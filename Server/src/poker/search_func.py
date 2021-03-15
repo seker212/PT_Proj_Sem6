@@ -1,6 +1,7 @@
-from poker.deck import *
+from typing import Optional
+from src.poker.deck import *
 
-def countCards(card, cardList):
+def countCards(card : Card, cardList : list[Card]) -> int:
     """Counts the number cards with given Suit or Rank in a list
 
     Args:
@@ -21,7 +22,7 @@ def countCards(card, cardList):
                 count += 1
     return count
 
-def findCard(card, cardList):
+def findCard(card : Card, cardList : list[Card]) -> Optional[Card]:
     """ Finds first occurence of given card.
     If either Suit or Rank is None it finds card with parameter that wasn't None
 
@@ -47,7 +48,7 @@ def findCard(card, cardList):
                 return c
     return None
 
-def has_straight(cR):
+def has_straight(cR : list[int]) -> Optional[int]:
     """Checks if player has a straight in hand
 
     Args:
@@ -74,7 +75,7 @@ def has_straight(cR):
             return s
     return None
 
-def flush(suit, cR, handCards):
+def flush(suit : Suit, cR : list[int], handCards : list[Card]) -> list[Card]:
     """Gets cards that creates flush
 
     Args:
@@ -88,13 +89,13 @@ def flush(suit, cR, handCards):
     hand = []
     for index in range(13):
         if cR[index] > 0:
-            c =findCard(Card(suit,Ranks[12-index]), handCards) 
+            c =findCard(Card(suit,RANKS[12-index]), handCards) 
             if c != None:
                 hand.append(c)
                 if len(hand) == 5:
                     return hand
 
-def revRankIndex(rank):
+def revRankIndex(rank : str) -> int:
     """Reverts card Rank index form ranks table with 2 having index 0
     to table with Ace having index 0
 
@@ -105,10 +106,10 @@ def revRankIndex(rank):
         int: index representing rank where 0 means Ace and so on
     """
     for index in range(13):
-        if Ranks[12-index] == rank:
+        if RANKS[12-index] == rank:
             return index
 
-def flushSuit(cS):
+def flushSuit(cS : list[int]) -> int:
     """Checks suit of a flush
 
     Args:
@@ -121,7 +122,7 @@ def flushSuit(cS):
         if cS[x] >= 5:
             return x
 
-def firstNo0(n, lista, avoid = None):
+def firstNo0(n : int, lista : list[int], avoid : Optional[int] = None) -> list[int]:
     """Gets a list of cards ranks form hand. Used to determin list of possible kickers
 
     Args:
@@ -148,7 +149,7 @@ def firstNo0(n, lista, avoid = None):
                 out.pop()
             return out
 
-def sameSuitStr(start, suit, hand):
+def sameSuitStr(start : int, suit : Suit, hand : list[Card]) -> bool:
     """Checks if a straight is of a particular suit
 
     Args:
@@ -162,6 +163,6 @@ def sameSuitStr(start, suit, hand):
     start = 12 - start
     for rank in range(start, start-5, -1):
         for card in hand:
-            if findCard(Card(suit, Ranks[rank]), hand) == None:
+            if findCard(Card(suit, RANKS[rank]), hand) is None:
                 return False
     return True
