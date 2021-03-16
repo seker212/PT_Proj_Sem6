@@ -58,22 +58,24 @@ def has_straight(cR : list[int]) -> Optional[int]:
         int: index of the highest card in straight
         None: if can't form a straight
     """
-    i = 0
+    index = 0
+    count = 0
     s = None
     t = False
-    for x in cR:
-        if x != 0:
-            i += 1
+    for i in range(13):
+        if cR[i] != 0:
+            count += 1
         else:
-            i = 0
-        if i == 1:
-            s = x
-        if i == 0 and t == False:
-            s = None
-        if x == 5:
-            t = True
-            return s
-    return None
+            if count > 4:
+                break
+            else:
+                count = 0
+        if count == 1:
+            index = i
+    if count > 4:
+        return index
+    else:
+        return None
 
 def flush(suit : Suit, cR : list[int], handCards : list[Card]) -> list[Card]:
     """Gets cards that creates flush
@@ -89,8 +91,8 @@ def flush(suit : Suit, cR : list[int], handCards : list[Card]) -> list[Card]:
     hand = []
     for index in range(13):
         if cR[index] > 0:
-            c =findCard(Card(suit,RANKS[12-index]), handCards) 
-            if c != None:
+            c =findCard(Card(suit,RANKS[index]), handCards) 
+            if c is not None:
                 hand.append(c)
                 if len(hand) == 5:
                     return hand
@@ -107,6 +109,19 @@ def revRankIndex(rank : str) -> int:
     """
     for index in range(13):
         if RANKS[12-index] == rank:
+            return index
+
+def getRankIndex(rank: str) -> int:
+    """Gets index from RANKS of given rank
+
+    Args:
+        rank (str): rank equal to one from RANKS
+
+    Returns:
+        int: index of element from RANKS
+    """
+    for index in range(13):
+        if RANKS[index] == rank:
             return index
 
 def flushSuit(cS : list[int]) -> int:
@@ -149,7 +164,7 @@ def firstNo0(n : int, lista : list[int], avoid : Optional[int] = None) -> list[i
                 out.pop()
             return out
 
-def sameSuitStr(start : int, suit : Suit, hand : list[Card]) -> bool:
+def sameSuitStr(start : int, suit : Suit, hand : list[Card]) -> Optional[int]:
     """Checks if a straight is of a particular suit
 
     Args:
@@ -158,11 +173,13 @@ def sameSuitStr(start : int, suit : Suit, hand : list[Card]) -> bool:
         hand (list): list of Cards representing player's hand
 
     Returns:
-        bool: True if straight is of this suit, False otherwise 
+        int: index of highest Rank of straight flush, None if no straight flush found 
     """
-    start = 12 - start
-    for rank in range(start, start-5, -1):
-        for card in hand:
+    found = False
+    for i in range(start, start+3):
+        for rank in range(i, i+5):
             if findCard(Card(suit, RANKS[rank]), hand) is None:
-                return False
-    return True
+                break
+            if rank == i+4:
+                return i
+    return None

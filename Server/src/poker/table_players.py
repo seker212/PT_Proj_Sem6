@@ -14,7 +14,7 @@ class TablePlayers:
     def __next__(self) -> Player:
         player = self.List[self.index]
         if self.lastIndex is not None and self.index == self.lastIndex:
-            raise StopIteration
+            return None
         if (self.index == len(self.List)-1):
             self.index = 0
         else:

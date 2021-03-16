@@ -2,7 +2,7 @@ import enum
 from random import shuffle
 from typing import Optional
 
-RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+RANKS = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2']
 
 class Suit:
     def __init__(self, name : str, symbol : str):
@@ -31,7 +31,10 @@ class Card:
         return self.rank+self.suit.symbol
 
     def __eq__(self, other) -> bool:
-        return self.rank == other.rank and self.suit == other.suit
+        if other is None:
+            return False
+        else:
+            return self.rank == other.rank and self.suit == other.suit
 
 def NewShuffledDeck() -> list[Card]:
     """Generates new full deck shuffled
