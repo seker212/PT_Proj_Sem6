@@ -19,3 +19,19 @@ def test_setLastPlayer():
             break
     assert i == 2
     assert next(it) == None   
+
+def test_setSmallBlind():
+    p1 = Player("test1")
+    p2 = Player("test2")
+    p2.blind = Blind.small
+    p3 = Player("test3")
+
+    players = TablePlayers([p1, p2, p3])
+    it = iter(players)
+    players.setIterSB()
+    assert next(it) == p2
+    assert next(it) != p2
+    players.setIterSB()
+    assert next(it) == p2
+    players.setIterSB()
+    assert next(it) == p2

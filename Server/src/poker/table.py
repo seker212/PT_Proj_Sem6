@@ -6,6 +6,7 @@ from src.poker.pot import Pot
 from src.poker.deck import Card, NewShuffledDeck
 from src.poker.Hand import Hand, HandType
 from src.helpers.pair import pair
+from src.poker.variables import SMALL_BLIND
 
 class GameStage(Enum):
     preFlop = 0
@@ -29,6 +30,10 @@ class Table:
         self.turnPlayer: Player = next(self.playerIt)
 
         self.players.setLastPlayer()
+
+    def nextPlayer(self) -> Player:
+        self.turnPlayer = next(self.playerIt)
+        return self.turnPlayer
 
     def giveHand(self) -> None:
         """ Removes cards form self.cards and add 2 to each player """
@@ -89,6 +94,13 @@ class Table:
                             hands.pop(k)
                 return list(hands.keys())
 
-                            
-
-
+    def getBlindsToPot(self) -> None:
+        for p in self.players:
+            if p.blind == Blind.small:
+                self.main_pot.ammount += SMALL_BLIND
+                self.main_pot.members += p
+                p.table_money = SMALL_BLIND
+            elif p.blind == Blind.big:
+                self.main_pot.ammount += 2*SMALL_BLIND
+                self.main_pot.members += p
+                p.table_money = 2*SMALL_BLIND
