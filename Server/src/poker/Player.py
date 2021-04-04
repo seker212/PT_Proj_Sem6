@@ -33,3 +33,6 @@ class Player:
             return NotImplemented
 
         return self.user == other.user #TODO: USER needs __eq__()
+
+    def __hash__(self):
+        return hash(self.user) #TODO: USER needs __hash__()
