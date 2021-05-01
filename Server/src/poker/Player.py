@@ -9,6 +9,13 @@ class Blind(enum.Enum):
     small = 1
     big = 2
 
+class Status(enum.Enum):
+    none = 0
+    fold = 1
+    check = 2
+    call = 3
+    all_in = 4
+
 class Player:
     def __init__(self, player: Any):
         """Constructor
@@ -21,9 +28,7 @@ class Player:
         self.money: int = STARTING_MONEY
         self.table_money: int = 0
         self.blind: Blind = Blind.none
-        self.fold: bool = False
-        self.all_in: bool = False
-        self.check: bool = False
+        self.status: Status = Status.none
     
     def __str__(self) -> str:
         return self.user + ': ' + str(self.hand[0]) + ' ' + str(self.hand[1]) + ' ' + str(self.money) + ' ' + str(self.table_money) + ' ' + self.blind.name + ' ' + str(self.fold) + ' ' + str(self.all_in) + ' ' + str(self.check) #FIXME: USER needs __str__()
@@ -33,6 +38,9 @@ class Player:
             return NotImplemented
 
         return self.user == other.user #TODO: USER needs __eq__()
+
+    def __ne__(self, other) -> bool:
+        return not self.__eq__(other)
 
     def __hash__(self):
         return hash(self.user) #TODO: USER needs __hash__()

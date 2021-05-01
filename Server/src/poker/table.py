@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Iterator
+from typing import Iterator, Optional
 from src.poker.table_players import TablePlayers
 from src.poker.Player import Player, Blind
 from src.poker.pot import Pot
@@ -18,8 +18,7 @@ class GameStage(Enum):
 class Table:
     def __init__(self, players: TablePlayers):
         self.stage: GameStage = GameStage.preFlop
-        self.main_pot: Pot = Pot()
-        self.site_pots: list[Pot] = Pot()
+        self.pots: list[Pot] = [Pot()]
         self.players: TablePlayers = players #TODO: Exception: Check if len(playerList) > 1
         self.number_of_deals: int = 0
         self.cards: list[Card] = NewShuffledDeck()[:2*len(self.players)+5]
@@ -49,6 +48,15 @@ class Table:
         hand_dict = {}
         for x in pot.members:
             hand_dict[x] = Hand.evaluateHand(x.hand + table.cards)
+
+    def getPlayerIndex(self, player: Player) -> Optional[int]:
+        for i in range(len(self.players)):
+            if self.players[i] == player:
+                return i
+        return None
+
+    def getRequiredAmmount(self) -> int:
+        return max(self.players.List, key= lambda p: p.table_money)
 
     def getWinners(self, hands: dict[Hand]) -> list[Player]:
         highest_handType = hands[min(hands, key=lambda x: hands[x].HandType.value)].HandType
@@ -95,12 +103,22 @@ class Table:
                 return list(hands.keys())
 
     def getBlindsToPot(self) -> None:
+        self.players.setIterSB()
+        small_blind_player = self.nextPlayer()
+        
+        #FIXME: player might not have enough money
+        
+        self.pots[0].ammount += SMALL_BLIND
+        p.money -= SMALL_BLIND
+        p.table_money = SMALL_BLIND
         for p in self.players:
             if p.blind == Blind.small:
-                self.main_pot.ammount += SMALL_BLIND
-                self.main_pot.members += p
+                self.pots[0].ammount += SMALL_BLIND
+                p.money -= SMALL_BLIND
                 p.table_money = SMALL_BLIND
             elif p.blind == Blind.big:
-                self.main_pot.ammount += 2*SMALL_BLIND
-                self.main_pot.members += p
+                self.pots[0].ammount += 2*SMALL_BLIND
+                p.money -= 2*SMALL_BLIND
+                self.pots[0].members += p
                 p.table_money = 2*SMALL_BLIND
+
