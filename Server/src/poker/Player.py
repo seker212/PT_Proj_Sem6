@@ -31,16 +31,16 @@ class Player:
         self.status: Status = Status.none
     
     def __str__(self) -> str:
-        return self.user + ': ' + str(self.hand[0]) + ' ' + str(self.hand[1]) + ' ' + str(self.money) + ' ' + str(self.table_money) + ' ' + self.blind.name + ' ' + str(self.fold) + ' ' + str(self.all_in) + ' ' + str(self.check) #FIXME: USER needs __str__()
+        return self.user + ': ' + str(self.hand[0]) + ' ' + str(self.hand[1]) + ' ' + str(self.money) + ' ' + str(self.table_money) + ' ' + self.blind.name + ' ' + str(self.fold) + ' ' + str(self.all_in) + ' ' + str(self.check)
 
     def __eq__(self, other) -> bool:
         if not isinstance(other, Player):
             return NotImplemented
 
-        return self.user == other.user #TODO: USER needs __eq__()
+        return self.user == other.user
 
     def __ne__(self, other) -> bool:
         return not self.__eq__(other)
 
     def __hash__(self):
-        return hash(self.user) #TODO: USER needs __hash__()
+        return hash(self.user)

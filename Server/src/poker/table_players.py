@@ -30,7 +30,7 @@ class TablePlayers:
     def __str__(self) -> str:
         end = '[ '
         for p in self.List:
-            end += p.user + ' '                 #FIXME: USER needs __str__()
+            end += p.user + ' '
         end += ']'
         return end
     

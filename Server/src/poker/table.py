@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Iterator, Optional
 from src.poker.table_players import TablePlayers
-from src.poker.Player import Player, Blind
+from src.poker.Player import Player, Blind, Status
 from src.poker.pot import Pot
 from src.poker.deck import Card, NewShuffledDeck
 from src.poker.Hand import Hand, HandType
@@ -19,7 +19,7 @@ class Table:
     def __init__(self, players: TablePlayers):
         self.stage: GameStage = GameStage.preFlop
         self.pots: list[Pot] = [Pot()]
-        self.players: TablePlayers = players #TODO: Exception: Check if len(playerList) > 1
+        self.players: TablePlayers = players
         self.number_of_deals: int = 0
         self.cards: list[Card] = NewShuffledDeck()[:2*len(self.players)+5]
         self.playerIt: Iterator[Player] = iter(self.players)
@@ -29,10 +29,36 @@ class Table:
         self.turnPlayer: Player = next(self.playerIt)
 
         self.players.setLastPlayer()
+        self.giveHand()
+        self.getBlindsToPot()
 
     def nextPlayer(self) -> Player:
         self.turnPlayer = next(self.playerIt)
         return self.turnPlayer
+    
+    def nextTurnPlayer(self) -> Player:
+        p = self.nextPlayer()
+        while p is not None and (p.status == Status.fold or p.status == Status.all_in):
+            p = self.nextPlayer()
+        if p is None:
+            self.nextStage()
+
+    def initRound(self):
+        self.players.setIterSB()
+        self.stage: GameStage = GameStage.preFlop
+        self.cards: list[Card] = NewShuffledDeck()[:2*len(self.players)+5]
+        self.pots: list[Pot] = [Pot()]
+        for p in self.players.List:
+            p.blind = Blind.none
+            p.hand = []
+            p.table_money = 0
+            p.status = Status.none
+        next(self.playerIt)
+        next(self.playerIt).blind = Blind.small
+        next(self.playerIt).blind = Blind.big
+        self.giveHand()
+        self.getBlindsToPot()
+        
 
     def giveHand(self) -> None:
         """ Removes cards form self.cards and add 2 to each player """
@@ -41,8 +67,14 @@ class Table:
                 p.hand.append(self.cards.pop())
 
     def nextStage(self) -> None:
-        self.stage = GameStage(self.stage.value + 1)
-        #TODO: czegos tu brakuje
+        if self.stage != GameStage.Showdown:
+            self.stage = GameStage(self.stage.value + 1)
+        if self.stage != GameStage.Showdown:
+            self.players.setIterSB()
+            self.nextTurnPlayer()
+            for p in self.players.List:
+                if p.status != Status.fold and p.status != Status.all_in:
+                    p.status = Status.none
 
     def getHands(self, pot: Pot) -> dict[Hand]:
         hand_dict = {}
@@ -102,15 +134,9 @@ class Table:
                             hands.pop(k)
                 return list(hands.keys())
 
-    def getBlindsToPot(self) -> None:
-        self.players.setIterSB()
-        small_blind_player = self.nextPlayer()
-        
+    def getBlindsToPot(self) -> None:        
         #FIXME: player might not have enough money
-        
-        self.pots[0].ammount += SMALL_BLIND
-        p.money -= SMALL_BLIND
-        p.table_money = SMALL_BLIND
+
         for p in self.players:
             if p.blind == Blind.small:
                 self.pots[0].ammount += SMALL_BLIND

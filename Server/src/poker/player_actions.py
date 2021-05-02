@@ -36,6 +36,8 @@ def bet_raise(table: Table, player: Player, money: int) -> ActionEffect:
         table.pots[len(table.pots)-1].ammount += money
         table.pots[len(table.pots)-1].required = player.table_money + money
 
+    table.players.setLastPlayer()
+
     return ActionEffect.OK
 
 def fold(table: Table, player: Player) -> ActionEffect:
@@ -55,7 +57,7 @@ def check(table: Table, player: Player) -> ActionEffect:
     table.turnPlayer.status = Status.check
     return ActionEffect.OK
 
-def all_in(table: Table, player: Player) -> ActionEffect:
+def all_in(table: Table, player: Player) -> ActionEffect: #FIXME: Add new pot if it doesn't need to split any existing
     if table.turnPlayer != player:
         return ActionEffect.Wrong_player
 
