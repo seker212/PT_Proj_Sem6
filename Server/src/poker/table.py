@@ -122,3 +122,14 @@ class Table:
                 self.pots[0].members += p
                 p.table_money = 2*SMALL_BLIND
 
+    def getCurrentCards(self):
+        if self.stage == GameStage.preFlop:
+            return []
+        elif self.stage == GameStage.Flop:
+            return self.cards[:3]
+        elif self.stage == GameStage.Turn:
+            return self.cards[:4]
+        elif self.stage == GameStage.River or self.stage == GameStage.Showdown:
+            return self.cards
+
+            
