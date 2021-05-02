@@ -41,6 +41,7 @@ class Table:
         while p is not None and (p.status == Status.fold or p.status == Status.all_in):
             p = self.nextPlayer()
         if p is None:
+            #FIXME: Check if there is more than one player without fold
             self.nextStage()
 
     def initRound(self):

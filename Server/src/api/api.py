@@ -198,6 +198,32 @@ class DisconnectPlayer(MethodResource, Resource):
 api.add_resource(DisconnectPlayer, '/table/<tableID>/disconnect')
 docs.register(DisconnectPlayer)
 
+
+class NextRound(MethodResource, Resource):
+    @doc(tags=['Manage'])
+    @use_kwargs({'playerID': fields.String()}, location='querystring')
+    @marshal_with(None, code='200', description='OK' )
+    @marshal_with(None, code='403', description='playerID not found')
+    @marshal_with(None, code='404', description='tableID not found')
+    def put(self, tableID, playerID):
+        pass #TODO: call next round afret all players sent this
+        
+api.add_resource(NextRound, '/table/<tableID>/nextround')
+docs.register(NextRound)
+
+class Showdown(MethodResource, Resource):
+    @doc(tags=['Manage'])
+    @use_kwargs({'playerID': fields.String()}, location='querystring')
+    @marshal_with(None, code='200', description='OK' )
+    @marshal_with(None, code='403', description='playerID not found')
+    @marshal_with(None, code='404', description='tableID not found')
+    def get(self, tableID, playerID):
+        pass #TODO: get showdown if table.stage == Showdown
+        
+api.add_resource(Showdown, '/table/<tableID>/showdown')
+docs.register(Showdown)
+
+
 class Bet(MethodResource, Resource):
     @doc(tags=['Player Actions'])
     @use_kwargs({'playerID': fields.String(), 'ammount': fields.Integer()}, location='querystring')
@@ -233,7 +259,7 @@ class Check(MethodResource, Resource):
     @marshal_with(None, code='400', description='Move not allowed')
     @marshal_with(None, code='403', description='playerID not found')
     @marshal_with(None, code='404', description='tableID not found')
-    def get(self, tableID, playerID, ammount):
+    def get(self, tableID, playerID):
         if tableID not in started_games:
             return '', 404
         if playerID not in [p.user.id for p in table.players.List]:
@@ -262,7 +288,7 @@ class Fold(MethodResource, Resource):
     @marshal_with(None, code='400', description='Move not allowed')
     @marshal_with(None, code='403', description='playerID not found')
     @marshal_with(None, code='404', description='tableID not found')
-    def get(self, tableID, playerID, ammount):
+    def get(self, tableID, playerID):
         if tableID not in started_games:
             return '', 404
         if playerID not in [p.user.id for p in table.players.List]:
@@ -291,7 +317,7 @@ class Call(MethodResource, Resource):
     @marshal_with(None, code='400', description='Move not allowed')
     @marshal_with(None, code='403', description='playerID not found')
     @marshal_with(None, code='404', description='tableID not found')
-    def get(self, tableID, playerID, ammount):
+    def get(self, tableID, playerID):
         if tableID not in started_games:
             return '', 404
         if playerID not in [p.user.id for p in table.players.List]:
@@ -320,7 +346,7 @@ class AllIn(MethodResource, Resource):
     @marshal_with(None, code='400', description='Move not allowed')
     @marshal_with(None, code='403', description='playerID not found')
     @marshal_with(None, code='404', description='tableID not found')
-    def get(self, tableID, playerID, ammount):
+    def get(self, tableID, playerID):
         if tableID not in started_games:
             return '', 404
         if playerID not in [p.user.id for p in table.players.List]:
