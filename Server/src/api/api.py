@@ -311,9 +311,9 @@ class Check(MethodResource, Resource):
                 player = p
                 break
         result = check(started_games[tableID], player)
-        started_games[tableID].nextTurnPlayer()
 
         if result == ActionEffect.OK:
+            started_games[tableID].nextTurnPlayer()
             return '', 200
         else:
             return result.name, 400
@@ -341,9 +341,9 @@ class Fold(MethodResource, Resource):
                 player = p
                 break
         result = fold(started_games[tableID], player)
-        started_games[tableID].nextTurnPlayer()
 
         if result == ActionEffect.OK:
+            started_games[tableID].nextTurnPlayer()
             return '', 200
         else:
             return result.name, 400
@@ -371,9 +371,9 @@ class Call(MethodResource, Resource):
                 player = p
                 break
         result = call(started_games[tableID], player)
-        started_games[tableID].nextTurnPlayer()
 
         if result == ActionEffect.OK:
+            started_games[tableID].nextTurnPlayer()
             return '', 200
         else:
             return result.name, 400
@@ -401,9 +401,9 @@ class AllIn(MethodResource, Resource):
                 player = p
                 break
         result = all_in(started_games[tableID], player)
-        started_games[tableID].nextTurnPlayer()
 
         if result == ActionEffect.OK:
+            started_games[tableID].nextTurnPlayer()
             return '', 200
         else:
             return result.name, 400

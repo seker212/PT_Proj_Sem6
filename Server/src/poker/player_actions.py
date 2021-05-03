@@ -16,7 +16,7 @@ class ActionEffect(enum.Enum):
     Invalid_action = 9
 
 
-def bet_raise(table: Table, player: Player, money: int) -> ActionEffect:
+def bet_raise(table: Table, player: Player, money: int) -> ActionEffect: #TODO: More tests
     if table.turnPlayer is None or table.turnPlayer != player:
         return ActionEffect.Wrong_player
     if money <= 0:
@@ -51,15 +51,16 @@ def fold(table: Table, player: Player) -> ActionEffect:
             pot.members.remove(player)
     return ActionEffect.OK
 
-def check(table: Table, player: Player) -> ActionEffect:
+def check(table: Table, player: Player) -> ActionEffect: #TODO: Test this
     if table.turnPlayer is None or table.turnPlayer != player:
         return ActionEffect.Wrong_player
-    if max(table.players.List, key= lambda p: p.table_money) != 0: #FIXME: Nope
+    if player in table.pots[len(table.pots)-1].members and player.table_money == table.pots[len(table.pots)-1].required:
+        table.turnPlayer.status = Status.check
+        return ActionEffect.OK
+    else:
         return ActionEffect.Invalid_action
-    table.turnPlayer.status = Status.check
-    return ActionEffect.OK
 
-def all_in(table: Table, player: Player) -> ActionEffect: #FIXME: Add new pot if it doesn't need to split any existing
+def all_in(table: Table, player: Player) -> ActionEffect:
     if table.turnPlayer is None or table.turnPlayer != player:
         return ActionEffect.Wrong_player
 
@@ -67,37 +68,66 @@ def all_in(table: Table, player: Player) -> ActionEffect: #FIXME: Add new pot if
     prev_pot_req = 0
     i = 0
     for pot in table.pots:
-        if pot.required > player.table_money + player.money:
-            new_pot = Pot()
-            new_pot.members = pot.members.copy()
-            new_pot.members.append(player)
-            new_pot.required = player.table_money + player.money
-            if i != 0:
-                new_pot.ammount = (new_pot.required-table.pots[i-1].required)*len(new_pot.members)
-                pot.ammount -= (new_pot.required-table.pots[i-1].required)*(len(new_pot.members)-1)
-            else:
-                new_pot.ammount = (new_pot.required)*len(new_pot.members)
-                pot.ammount -= (new_pot.required)*(len(new_pot.members)-1)
-            player.table_money += player.money
-            player.money = 0
-            table.pots.insert(i, new_pot)
-            break
-        else:
-            if player in pot.members:
-                count_for_player -= pot.required - prev_pot_req
-            else:
-                pot.ammount += pot.required - prev_pot_req - count_for_player
-                player.table_money += pot.required - prev_pot_req - count_for_player
-                player.money -= pot.required - prev_pot_req - count_for_player
-                pot.members.append(player)
-                count_for_player = 0
+        if player not in pot.members:
+            koszt = pot.required - prev_pot_req
+            mozliwosc = player.table_money - prev_pot_req + player.money
+            if koszt < mozliwosc:
+                if any(player.status == Status.all_in for player in pot.members):
+                    give = None
+                    if player.table_money - prev_pot_req > 0:
+                        give = koszt - (player.table_money - prev_pot_req)
+                    else:
+                        give = koszt    
+                    pot.ammount += give
+                    player.table_money += give
+                    player.money -= give
+                    pot.members.append(player)
+                else:
+                    pot.ammount += player.money
+                    player.table_money += player.money
+                    player.money = 0
+                    pot.members = [player]
+                    pot.required = player.table_money
+                    table.players.setLastPlayer()
+                    break
 
-            prev_pot_req = pot.required
-            i += 1
+            elif koszt == mozliwosc:
+                pot.ammount += player.money
+                player.table_money += player.money
+                player.money = 0
+                pot.members.append(player)
+                break
+            else:
+                new_pot = Pot()
+                new_pot.members = pot.members.copy()
+                new_pot.members.append(player)
+                new_pot.required = player.table_money + player.money
+                new_pot.ammount = (new_pot.required-prev_pot_req)*len(new_pot.members)
+                if player.table_money - prev_pot_req > 0:
+                    pot.ammount -= (new_pot.required-prev_pot_req)*(len(new_pot.members)-1)+(player.table_money - prev_pot_req)
+                else:
+                    pot.ammount -= (new_pot.required-prev_pot_req)*(len(new_pot.members)-1)
+                player.table_money += player.money
+                player.money = 0
+                table.pots.insert(i, new_pot)
+                break
+
+        prev_pot_req = pot.required
+        i += 1
+    if player.money > 0:
+        pot = Pot()
+        pot.members = [player]
+        pot.ammount = player.money
+        player.table_money += player.money
+        pot.required = player.table_money
+        player.money = 0
+        table.pots.append(pot)
+        table.players.setLastPlayer()
+
     table.turnPlayer.status = Status.all_in
     return ActionEffect.OK
 
-def call(table: Table, player: Player) -> ActionEffect: 
+def call(table: Table, player: Player) -> ActionEffect: #TODO: More tests
     if table.turnPlayer is None or table.turnPlayer != player:
         return ActionEffect.Wrong_player
     to_call = _to_call(table, player)

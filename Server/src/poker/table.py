@@ -37,7 +37,7 @@ class Table:
         return self.turnPlayer
     
     def nextTurnPlayer(self) -> Optional[Player]:
-        if [p.status != Status.fold for p in self.players.List].count(True) == 1:
+        if [p.status != Status.fold for p in self.players.List].count(True) == 1 or [p.status == Status.fold or p.status == Status.all_in for p in self.players.List].count(True) == len(self.players.List):
             self.stage = GameStage.Showdown
             return None
         p = self.nextPlayer()
@@ -76,6 +76,7 @@ class Table:
         if self.stage != GameStage.Showdown:
             self.players.setIterSB()
             self.nextTurnPlayer()
+            self.players.setLastPlayer()
             for p in self.players.List:
                 if p.status != Status.fold and p.status != Status.all_in:
                     p.status = Status.none
@@ -152,6 +153,7 @@ class Table:
                 p.money -= 2*SMALL_BLIND
                 self.pots[0].members.append(p)
                 p.table_money = 2*SMALL_BLIND
+                self.pots[0].required = 2*SMALL_BLIND
 
     def getCurrentCards(self):
         if self.stage == GameStage.preFlop:
