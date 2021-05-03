@@ -20,3 +20,14 @@ class TableModel():
         self.players = players 
         self.player_turn = player_turn
         self.cards = cards
+
+class PlayerHandModel():
+    def __init__(self, hand_type: str, hand: list):
+        self.hand_type = hand_type
+        self.hand = hand
+
+class ShowdownModel():
+    def __init__(self, players_hands: dict, winners: list, pot):
+        self.pot = pot
+        self.players_hands = players_hands
+        self.winners = winners

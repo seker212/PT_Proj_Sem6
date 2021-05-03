@@ -36,12 +36,14 @@ class Table:
         self.turnPlayer = next(self.playerIt)
         return self.turnPlayer
     
-    def nextTurnPlayer(self) -> Player:
+    def nextTurnPlayer(self) -> Optional[Player]:
+        if [p.status != Status.fold for p in self.players.List].count(True) == 1:
+            self.stage = GameStage.Showdown
+            return None
         p = self.nextPlayer()
         while p is not None and (p.status == Status.fold or p.status == Status.all_in):
             p = self.nextPlayer()
         if p is None:
-            #FIXME: Check if there is more than one player without fold
             self.nextStage()
 
     def initRound(self):
@@ -57,6 +59,7 @@ class Table:
         next(self.playerIt)
         next(self.playerIt).blind = Blind.small
         next(self.playerIt).blind = Blind.big
+        self.nextPlayer()
         self.giveHand()
         self.getBlindsToPot()
         
@@ -80,7 +83,8 @@ class Table:
     def getHands(self, pot: Pot) -> dict[Hand]:
         hand_dict = {}
         for x in pot.members:
-            hand_dict[x] = Hand.evaluateHand(x.hand + table.cards)
+            hand_dict[x] = Hand.evaluateHand(x.hand + self.cards)
+        return hand_dict
 
     def getPlayerIndex(self, player: Player) -> Optional[int]:
         for i in range(len(self.players)):
@@ -138,7 +142,7 @@ class Table:
     def getBlindsToPot(self) -> None:        
         #FIXME: player might not have enough money
 
-        for p in self.players:
+        for p in self.players.List:
             if p.blind == Blind.small:
                 self.pots[0].ammount += SMALL_BLIND
                 p.money -= SMALL_BLIND
@@ -146,7 +150,7 @@ class Table:
             elif p.blind == Blind.big:
                 self.pots[0].ammount += 2*SMALL_BLIND
                 p.money -= 2*SMALL_BLIND
-                self.pots[0].members += p
+                self.pots[0].members.append(p)
                 p.table_money = 2*SMALL_BLIND
 
     def getCurrentCards(self):

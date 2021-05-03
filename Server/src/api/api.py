@@ -12,7 +12,7 @@ from flask_apispec import marshal_with, doc, use_kwargs
 
 from src.helpers.KeyGenerator import generateStringKey
 from src.helpers.User import User
-from src.poker.table import Table
+from src.poker.table import Table, GameStage
 from src.poker.table_players import TablePlayers
 from src.poker.Player import Player
 from src.poker.player_actions import bet_raise, all_in, call, check, fold, ActionEffect
@@ -35,7 +35,7 @@ docs = FlaskApiSpec(app)
 
 not_started_games = {}
 started_games = {}
-
+next_rounds_check = {}
 
 
 class GetTableInfo(MethodResource, Resource):
@@ -149,9 +149,6 @@ class StartTable(MethodResource, Resource):
         players = [Player(user) for user in table]
         started_games[tableID] = Table(TablePlayers(players))
         
-        started_games[tableID].giveHand()
-        started_games[tableID].getBlindsToPot()
-        
         del not_started_games[tableID]
         return '', 200
 
@@ -183,6 +180,10 @@ class DisconnectPlayer(MethodResource, Resource):
                         if disconnect_player in pot.members:
                             pot.members.remove(disconnect_player)
                     table.players.List.remove(disconnect_player)
+                if tableID in next_rounds_check:
+                    del next_rounds_check[tableID][playerID]
+                    if all(next_rounds_check[tableID].values()):
+                        table.initRound()
         else:
             table = not_started_games[table]
             if playerID not in [p.id for p in table]:
@@ -203,22 +204,60 @@ class NextRound(MethodResource, Resource):
     @doc(tags=['Manage'])
     @use_kwargs({'playerID': fields.String()}, location='querystring')
     @marshal_with(None, code='200', description='OK' )
+    @marshal_with(None, code='400', description='')
     @marshal_with(None, code='403', description='playerID not found')
     @marshal_with(None, code='404', description='tableID not found')
     def put(self, tableID, playerID):
-        pass #TODO: call next round afret all players sent this
+        if tableID not in started_games:
+            return '', 404
+        table = started_games[tableID]
+        if table.stage != GameStage.Showdown:
+            return '', 400
+
+        if playerID not in [p.user.id for p in table.players.List]:
+            return '', 403
+        
+        if tableID not in next_rounds_check:
+            next_rounds_check[tableID] = {}
+            for p in table.players.List:
+                if playerID != p.user.id:
+                    next_rounds_check[tableID][p.user.id] = False
+                else:
+                    next_rounds_check[tableID][p.user.id] = True
+        else:
+            next_rounds_check[tableID][playerID] = True
+        
+        if all(next_rounds_check[tableID].values()):
+            table.initRound()
         
 api.add_resource(NextRound, '/table/<tableID>/nextround')
 docs.register(NextRound)
 
 class Showdown(MethodResource, Resource):
-    @doc(tags=['Manage'])
-    @use_kwargs({'playerID': fields.String()}, location='querystring')
-    @marshal_with(None, code='200', description='OK' )
-    @marshal_with(None, code='403', description='playerID not found')
+    @doc(tags=['Get Info'])
+    @marshal_with(ShowdownSchema(many=True), code='200', description='OK' )
+    @marshal_with(None, code='400', description='')
     @marshal_with(None, code='404', description='tableID not found')
-    def get(self, tableID, playerID):
-        pass #TODO: get showdown if table.stage == Showdown
+    def get(self, tableID):
+        if tableID not in started_games:
+            return '', 404
+
+        table = started_games[tableID]
+        if table.stage != GameStage.Showdown:
+            return '', 400
+        showdown_models = []
+        pot_index = 0
+        for pot in table.pots:
+            players_hands_model_dict = {}
+            players_hands = table.getHands(pot)
+            for player in players_hands.keys():
+                players_hands_model_dict[player.user.name] = PlayerHandModel(players_hands[player].HandType.name, [CardModel(c.suit.name, c.rank) for c in player.hand])
+            winners = table.getWinners(players_hands)
+            showdown_models.append(ShowdownModel(players_hands_model_dict.copy(), [w.user.name for w in winners], pot_index))
+            pot_index += 1
+        showdown_schemas = [ShowdownSchema().dump(model) for model in showdown_models]
+        return showdown_schemas, 200
+
         
 api.add_resource(Showdown, '/table/<tableID>/showdown')
 docs.register(Showdown)
@@ -234,6 +273,7 @@ class Bet(MethodResource, Resource):
     def get(self, tableID, playerID, ammount):
         if tableID not in started_games:
             return '', 404
+        table = started_games[tableID]
         if playerID not in [p.user.id for p in table.players.List]:
             return '', 403
         player = None
@@ -242,8 +282,8 @@ class Bet(MethodResource, Resource):
                 player = p
                 break
         result = bet_raise(started_games[tableID], player, ammount)
-        started_games[tableID].nextTurnPlayer()
         if result == ActionEffect.OK:
+            started_games[tableID].nextTurnPlayer()
             return '', 200
         else:
             return result.name, 400
@@ -262,6 +302,7 @@ class Check(MethodResource, Resource):
     def get(self, tableID, playerID):
         if tableID not in started_games:
             return '', 404
+        table = started_games[tableID]
         if playerID not in [p.user.id for p in table.players.List]:
             return '', 403
         player = None
@@ -291,6 +332,7 @@ class Fold(MethodResource, Resource):
     def get(self, tableID, playerID):
         if tableID not in started_games:
             return '', 404
+        table = started_games[tableID]
         if playerID not in [p.user.id for p in table.players.List]:
             return '', 403
         player = None
@@ -320,6 +362,7 @@ class Call(MethodResource, Resource):
     def get(self, tableID, playerID):
         if tableID not in started_games:
             return '', 404
+        table = started_games[tableID]
         if playerID not in [p.user.id for p in table.players.List]:
             return '', 403
         player = None
@@ -349,6 +392,7 @@ class AllIn(MethodResource, Resource):
     def get(self, tableID, playerID):
         if tableID not in started_games:
             return '', 404
+        table = started_games[tableID]
         if playerID not in [p.user.id for p in table.players.List]:
             return '', 403
         player = None

@@ -19,5 +19,11 @@ class TableSchema(Schema):
     player_turn = fields.String(dump_only=True)
     cards = fields.List(fields.Nested(CardSchema), dump_only=True)
 
-class StringSchema(Schema):
-    fields.String(dump_only=True)
+class PlayerHandSchema(Schema):
+    hand_type = fields.String(dump_only=True)
+    hand = fields.List(fields.Nested(CardSchema()), dump_only=True)
+
+class ShowdownSchema(Schema):
+    pot = fields.Integer(dump_only=True)
+    players_hands = fields.Dict(fields.String(), fields.Nested(PlayerHandSchema), dump_only=True)
+    winners = fields.List(fields.String(), dump_only=True)

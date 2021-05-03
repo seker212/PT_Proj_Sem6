@@ -17,7 +17,7 @@ class ActionEffect(enum.Enum):
 
 
 def bet_raise(table: Table, player: Player, money: int) -> ActionEffect:
-    if table.turnPlayer != player:
+    if table.turnPlayer is None or table.turnPlayer != player:
         return ActionEffect.Wrong_player
     if money <= 0:
         return ActionEffect.Arg_out_of_range
@@ -30,18 +30,20 @@ def bet_raise(table: Table, player: Player, money: int) -> ActionEffect:
         pot.members = [player]
         pot.ammount = money
         pot.required = player.table_money + money
+        player -= money
         table.pots.append(pot)
     else:
         table.pots[len(table.pots)-1].members = [player]
         table.pots[len(table.pots)-1].ammount += money
         table.pots[len(table.pots)-1].required = player.table_money + money
+        player.money -= money
 
     table.players.setLastPlayer()
 
     return ActionEffect.OK
 
 def fold(table: Table, player: Player) -> ActionEffect:
-    if table.turnPlayer != player:
+    if table.turnPlayer is None or table.turnPlayer != player:
         return ActionEffect.Wrong_player
     table.turnPlayer.status = Status.fold
     for pot in table.pots:
@@ -50,7 +52,7 @@ def fold(table: Table, player: Player) -> ActionEffect:
     return ActionEffect.OK
 
 def check(table: Table, player: Player) -> ActionEffect:
-    if table.turnPlayer != player:
+    if table.turnPlayer is None or table.turnPlayer != player:
         return ActionEffect.Wrong_player
     if max(table.players.List, key= lambda p: p.table_money) != 0: #FIXME: Nope
         return ActionEffect.Invalid_action
@@ -58,7 +60,7 @@ def check(table: Table, player: Player) -> ActionEffect:
     return ActionEffect.OK
 
 def all_in(table: Table, player: Player) -> ActionEffect: #FIXME: Add new pot if it doesn't need to split any existing
-    if table.turnPlayer != player:
+    if table.turnPlayer is None or table.turnPlayer != player:
         return ActionEffect.Wrong_player
 
     count_for_player = player.table_money
@@ -96,7 +98,7 @@ def all_in(table: Table, player: Player) -> ActionEffect: #FIXME: Add new pot if
     return ActionEffect.OK
 
 def call(table: Table, player: Player) -> ActionEffect: 
-    if table.turnPlayer != player:
+    if table.turnPlayer is None or table.turnPlayer != player:
         return ActionEffect.Wrong_player
     to_call = _to_call(table, player)
     if table.turnPlayer.money <= to_call - table.turnPlayer.table_money:
@@ -110,6 +112,7 @@ def call(table: Table, player: Player) -> ActionEffect:
         else:
             pot.ammount += pot.required - prev_pot_req - count_for_player
             player.table_money += pot.required - prev_pot_req - count_for_player
+            player.money -= pot.required - prev_pot_req - count_for_player
             pot.members.append(player)
             count_for_player = 0
 
@@ -117,6 +120,6 @@ def call(table: Table, player: Player) -> ActionEffect:
     return ActionEffect.OK
 
 def _to_call(table: Table, player: Player) -> int:
-    if table.turnPlayer != player:
+    if table.turnPlayer is None or table.turnPlayer != player:
         raise Exception
     return max(table.players.List, key= lambda p: p.table_money).table_money - table.turnPlayer.table_money
