@@ -228,6 +228,7 @@ class NextRound(MethodResource, Resource):
             next_rounds_check[tableID][playerID] = True
         
         if all(next_rounds_check[tableID].values()):
+            table.dividePots()
             table.initRound()
         
 api.add_resource(NextRound, '/table/<tableID>/nextround')

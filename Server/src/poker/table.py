@@ -165,4 +165,10 @@ class Table:
         elif self.stage == GameStage.River or self.stage == GameStage.Showdown:
             return self.cards
 
-            
+    def dividePots(self):
+        if self.stage == GameStage.Showdown:
+            for pot in self.pots:
+                winners = self.getWinners(self.getHands(pot))
+                for p in winners:
+                    p.money += pot.ammount / len(winners)
+                    p.table_money = 0            
