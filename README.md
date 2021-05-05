@@ -1,7 +1,7 @@
 # Podstawy Teleinformatyki - Projekt
 
 ## Installation
-### Serwer
+### Server
 After cloning repository go to `Server` directory and install requirements. You can do this by running `pip install -r requirements.txt`. It is adviced to use virtual environment to do so. 
 ## Usage
 ### Server
