@@ -52,10 +52,13 @@ class Table:
         self.cards: list[Card] = NewShuffledDeck()[:2*len(self.players)+5]
         self.pots: list[Pot] = [Pot()]
         for p in self.players.List:
-            p.blind = Blind.none
-            p.hand = []
-            p.table_money = 0
-            p.status = Status.none
+            if p.money == 0:
+                self.players.List.remove(p)
+            else:
+                p.blind = Blind.none
+                p.hand = []
+                p.table_money = 0
+                p.status = Status.none
         next(self.playerIt)
         next(self.playerIt).blind = Blind.small
         next(self.playerIt).blind = Blind.big

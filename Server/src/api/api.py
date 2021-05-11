@@ -29,7 +29,9 @@ app.config.update({
         openapi_version='2.0.0'
     ),
     'APISPEC_SWAGGER_URL': '/doc/swagger/',  # URI to access API Doc JSON
-    'APISPEC_SWAGGER_UI_URL': '/doc/swagger/ui/'  # URI to access UI of API Doc
+    'APISPEC_SWAGGER_UI_URL': '/doc/swagger/ui/',  # URI to access UI of API Doc
+    'PREFERRED_URL_SCHEME': 'https',
+    'SSL_DISABLE': 'False'
 })
 docs = FlaskApiSpec(app)
 
@@ -413,4 +415,6 @@ api.add_resource(AllIn, '/table/<tableID>/actions/allin')
 docs.register(AllIn)
 
 if __name__ == '__main__':
+    # context = ('myCA.pem', 'myKey.key')
+    # app.run(port=29345, ssl_context=context)
     app.run(port=29345)
