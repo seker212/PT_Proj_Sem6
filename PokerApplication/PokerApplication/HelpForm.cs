@@ -21,8 +21,13 @@ namespace PokerApplication
         {
             InitializeComponent();
             this.client = myClient;
+            //webBrowser1.Navigate("https://www.youtube.com/watch?v=-QXdRX6OE3E");
+            //movieLabel1.Text= System.IO.Directory.GetCurrentDirectory();
         }
 
-
+        private void sourceButton_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=-QXdRX6OE3E");
+        }
     }
 }

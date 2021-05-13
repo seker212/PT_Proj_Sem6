@@ -46,64 +46,65 @@ namespace PokerApplication
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Comic Sans MS", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label1.Font = new System.Drawing.Font("Comic Sans MS", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label1.ForeColor = System.Drawing.Color.Firebrick;
-            this.label1.Location = new System.Drawing.Point(57, 37);
+            this.label1.Location = new System.Drawing.Point(52, 29);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(335, 45);
+            this.label1.Size = new System.Drawing.Size(282, 38);
             this.label1.TabIndex = 0;
             this.label1.Text = "oker Texas Hold\'em";
             // 
             // label3
             // 
             this.label3.BackColor = System.Drawing.Color.White;
-            this.label3.Font = new System.Drawing.Font("Comic Sans MS", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label3.Font = new System.Drawing.Font("Comic Sans MS", 39.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label3.ForeColor = System.Drawing.Color.Firebrick;
-            this.label3.Location = new System.Drawing.Point(12, 7);
+            this.label3.Location = new System.Drawing.Point(12, 9);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(50, 75);
+            this.label3.Size = new System.Drawing.Size(46, 58);
             this.label3.TabIndex = 2;
             this.label3.Text = "P";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // userName
             // 
-            this.userName.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.userName.Location = new System.Drawing.Point(94, 297);
+            this.userName.Font = new System.Drawing.Font("Comic Sans MS", 15.75F);
+            this.userName.Location = new System.Drawing.Point(81, 257);
             this.userName.Name = "userName";
-            this.userName.PlaceholderText = "Nazwa użytkownika";
-            this.userName.Size = new System.Drawing.Size(208, 37);
+            this.userName.Size = new System.Drawing.Size(179, 37);
             this.userName.TabIndex = 3;
+            this.userName.Text = "pseudonim";
             this.userName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // addressBox
             // 
-            this.addressBox.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.addressBox.Location = new System.Drawing.Point(94, 340);
+            this.addressBox.Font = new System.Drawing.Font("Comic Sans MS", 15.75F);
+            this.addressBox.Location = new System.Drawing.Point(81, 295);
             this.addressBox.Name = "addressBox";
-            this.addressBox.PlaceholderText = "Adres serwera";
-            this.addressBox.Size = new System.Drawing.Size(208, 37);
+            this.addressBox.Size = new System.Drawing.Size(179, 37);
             this.addressBox.TabIndex = 4;
+            this.addressBox.Text = "adres serwera";
             this.addressBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // portBox
             // 
-            this.portBox.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.portBox.Location = new System.Drawing.Point(94, 383);
+            this.portBox.Font = new System.Drawing.Font("Comic Sans MS", 15.75F);
+            this.portBox.Location = new System.Drawing.Point(81, 332);
             this.portBox.Name = "portBox";
-            this.portBox.PlaceholderText = "Port serwera";
-            this.portBox.Size = new System.Drawing.Size(208, 37);
+            this.portBox.Size = new System.Drawing.Size(179, 37);
             this.portBox.TabIndex = 5;
+            this.portBox.Text = "port";
             this.portBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // playButton
             // 
             this.playButton.BackColor = System.Drawing.Color.White;
             this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.playButton.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.playButton.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.playButton.ForeColor = System.Drawing.Color.Firebrick;
-            this.playButton.Location = new System.Drawing.Point(94, 426);
+            this.playButton.Location = new System.Drawing.Point(81, 369);
             this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(208, 38);
+            this.playButton.Size = new System.Drawing.Size(178, 33);
             this.playButton.TabIndex = 6;
             this.playButton.Text = "Rozpocznij";
             this.playButton.UseVisualStyleBackColor = false;
@@ -116,9 +117,9 @@ namespace PokerApplication
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(57, 430);
+            this.pictureBox1.Location = new System.Drawing.Point(49, 373);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(31, 30);
+            this.pictureBox1.Size = new System.Drawing.Size(27, 26);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
@@ -129,9 +130,9 @@ namespace PokerApplication
             this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(308, 430);
+            this.pictureBox2.Location = new System.Drawing.Point(264, 373);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(31, 30);
+            this.pictureBox2.Size = new System.Drawing.Size(27, 26);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 8;
             this.pictureBox2.TabStop = false;
@@ -139,19 +140,19 @@ namespace PokerApplication
             // 
             // IntroForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(404, 490);
+            this.ClientSize = new System.Drawing.Size(346, 425);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.playButton);
             this.Controls.Add(this.portBox);
             this.Controls.Add(this.addressBox);
             this.Controls.Add(this.userName);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.label3);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

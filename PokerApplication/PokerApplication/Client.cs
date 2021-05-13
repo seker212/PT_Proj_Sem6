@@ -6,8 +6,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+//using System.Text.Json;
+//using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
@@ -17,7 +17,7 @@ namespace PokerApplication
 {
     public class Client
     {
-       public string apiAddress, apiPort, userName;
+       public string apiAddress, apiPort, userName,userCode;
        public string endpoint { get; set; }
        public httpVerbs httpMethod { get; set; }
        public Client() {
@@ -29,25 +29,62 @@ namespace PokerApplication
             GET,
             POST
         }
-        public bool Initialize(string ipAddress,string port, string username)
+        /// <summary>
+        /// Checks if server is responding
+        /// </summary>
+        /// <param name="ipAddress"></param>
+        /// <param name="port"></param>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public bool Initialize(string ipAddress, string port, string username)
         {
-
-            string api_Request = "http://"+ipAddress+":"+port+"/doc/swagger/";
-            string[] received = makeRequest(api_Request);
-            if(received[0]=="ACK")
+            //CHANGE REQUEST FOR PING
+            var api_Request = "http://" + ipAddress + ":" + port + "/doc/swagger/";
+            string[] received = makeRequest(api_Request,0);
+            if (!String.IsNullOrEmpty(received[0]) )
             {
                 this.apiAddress = ipAddress;
                 this.apiPort = port;
                 this.userName = username;
                 return true;
             }
-            else 
+            else
             {
                 return false;
             }
-           
-
         }
+        /// <summary>
+        /// Creates a new poker table, return unique table code.
+        /// </summary>
+        /// <returns></returns>
+        public string createGame()
+        {      
+            var api_Request = "http://" + apiAddress + ":" + apiPort + "/newtable";
+            string[] received = makeRequest(api_Request,1);
+            Regex reg = new Regex("[*'\",_&#^@]");
+            received[0] = reg.Replace(received[0], string.Empty);
+            return received[0];
+        }
+        public bool joinGame(string joinCode)
+        {
+            var message = "http://" + apiAddress + ":" + apiPort + "/newtable/join/" + joinCode + "?playerName=" + userName;
+            userCode = makeRequest(message,1)[0];
+            Regex reg = new Regex("[*'\",_&#^@]");
+            userCode = reg.Replace(userCode, string.Empty);
+            if(userCode.Length>19||userCode.Length<17)
+            {
+                userCode = "";
+                return false;
+            }
+            return true;
+        }
+        /// <summary>
+        /// Checks data on input before sending to server
+        /// </summary>
+        /// <param name="ipAddress"></param>
+        /// <param name="port"></param>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public bool CheckData(string ipAddress, string port, string username)
         {
             if ((new Regex(@"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$")).IsMatch(ipAddress))
@@ -75,7 +112,7 @@ namespace PokerApplication
         public string Login(string login, string passwd)
         {
             string api_Request = "http://127.0.0.1:29345/doc/swagger/";
-            string[] received = makeRequest(api_Request);
+            string[] received = makeRequest(api_Request,0);
             return "hello";
             /*
             if (Regex.IsMatch(login, @"^[a-zA-Z0-9]+$"))
@@ -160,16 +197,29 @@ namespace PokerApplication
 
             }
             string[] received = new string[10];
-            received = makeRequest(api_Request);
+            received = makeRequest(api_Request,0);
             Console.WriteLine(received);
             //TEST
             return received;
 
 
         }
-        public string[] makeRequest(string message)
+        /// <summary>
+        /// Makes API request
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public string[] makeRequest(string message,int type)
         {
             string msgResponse = string.Empty;
+            if(type==0)
+            {
+                httpMethod = httpVerbs.GET;
+            }
+            if(type==1)
+            {
+                httpMethod = httpVerbs.POST;
+            }
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(message);
 
             request.Method = httpMethod.ToString();
@@ -193,96 +243,19 @@ namespace PokerApplication
                         {
                             using (StreamReader reader = new StreamReader(responseStream))
                             {
-                                String[] resp = new String[100];
+                                String[] resp = new String[1000];
                                 String jsonResponse = "";
-                                int jump = 0;
-                                /*
+                                int i = 0;
+                                jsonResponse = reader.ReadLine();
                                 while (jsonResponse != null)
                                 {
-                                    if(!jsonResponse.Contains("result_file"))
-                                    {
-                                        jsonResponse = Regex.Replace(jsonResponse, @"[^0-9a-zA-Z_-]+", "");
-                                    }
-                                   
                                     
-                                    if (type == 1)
-                                    {
-
-                                        if (jsonResponse.Contains("username"))
-                                        {
-                                            jsonResponse = jsonResponse.Replace("username", "");
-                                            resp[0] = jsonResponse;
-                                            break;
-                                        }
-                                        if (jsonResponse.Contains("pesel"))
-                                        {
-                                            jsonResponse = jsonResponse.Replace("pesel", "");
-                                            resp[0] = jsonResponse;
-                                            break;
-                                        }
-                                        if (jsonResponse.Contains("password"))
-                                        {
-                                            jsonResponse = jsonResponse.Replace("password", "");
-                                            resp[1] = jsonResponse;
-                                        }
-                                        jsonResponse = reader.ReadLine();
-                                    }
-                                    else if (type == 2)
-                                    {
-
-                                        if (jsonResponse.Contains("pesel"))
-                                        {
-                                            jsonResponse = jsonResponse.Replace("pesel", "");
-                                            resp[0 + jump] = jsonResponse;
-
-                                        }
-                                        if (jsonResponse.Contains("result_date"))
-                                        {
-                                            jsonResponse = jsonResponse.Replace("result_date", "");   
-                                            String[] r = jsonResponse.Split('T');
-                                            resp[1 + jump] = r[0];
-                                        }
-                                        if (jsonResponse.Contains("result_file"))
-                                        {
-                                            jsonResponse = Regex.Replace(jsonResponse, @"[^0-9a-zA-Z\+\\\/\=]+", "");
-                                            jsonResponse = jsonResponse.Replace("resultfile", "");
-                                            resp[2 + jump] = jsonResponse;
-                                        }
-                                        if (jsonResponse.Contains("username"))
-                                        {
-                                            jsonResponse = jsonResponse.Replace("username", "");
-                                            resp[3 + jump] = jsonResponse;
-                                            jump = jump + 4;
-
-                                        }
-                                        jsonResponse = reader.ReadLine();
-
-                                    }
-                                    else if (type == 3)
-                                    {
-                                        jsonResponse = Regex.Replace(jsonResponse, @"[^0-9a-zA-Z\+\\\/\=]+", "");
-
-
-                                        if (jsonResponse.Contains("firstname"))
-                                        {
-                                            
-                                            jsonResponse = jsonResponse.Replace("firstname", "");
-                                            resp[0] = jsonResponse;
-                                        }
-                                        if (jsonResponse.Contains("lastname"))
-                                        {
-                                            jsonResponse = jsonResponse.Replace("lastname", "");
-                                            resp[1] = jsonResponse; 
-                                        }
-                                        jsonResponse = reader.ReadLine();
-
-
-                                    }
-                                    
-                                }*/
-                                string[] stringResponse = new string[] { "" };
-                                stringResponse[0] = "ACK";
-                                return stringResponse;
+                                    resp[i] = jsonResponse;
+                                    i++;
+                                    jsonResponse = reader.ReadLine();
+                                }
+                                
+                                return resp;
 
                             }
                         }

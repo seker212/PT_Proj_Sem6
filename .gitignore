@@ -348,3 +348,5 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/PokerApplication/PokerApplication/cards/poker.mp4
+/Server/python

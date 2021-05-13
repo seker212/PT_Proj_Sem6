@@ -19,7 +19,7 @@ namespace PokerApplication
 
         private void label3_Paint(object sender, PaintEventArgs e)
         {
-            Font font = new Font("BuRGfont TTF",48);
+            Font font = new Font("BuRGfont TTF", 48);
             Brush brush = new System.Drawing.SolidBrush(System.Drawing.Color.Firebrick);
             e.Graphics.TranslateTransform(30, 20);
             e.Graphics.RotateTransform(180);
@@ -28,9 +28,9 @@ namespace PokerApplication
 
         private void playButton_Click(object sender, EventArgs e)
         {
-           Client client = new Client();
-           if(client.CheckData(addressBox.Text, portBox.Text, userName.Text))
-           {
+            Client client = new Client();
+            if (client.CheckData(addressBox.Text, portBox.Text, userName.Text))
+            {
                 if (client.Initialize(addressBox.Text, portBox.Text, userName.Text))
                 {
                     MainMenu mainMenu = new MainMenu(client);
@@ -41,13 +41,13 @@ namespace PokerApplication
                 {
                     MessageBox.Show("Nie uzyskano odpowiedzi od serwera.");
                 }
-           }
-           else
-           {
+            }
+            else
+            {
                 MessageBox.Show("Wprowadzone dane są niepoprawne.");
-           }
-           
-            
+            }
+
+
         }
         private void playButton_Hover(object sender, EventArgs e)
         {
@@ -60,5 +60,9 @@ namespace PokerApplication
             pictureBox2.Visible = false;
         }
 
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

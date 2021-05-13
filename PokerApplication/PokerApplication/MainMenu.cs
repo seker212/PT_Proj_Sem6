@@ -16,7 +16,7 @@ namespace PokerApplication
         private MainMenu()
         {
             InitializeComponent();
-           
+
         }
         public MainMenu(Client client1)
         {
@@ -25,19 +25,19 @@ namespace PokerApplication
             mainLabel.Text = getTime(client.userName);
         }
 
-       string getTime(string name)
+        string getTime(string name)
         {
-            
+
             var now = DateTime.Now;
-            if(now.Hour<19 && now.Hour>5)
+            if (now.Hour < 19 && now.Hour > 5)
             {
                 return "Dzień dobry " + name;
             }
-            else 
+            else
             {
-                return "Dobry wieczór "+name;
+                return "Dobry wieczór " + name;
             }
-            
+
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -53,7 +53,7 @@ namespace PokerApplication
             if (result == DialogResult.No)
             {
                 // cancel the closure of the form.
-                
+
             }
             else
             {
@@ -77,10 +77,10 @@ namespace PokerApplication
             }
             else
             {
-                
+
             }
         }
-        
+
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             CloseCancel(e);
@@ -163,8 +163,34 @@ namespace PokerApplication
             leftArrow.Visible = false;
             rightArrow.Visible = false;
         }
+
         #endregion
 
-     
+        private void MainMenu_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void startButton_Click(object sender, EventArgs e)
+        {
+            var code =client.createGame();
+            if(client.joinGame(code))
+            {
+                Lobby lobby = new Lobby(client, code);
+                lobby.Show();
+                this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("Wystąpił błąd");
+            }
+            
+
+        }
+
+        private void joinButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
