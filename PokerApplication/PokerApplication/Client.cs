@@ -17,7 +17,7 @@ namespace PokerApplication
 {
     public class Client
     {
-       private string apiAddress, apiPort, userName;
+       public string apiAddress, apiPort, userName;
        public string endpoint { get; set; }
        public httpVerbs httpMethod { get; set; }
        public Client() {

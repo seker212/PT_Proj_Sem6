@@ -33,7 +33,9 @@ namespace PokerApplication
            {
                 if (client.Initialize(addressBox.Text, portBox.Text, userName.Text))
                 {
-                    MessageBox.Show("Serwer robi halo");
+                    MainMenu mainMenu = new MainMenu(client);
+                    mainMenu.Show();
+                    this.Hide();
                 }
                 else
                 {
