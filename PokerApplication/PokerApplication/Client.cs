@@ -17,7 +17,7 @@ namespace PokerApplication
 {
     public class Client
     {
-       public string apiAddress, apiPort, userName,userCode;
+       public string apiAddress, apiPort, userName,userCode,tableCode;
        public string endpoint { get; set; }
        public httpVerbs httpMethod { get; set; }
        public Client() {
@@ -27,7 +27,8 @@ namespace PokerApplication
         public enum httpVerbs
         {
             GET,
-            POST
+            POST,
+            DELETE
         }
         /// <summary>
         /// Checks if server is responding
@@ -71,8 +72,16 @@ namespace PokerApplication
             userCode = makeRequest(message,1)[0];
             Regex reg = new Regex("[*'\",_&#^@]");
             userCode = reg.Replace(userCode, string.Empty);
-           
-            return true;
+            if(userCode==""||userCode==null)
+            {
+                return false;
+            }
+            else
+            {
+                tableCode = joinCode;
+                return true;
+            }
+            
         }
         
         /// <summary>
@@ -216,6 +225,10 @@ namespace PokerApplication
             if(type==1)
             {
                 httpMethod = httpVerbs.POST;
+            }
+            if(type==2)
+            {
+                httpMethod = httpVerbs.DELETE;
             }
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(message);
 

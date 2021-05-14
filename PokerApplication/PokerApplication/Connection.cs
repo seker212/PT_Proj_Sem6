@@ -12,7 +12,7 @@ namespace PokerApplication
 {
     public partial class Connection : Form
     {
-        string gamecode;
+        
         Client client;
         public Connection()
         {
@@ -26,7 +26,16 @@ namespace PokerApplication
 
         private void button1_Click(object sender, EventArgs e)
         {
-            client.joinGame(textBox1.Text);
+            if(client.joinGame(textBox1.Text))
+            {
+                UserLobby userLobby = new UserLobby(client, client.tableCode);
+                userLobby.Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Wystąpił błąd. Upewnij się, że podany kod jest poprawny");
+            }
         }
 
         private void returnButton_Click(object sender, EventArgs e)

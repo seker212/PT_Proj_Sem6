@@ -36,6 +36,7 @@ namespace PokerApplication
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.axWindowsMediaPlayer2 = new AxWMPLib.AxWindowsMediaPlayer();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.return_Button = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer2)).BeginInit();
             this.SuspendLayout();
@@ -43,7 +44,7 @@ namespace PokerApplication
             // movieLabel1
             // 
             this.movieLabel1.AutoSize = true;
-            this.movieLabel1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.movieLabel1.BackColor = System.Drawing.Color.Transparent;
             this.movieLabel1.Font = new System.Drawing.Font("Comic Sans MS", 20.25F, System.Drawing.FontStyle.Bold);
             this.movieLabel1.Location = new System.Drawing.Point(6, 41);
             this.movieLabel1.Name = "movieLabel1";
@@ -54,7 +55,7 @@ namespace PokerApplication
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Comic Sans MS", 20.25F, System.Drawing.FontStyle.Bold);
             this.label1.Location = new System.Drawing.Point(69, 79);
             this.label1.Name = "label1";
@@ -78,7 +79,9 @@ namespace PokerApplication
             // 
             // groupBox1
             // 
-            this.groupBox1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.groupBox1.BackColor = System.Drawing.Color.White;
+            this.groupBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.groupBox1.Controls.Add(this.return_Button);
             this.groupBox1.Controls.Add(this.axWindowsMediaPlayer2);
             this.groupBox1.Controls.Add(this.movieLabel1);
             this.groupBox1.Controls.Add(this.sourceButton);
@@ -86,7 +89,7 @@ namespace PokerApplication
             this.groupBox1.Font = new System.Drawing.Font("Comic Sans MS", 20.25F, System.Drawing.FontStyle.Bold);
             this.groupBox1.Location = new System.Drawing.Point(12, 23);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(596, 591);
+            this.groupBox1.Size = new System.Drawing.Size(596, 632);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Zasady Pokera";
@@ -102,12 +105,27 @@ namespace PokerApplication
             // 
             // groupBox2
             // 
-            this.groupBox2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.groupBox2.Location = new System.Drawing.Point(606, 23);
+            this.groupBox2.BackColor = System.Drawing.Color.White;
+            this.groupBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.groupBox2.Location = new System.Drawing.Point(605, 23);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(646, 591);
+            this.groupBox2.Size = new System.Drawing.Size(647, 632);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
+            // 
+            // return_Button
+            // 
+            this.return_Button.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.return_Button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.return_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.return_Button.Font = new System.Drawing.Font("Comic Sans MS", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.return_Button.Location = new System.Drawing.Point(7, 586);
+            this.return_Button.Name = "return_Button";
+            this.return_Button.Size = new System.Drawing.Size(139, 37);
+            this.return_Button.TabIndex = 7;
+            this.return_Button.Text = "Powrót";
+            this.return_Button.UseVisualStyleBackColor = false;
+            this.return_Button.Click += new System.EventHandler(this.return_Button_Click);
             // 
             // HelpForm
             // 
@@ -134,5 +152,6 @@ namespace PokerApplication
         private System.Windows.Forms.GroupBox groupBox1;
         private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer2;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button return_Button;
     }
 }

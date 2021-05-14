@@ -1,7 +1,7 @@
 ﻿
 namespace PokerApplication
 {
-    partial class Lobby
+    partial class UserLobby
     {
         /// <summary>
         /// Required designer variable.
@@ -32,9 +32,8 @@ namespace PokerApplication
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.codeBox = new System.Windows.Forms.TextBox();
-            this.start_Button = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.refresh_button = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.userLabel1 = new System.Windows.Forms.Label();
             this.userLabel2 = new System.Windows.Forms.Label();
             this.userLabel3 = new System.Windows.Forms.Label();
@@ -73,16 +72,6 @@ namespace PokerApplication
             this.codeBox.Size = new System.Drawing.Size(294, 45);
             this.codeBox.TabIndex = 2;
             // 
-            // start_Button
-            // 
-            this.start_Button.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold);
-            this.start_Button.Location = new System.Drawing.Point(558, 404);
-            this.start_Button.Name = "start_Button";
-            this.start_Button.Size = new System.Drawing.Size(230, 34);
-            this.start_Button.TabIndex = 3;
-            this.start_Button.Text = "Rozpocznij rozgrywkę";
-            this.start_Button.UseVisualStyleBackColor = true;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -93,22 +82,22 @@ namespace PokerApplication
             this.label2.TabIndex = 4;
             this.label2.Text = "Lobby";
             // 
-            // refresh_button
+            // button3
             // 
-            this.refresh_button.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold);
-            this.refresh_button.Location = new System.Drawing.Point(326, 404);
-            this.refresh_button.Name = "refresh_button";
-            this.refresh_button.Size = new System.Drawing.Size(133, 34);
-            this.refresh_button.TabIndex = 5;
-            this.refresh_button.Text = "Odśwież";
-            this.refresh_button.UseVisualStyleBackColor = true;
-            this.refresh_button.Click += new System.EventHandler(this.refresh_Click);
+            this.button3.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold);
+            this.button3.Location = new System.Drawing.Point(655, 404);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(133, 34);
+            this.button3.TabIndex = 5;
+            this.button3.Text = "Odśwież";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.refresh_Click);
             // 
             // userLabel1
             // 
             this.userLabel1.AutoSize = true;
             this.userLabel1.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.userLabel1.Location = new System.Drawing.Point(23, 217);
+            this.userLabel1.Location = new System.Drawing.Point(25, 168);
             this.userLabel1.Name = "userLabel1";
             this.userLabel1.Size = new System.Drawing.Size(40, 35);
             this.userLabel1.TabIndex = 6;
@@ -118,7 +107,7 @@ namespace PokerApplication
             // 
             this.userLabel2.AutoSize = true;
             this.userLabel2.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.userLabel2.Location = new System.Drawing.Point(23, 252);
+            this.userLabel2.Location = new System.Drawing.Point(25, 203);
             this.userLabel2.Name = "userLabel2";
             this.userLabel2.Size = new System.Drawing.Size(40, 35);
             this.userLabel2.TabIndex = 7;
@@ -128,7 +117,7 @@ namespace PokerApplication
             // 
             this.userLabel3.AutoSize = true;
             this.userLabel3.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.userLabel3.Location = new System.Drawing.Point(23, 287);
+            this.userLabel3.Location = new System.Drawing.Point(25, 238);
             this.userLabel3.Name = "userLabel3";
             this.userLabel3.Size = new System.Drawing.Size(40, 35);
             this.userLabel3.TabIndex = 8;
@@ -138,7 +127,7 @@ namespace PokerApplication
             // 
             this.userLabel6.AutoSize = true;
             this.userLabel6.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.userLabel6.Location = new System.Drawing.Point(441, 287);
+            this.userLabel6.Location = new System.Drawing.Point(443, 238);
             this.userLabel6.Name = "userLabel6";
             this.userLabel6.Size = new System.Drawing.Size(40, 35);
             this.userLabel6.TabIndex = 11;
@@ -148,7 +137,7 @@ namespace PokerApplication
             // 
             this.userLabel5.AutoSize = true;
             this.userLabel5.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.userLabel5.Location = new System.Drawing.Point(441, 252);
+            this.userLabel5.Location = new System.Drawing.Point(443, 203);
             this.userLabel5.Name = "userLabel5";
             this.userLabel5.Size = new System.Drawing.Size(40, 35);
             this.userLabel5.TabIndex = 10;
@@ -158,13 +147,13 @@ namespace PokerApplication
             // 
             this.userLabel4.AutoSize = true;
             this.userLabel4.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.userLabel4.Location = new System.Drawing.Point(441, 217);
+            this.userLabel4.Location = new System.Drawing.Point(443, 168);
             this.userLabel4.Name = "userLabel4";
             this.userLabel4.Size = new System.Drawing.Size(40, 35);
             this.userLabel4.TabIndex = 9;
             this.userLabel4.Text = "4:";
             // 
-            // Lobby
+            // UserLobby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -175,13 +164,12 @@ namespace PokerApplication
             this.Controls.Add(this.userLabel3);
             this.Controls.Add(this.userLabel2);
             this.Controls.Add(this.userLabel1);
-            this.Controls.Add(this.refresh_button);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.start_Button);
             this.Controls.Add(this.codeBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
-            this.Name = "Lobby";
+            this.Name = "UserLobby";
             this.Text = "Lobby";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -193,9 +181,8 @@ namespace PokerApplication
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox codeBox;
-        private System.Windows.Forms.Button start_Button;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button refresh_button;
+        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label userLabel1;
         private System.Windows.Forms.Label userLabel2;
         private System.Windows.Forms.Label userLabel3;

@@ -29,5 +29,11 @@ namespace PokerApplication
         {
             System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=-QXdRX6OE3E");
         }
+        private void return_Button_Click(object sender, EventArgs e)
+        {
+            MainMenu mainMenu = new MainMenu(client);
+            mainMenu.Show();
+            this.Close();
+        }
     }
 }

@@ -187,7 +187,7 @@ class DisconnectPlayer(MethodResource, Resource):
                     if all(next_rounds_check[tableID].values()):
                         table.initRound()
         else:
-            table = not_started_games[table]
+            table = not_started_games[tableID]
             if playerID not in [p.id for p in table]:
                 return '', 403
             else:
