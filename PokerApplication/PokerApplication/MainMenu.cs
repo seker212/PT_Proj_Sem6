@@ -190,7 +190,9 @@ namespace PokerApplication
 
         private void joinButton_Click(object sender, EventArgs e)
         {
-
+            Connection connection = new Connection(client);
+            connection.Show();
+            this.Hide();
         }
     }
 }

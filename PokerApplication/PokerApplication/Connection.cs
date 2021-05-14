@@ -18,7 +18,7 @@ namespace PokerApplication
         {
             InitializeComponent();
         }
-        public Connection(Client myClient, string code)
+        public Connection(Client myClient)
         {
             this.client = myClient;
             InitializeComponent();  
@@ -28,6 +28,12 @@ namespace PokerApplication
         {
             client.joinGame(textBox1.Text);
         }
-        
+
+        private void returnButton_Click(object sender, EventArgs e)
+        {
+            MainMenu mainMenu = new MainMenu(client);
+            mainMenu.Show();
+            this.Close();
+        }
     }
 }

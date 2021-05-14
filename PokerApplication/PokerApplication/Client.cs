@@ -71,13 +71,10 @@ namespace PokerApplication
             userCode = makeRequest(message,1)[0];
             Regex reg = new Regex("[*'\",_&#^@]");
             userCode = reg.Replace(userCode, string.Empty);
-            if(userCode.Length>19||userCode.Length<17)
-            {
-                userCode = "";
-                return false;
-            }
+           
             return true;
         }
+        
         /// <summary>
         /// Checks data on input before sending to server
         /// </summary>
@@ -267,13 +264,11 @@ namespace PokerApplication
                     }
                 }
 
-
-
             }
                 catch(System.Net.WebException)
                 {
                     String[] resp = new String[2];
-                    resp[0] = "Invalid credentials";
+                    resp[0] = "Error Occured";
                     resp[1] = "Error";
                     return resp;
                 }

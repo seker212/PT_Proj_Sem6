@@ -32,12 +32,13 @@ namespace PokerApplication
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.returnButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Comic Sans MS", 20.25F, System.Drawing.FontStyle.Bold);
-            this.button1.Location = new System.Drawing.Point(128, 158);
+            this.button1.Location = new System.Drawing.Point(247, 158);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(158, 43);
             this.button1.TabIndex = 0;
@@ -63,11 +64,23 @@ namespace PokerApplication
             this.label1.TabIndex = 2;
             this.label1.Text = "Podaj otrzymany klucz";
             // 
+            // returnButton
+            // 
+            this.returnButton.Font = new System.Drawing.Font("Comic Sans MS", 20.25F, System.Drawing.FontStyle.Bold);
+            this.returnButton.Location = new System.Drawing.Point(12, 158);
+            this.returnButton.Name = "returnButton";
+            this.returnButton.Size = new System.Drawing.Size(158, 43);
+            this.returnButton.TabIndex = 3;
+            this.returnButton.Text = "Powrót";
+            this.returnButton.UseVisualStyleBackColor = true;
+            this.returnButton.Click += new System.EventHandler(this.returnButton_Click);
+            // 
             // Connection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(417, 213);
+            this.Controls.Add(this.returnButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
@@ -83,5 +96,6 @@ namespace PokerApplication
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button returnButton;
     }
 }
