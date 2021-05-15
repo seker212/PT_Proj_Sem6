@@ -40,6 +40,7 @@ namespace PokerApplication
             this.userLabel6 = new System.Windows.Forms.Label();
             this.userLabel5 = new System.Windows.Forms.Label();
             this.userLabel4 = new System.Windows.Forms.Label();
+            this.joinButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -85,7 +86,7 @@ namespace PokerApplication
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold);
-            this.button3.Location = new System.Drawing.Point(655, 404);
+            this.button3.Location = new System.Drawing.Point(329, 404);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(133, 34);
             this.button3.TabIndex = 5;
@@ -153,11 +154,24 @@ namespace PokerApplication
             this.userLabel4.TabIndex = 9;
             this.userLabel4.Text = "4:";
             // 
+            // joinButton
+            // 
+            this.joinButton.Enabled = false;
+            this.joinButton.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold);
+            this.joinButton.Location = new System.Drawing.Point(655, 404);
+            this.joinButton.Name = "joinButton";
+            this.joinButton.Size = new System.Drawing.Size(133, 34);
+            this.joinButton.TabIndex = 12;
+            this.joinButton.Text = "Dołącz";
+            this.joinButton.UseVisualStyleBackColor = true;
+            this.joinButton.Click += new System.EventHandler(this.joinButton_Click);
+            // 
             // UserLobby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.joinButton);
             this.Controls.Add(this.userLabel6);
             this.Controls.Add(this.userLabel5);
             this.Controls.Add(this.userLabel4);
@@ -189,5 +203,6 @@ namespace PokerApplication
         private System.Windows.Forms.Label userLabel6;
         private System.Windows.Forms.Label userLabel5;
         private System.Windows.Forms.Label userLabel4;
+        private System.Windows.Forms.Button joinButton;
     }
 }

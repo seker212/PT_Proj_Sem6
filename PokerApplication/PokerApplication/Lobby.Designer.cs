@@ -75,6 +75,7 @@ namespace PokerApplication
             // 
             // start_Button
             // 
+            this.start_Button.Enabled = false;
             this.start_Button.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold);
             this.start_Button.Location = new System.Drawing.Point(558, 404);
             this.start_Button.Name = "start_Button";
@@ -82,6 +83,7 @@ namespace PokerApplication
             this.start_Button.TabIndex = 3;
             this.start_Button.Text = "Rozpocznij rozgrywkę";
             this.start_Button.UseVisualStyleBackColor = true;
+            this.start_Button.Click += new System.EventHandler(this.start_Button_Click);
             // 
             // label2
             // 

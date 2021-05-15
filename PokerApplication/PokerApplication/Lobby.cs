@@ -30,6 +30,14 @@ namespace PokerApplication
         private void refresh_Click(object sender, EventArgs e)
         {
             refresh();
+            if (label2.Text.Length > 2)
+            {
+                start_Button.Enabled = true;
+            }
+            else
+            {
+                start_Button.Enabled = false;
+            }
         }
         private void refresh()
         {
@@ -133,6 +141,9 @@ namespace PokerApplication
             }
         }
 
-        
+        private void start_Button_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Zaczynamy");
+        }
     }
 }

@@ -26,16 +26,25 @@ namespace PokerApplication
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(client.joinGame(textBox1.Text))
+            client.tableCode = textBox1.Text;
+            if (client.Started())
             {
-                UserLobby userLobby = new UserLobby(client, client.tableCode);
-                userLobby.Show();
-                this.Close();
+                MessageBox.Show("Za późno. Gra już się zaczęła.");
             }
             else
             {
-                MessageBox.Show("Wystąpił błąd. Upewnij się, że podany kod jest poprawny");
+                if (client.joinGame(textBox1.Text))
+                {
+                    UserLobby userLobby = new UserLobby(client, client.tableCode);
+                    userLobby.Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Wystąpił błąd. Upewnij się, że podany kod jest poprawny");
+                }
             }
+           
         }
 
         private void returnButton_Click(object sender, EventArgs e)

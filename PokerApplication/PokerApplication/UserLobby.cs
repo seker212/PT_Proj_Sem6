@@ -31,6 +31,17 @@ namespace PokerApplication
         private void refresh_Click(object sender, EventArgs e)
         {
             refresh();
+            if (client.Started())
+            {
+                joinButton.Enabled = true;
+                MessageBox.Show("Gra rozpoczęta. Dołącz do rozgrywki");
+            }
+            else
+            {
+                joinButton.Enabled = false;
+            }
+            
+
         }
         private void refresh()
         {
@@ -116,6 +127,9 @@ namespace PokerApplication
            }
         }
 
-        
+        private void joinButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Dołączam");
+        }
     }
 }

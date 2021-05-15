@@ -241,10 +241,21 @@ namespace PokerApplication
                     if (response.StatusCode != HttpStatusCode.OK)
                     {
                         //TODO
+                        if (response.StatusCode != HttpStatusCode.NotFound)
+                        {
+                            if(type==0)
+                            {
+                                string[] resp = new string[] { "NO" };
+                                return resp;
+                                    
+                            }
+                        }
                         string[] stringResponse = new string[] { "" };
                         stringResponse[0]= "NAK";
+
                         return stringResponse;
                         throw new Exception("Error code: " + response.StatusCode);
+                       
 
                     }
                     using (Stream responseStream = response.GetResponseStream())
@@ -280,10 +291,20 @@ namespace PokerApplication
             }
                 catch(System.Net.WebException)
                 {
-                    String[] resp = new String[2];
-                    resp[0] = "Error Occured";
-                    resp[1] = "Error";
-                    return resp;
+                   if( message=="http://" + apiAddress + ":" + apiPort + "/table/" + tableCode)
+                   {
+                        String[] resp = new String[1];
+                        resp[0] = "NO";
+                        return resp;
+                    }
+                   else
+                   {
+                        String[] resp = new String[2];
+                        resp[0] = "";
+                        resp[1] = "Error";
+                        return resp;
+                   }
+                   
                 }
 
         }
@@ -321,5 +342,20 @@ namespace PokerApplication
             return comparer.Compare(hashOfInput, hash) == 0;
         }
         #endregion 
+        public bool Started()
+        {
+            var request = "http://"+apiAddress+":"+apiPort+"/table/" +tableCode;
+            
+            if (makeRequest(request, 0)[0] != "NO")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+           
+        }
     }
 }
