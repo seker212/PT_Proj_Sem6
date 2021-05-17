@@ -137,19 +137,24 @@ docs.register(NewTablePlayers)
 
 class StartTable(MethodResource, Resource):
     @doc(tags=['Manage'])
-    @marshal_with(None, code='200', description='Returns new player\'s playerID as a string' )
-    @marshal_with(None, code='400', description='Not enought players')
+    @use_kwargs({'startingMoney': fields.Integer(), 'smallBlind': fields.Integer()}, location='querystring')
+    @marshal_with(None, code='200', description='Success' )
+    @marshal_with(None, code='400', description='Bad request')
     @marshal_with(None, code='404', description='tableID not found')
-    def get(self, tableID):
+    def get(self, tableID, startingMoney, smallBlind):
         if tableID not in not_started_games:
             return '', 404
         
         table = not_started_games[tableID]
         if len(table) < 2:
-            return '', 400
+            return 'Not enought players', 400
+        if smallBlind <= 0:
+            return 'Small blind amount has to be intiger greater than 0', 400
+        if startingMoney <= 2*smallBlind:
+            return 'Statring money ammount has to be greater than twice the small blind ammount', 400
         
-        players = [Player(user) for user in table]
-        started_games[tableID] = Table(TablePlayers(players))
+        players = [Player(user, startingMoney) for user in table]
+        started_games[tableID] = Table(TablePlayers(players), smallBlind)
         
         del not_started_games[tableID]
         return '', 200
@@ -187,7 +192,7 @@ class DisconnectPlayer(MethodResource, Resource):
                     if all(next_rounds_check[tableID].values()):
                         table.initRound()
         else:
-            table = not_started_games[table]
+            table = not_started_games[tableID]
             if playerID not in [p.id for p in table]:
                 return '', 403
             else:

@@ -398,12 +398,12 @@ def test_all_in_create_new_pot_at_end():
     assert table.players.lastIndex == 1
 
 def test_combined_1():
-    p1 = Player("test1")
-    p2 = Player("test2")
-    p3 = Player("test3")
-    p4 = Player("test4")
+    p1 = Player("test1", STARTING_MONEY)
+    p2 = Player("test2", STARTING_MONEY)
+    p3 = Player("test3", STARTING_MONEY)
+    p4 = Player("test4", STARTING_MONEY)
 
-    table = Table(TablePlayers([p1, p2, p3, p4]))
+    table = Table(TablePlayers([p1, p2, p3, p4]), SMALL_BLIND)
 
     assert table.stage == GameStage.preFlop
 

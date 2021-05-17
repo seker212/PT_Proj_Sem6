@@ -17,7 +17,7 @@ class Status(enum.Enum):
     all_in = 4
 
 class Player:
-    def __init__(self, player: Any):
+    def __init__(self, player: Any, starting_money:int):
         """Constructor
 
         Args:
@@ -25,7 +25,7 @@ class Player:
         """
         self.user: Any = player
         self.hand: list[Card] = []
-        self.money: int = STARTING_MONEY
+        self.money: int = starting_money
         self.table_money: int = 0
         self.blind: Blind = Blind.none
         self.status: Status = Status.none
