@@ -6,7 +6,6 @@ from src.poker.pot import Pot
 from src.poker.deck import Card, NewShuffledDeck
 from src.poker.Hand import Hand, HandType
 from src.helpers.pair import pair
-from src.poker.variables import SMALL_BLIND
 
 class GameStage(Enum):
     preFlop = 0
@@ -16,7 +15,8 @@ class GameStage(Enum):
     Showdown = 4
 
 class Table:
-    def __init__(self, players: TablePlayers):
+    def __init__(self, players: TablePlayers, small_blind: int):
+        self.small_blind = small_blind
         self.stage: GameStage = GameStage.preFlop
         self.pots: list[Pot] = [Pot()]
         self.players: TablePlayers = players
@@ -148,15 +148,15 @@ class Table:
 
         for p in self.players.List:
             if p.blind == Blind.small:
-                self.pots[0].ammount += SMALL_BLIND
-                p.money -= SMALL_BLIND
-                p.table_money = SMALL_BLIND
+                self.pots[0].ammount += self.small_blind
+                p.money -= self.small_blind
+                p.table_money = self.small_blind
             elif p.blind == Blind.big:
-                self.pots[0].ammount += 2*SMALL_BLIND
-                p.money -= 2*SMALL_BLIND
+                self.pots[0].ammount += 2*self.small_blind
+                p.money -= 2*self.small_blind
                 self.pots[0].members.append(p)
-                p.table_money = 2*SMALL_BLIND
-                self.pots[0].required = 2*SMALL_BLIND
+                p.table_money = 2*self.small_blind
+                self.pots[0].required = 2*self.small_blind
 
     def getCurrentCards(self):
         if self.stage == GameStage.preFlop:
