@@ -41,6 +41,12 @@ namespace PokerApplication
             this.userLabel6 = new System.Windows.Forms.Label();
             this.userLabel5 = new System.Windows.Forms.Label();
             this.userLabel4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.bet = new System.Windows.Forms.NumericUpDown();
+            this.smalBlind = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.bet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.smalBlind)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -58,7 +64,7 @@ namespace PokerApplication
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(281, 20);
+            this.label1.Location = new System.Drawing.Point(39, 18);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(246, 27);
             this.label1.TabIndex = 1;
@@ -67,7 +73,7 @@ namespace PokerApplication
             // codeBox
             // 
             this.codeBox.Font = new System.Drawing.Font("Comic Sans MS", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.codeBox.Location = new System.Drawing.Point(254, 50);
+            this.codeBox.Location = new System.Drawing.Point(12, 48);
             this.codeBox.Name = "codeBox";
             this.codeBox.ReadOnly = true;
             this.codeBox.Size = new System.Drawing.Size(294, 45);
@@ -166,11 +172,71 @@ namespace PokerApplication
             this.userLabel4.TabIndex = 9;
             this.userLabel4.Text = "4:";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold);
+            this.label3.Location = new System.Drawing.Point(594, 18);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(148, 27);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Mała w ciemno";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold);
+            this.label4.Location = new System.Drawing.Point(399, 18);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(48, 27);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Pula";
+            // 
+            // bet
+            // 
+            this.bet.Font = new System.Drawing.Font("Comic Sans MS", 20.25F, System.Drawing.FontStyle.Bold);
+            this.bet.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.bet.Location = new System.Drawing.Point(326, 48);
+            this.bet.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.bet.Name = "bet";
+            this.bet.Size = new System.Drawing.Size(200, 45);
+            this.bet.TabIndex = 14;
+            // 
+            // smalBlind
+            // 
+            this.smalBlind.Font = new System.Drawing.Font("Comic Sans MS", 20.25F, System.Drawing.FontStyle.Bold);
+            this.smalBlind.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.smalBlind.Location = new System.Drawing.Point(558, 48);
+            this.smalBlind.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.smalBlind.Name = "smalBlind";
+            this.smalBlind.Size = new System.Drawing.Size(200, 45);
+            this.smalBlind.TabIndex = 15;
+            // 
             // Lobby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.smalBlind);
+            this.Controls.Add(this.bet);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.userLabel6);
             this.Controls.Add(this.userLabel5);
             this.Controls.Add(this.userLabel4);
@@ -185,6 +251,8 @@ namespace PokerApplication
             this.Controls.Add(this.button1);
             this.Name = "Lobby";
             this.Text = "Lobby";
+            ((System.ComponentModel.ISupportInitialize)(this.bet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.smalBlind)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -204,5 +272,9 @@ namespace PokerApplication
         private System.Windows.Forms.Label userLabel6;
         private System.Windows.Forms.Label userLabel5;
         private System.Windows.Forms.Label userLabel4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown bet;
+        private System.Windows.Forms.NumericUpDown smalBlind;
     }
 }

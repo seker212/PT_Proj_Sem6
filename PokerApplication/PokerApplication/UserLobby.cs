@@ -125,11 +125,27 @@ namespace PokerApplication
                 userLabel5.Text = "5:" + users[4];
                 userLabel6.Text = "6:" + users[5];
            }
+           if(users.Length!=1)
+           {
+                client.users.Clear();
+                for (int i = 0; i < users.Length; i++)
+                {
+                    client.users.Add(users[i]);
+                }
+           }
+          
         }
 
         private void joinButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Dołączam");
+         
+            if (client.Started())
+            {
+                Table table = new Table(client);
+                table.Show();
+                this.Hide();
+            }
+
         }
     }
 }

@@ -11,18 +11,22 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
-using System.Text.RegularExpressions;
 
 namespace PokerApplication
 {
     public class Client
     {
-       public string apiAddress, apiPort, userName,userCode,tableCode;
+       public string apiAddress, apiPort, userName,userCode,tableCode,path;
+       public Game game;
+       public List<string> users;
        public string endpoint { get; set; }
        public httpVerbs httpMethod { get; set; }
        public Client() {
+            
             endpoint = string.Empty;
             httpMethod = httpVerbs.GET;
+            users = new List<string>();
+            game = new Game();
         }
         public enum httpVerbs
         {
@@ -68,6 +72,7 @@ namespace PokerApplication
         }
         public bool joinGame(string joinCode)
         {
+
             var message = "http://" + apiAddress + ":" + apiPort + "/newtable/join/" + joinCode + "?playerName=" + userName;
             userCode = makeRequest(message,1)[0];
             Regex reg = new Regex("[*'\",_&#^@]");
@@ -120,66 +125,6 @@ namespace PokerApplication
             string api_Request = "http://127.0.0.1:29345/doc/swagger/";
             string[] received = makeRequest(api_Request,0);
             return "hello";
-            /*
-            if (Regex.IsMatch(login, @"^[a-zA-Z0-9]+$"))
-            {
-                // Logowanie użytkownika po peselu
-                if (Regex.IsMatch(login, @"^[0-9]+$"))  
-                {
-                    if(login.Length!=11)
-                    {
-                        return "Invalid Login or Password";
-                    }
-                    api_Request = "http://127.0.0.1:29345/api/users?pesel="+login;
-                }
-                else // Logowanie administratora po loginie
-                {
-                    api_Request = "http://127.0.0.1:5000/api/employees?username=" + login;
-                }
-
-            }
-            else
-            {
-                return "Invalid Login or Password";
-            }
-            string hash = "";
-            string[] received = makeRequest(api_Request,1);
-            if(received.Length!=0 && received!=null && received[0] != null && received[1] != null)
-            {
-                //TU HASZOWAĆ
-                
-                using (SHA256 sha256Hash = SHA256.Create())
-                {
-                    hash = GetHash(sha256Hash, passwd);
-
-                    Console.WriteLine("Verifying the hash...");
-
-                    if (VerifyHash(sha256Hash, passwd, hash))
-                    {
-                        Console.WriteLine("The hashes are the same.");
-                        Console.WriteLine(hash);
-                    }
-                    else
-                    {
-                        Console.WriteLine("The hashes are not same.");
-                    }
-                }
-                if (received[0].Equals(login) && received[1].Equals(hash))
-                {
-                    return "Logged In";
-                }
-                else
-                {
-                    return "Invalid Login or Password";
-                }
-            }
-            else
-            {
-                return "Invalid Login or Password";
-            }
-            */
-
-
 
         }
         public string[] GetData(string login, string passwd)

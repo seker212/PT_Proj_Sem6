@@ -12,9 +12,12 @@ namespace PokerApplication
 {
     public partial class IntroForm : Form
     {
+       
         public IntroForm()
         {
             InitializeComponent();
+             
+            // MessageBox.Show(Application.StartupPath);
         }
 
         private void label3_Paint(object sender, PaintEventArgs e)
@@ -29,6 +32,8 @@ namespace PokerApplication
         private void playButton_Click(object sender, EventArgs e)
         {
             Client client = new Client();
+            client.path = Application.StartupPath;
+            client.path = client.path.Replace("bin\\Debug", "cards\\");
             if (client.CheckData(addressBox.Text, portBox.Text, userName.Text))
             {
                 if (client.Initialize(addressBox.Text, portBox.Text, userName.Text))

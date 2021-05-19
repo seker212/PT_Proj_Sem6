@@ -70,7 +70,6 @@ namespace PokerApplication
                 mainMenu.Show();
                 this.Close();
                 
-                //USUWANIE STOŁU 
             }
             
         }
@@ -81,69 +80,87 @@ namespace PokerApplication
            data=data.Replace("\"", "");
            data = data.Replace("\'", "");
            data = data.Replace(" ", "");
-           var users = data.Split(',');
+           var Users = data.Split(',');
 
-            //MessageBox.Show(data);
-            if (users.Length == 1)
+            if (Users.Length == 1)
             {
-                userLabel1.Text = "1:" + users[0];
+                userLabel1.Text = "1:" + Users[0];
                 userLabel2.Text = "2:";
                 userLabel3.Text = "3:";
                 userLabel4.Text = "4:";
                 userLabel5.Text = "5:";
                 userLabel6.Text = "6:";
             }
-            if (users.Length == 2)
+            if (Users.Length == 2)
             {
-                userLabel1.Text = "1:" + users[0];
-                userLabel2.Text = "2:" + users[1];
+                userLabel1.Text = "1:" + Users[0];
+                userLabel2.Text = "2:" + Users[1];
                 userLabel3.Text = "3:";
                 userLabel4.Text = "4:";
                 userLabel5.Text = "5:";
                 userLabel6.Text = "6:";
 
             }
-            if (users.Length == 3)
+            if (Users.Length == 3)
             {
-                userLabel1.Text = "1:" + users[0];
-                userLabel2.Text = "2:" + users[1];
-                userLabel3.Text = "3:" + users[2];
+                userLabel1.Text = "1:" + Users[0];
+                userLabel2.Text = "2:" + Users[1];
+                userLabel3.Text = "3:" + Users[2];
                 userLabel4.Text = "4:";
                 userLabel5.Text = "5:";
                 userLabel6.Text = "6:";
             }
-            if (users.Length == 4)
+            if (Users.Length == 4)
             {
-                userLabel1.Text = "1:" + users[0];
-                userLabel2.Text = "2:" + users[1];
-                userLabel3.Text = "3:" + users[2];
-                userLabel4.Text = "4:" + users[3];
+                userLabel1.Text = "1:" + Users[0];
+                userLabel2.Text = "2:" + Users[1];
+                userLabel3.Text = "3:" + Users[2];
+                userLabel4.Text = "4:" + Users[3];
                 userLabel5.Text = "5:";
                 userLabel6.Text = "6:";
             }
-            if (users.Length == 5)
+            if (Users.Length == 5)
             {
-                userLabel1.Text = "1:" + users[0];
-                userLabel2.Text = "2:" + users[1];
-                userLabel3.Text = "3:" + users[2];
-                userLabel4.Text = "4:" + users[3];
-                userLabel5.Text = "5:" + users[4];
+                userLabel1.Text = "1:" + Users[0];
+                userLabel2.Text = "2:" + Users[1];
+                userLabel3.Text = "3:" + Users[2];
+                userLabel4.Text = "4:" + Users[3];
+                userLabel5.Text = "5:" + Users[4];
                 userLabel6.Text = "6:";
             }
-            if (users.Length == 6)
+            if (Users.Length == 6)
             {
-                userLabel1.Text = "1:" + users[0];
-                userLabel2.Text = "2:" + users[1];
-                userLabel3.Text = "3:" + users[2];
-                userLabel4.Text = "4:" + users[3];
-                userLabel5.Text = "5:" + users[4];
-                userLabel6.Text = "6:" + users[5];
+                userLabel1.Text = "1:" + Users[0];
+                userLabel2.Text = "2:" + Users[1];
+                userLabel3.Text = "3:" + Users[2];
+                userLabel4.Text = "4:" + Users[3];
+                userLabel5.Text = "5:" + Users[4];
+                userLabel6.Text = "6:" + Users[5];
+            }
+            if (Users.Length != 1)
+            {
+                client.users.Clear();
+                for (int i = 0; i < Users.Length; i++)
+                {
+                    client.users.Add(Users[i]);
+                }
             }
         }
 
         private void start_Button_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Zaczynamy");
+            
+            //http://127.0.0.1:29345/newtable/start/mjjzZEMSOtbIJ1bf?startingMoney=1000&smallBlind=20
+            var message = "http://"+client.apiAddress+":"+client.apiPort+"/newtable/start/"+client.tableCode+"?startingMoney="+bet.Value.ToString()+"&smallBlind="+smalBlind.Value.ToString();
+            client.makeRequest(message,0);
+            if(client.Started())
+            {
+                Table table = new Table(client);
+                table.Show();
+                this.Hide();
+            }
+            
+
         }
     }
 }

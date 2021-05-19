@@ -34,11 +34,9 @@ namespace PokerApplication
             this.label1 = new System.Windows.Forms.Label();
             this.sourceButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.axWindowsMediaPlayer2 = new AxWMPLib.AxWindowsMediaPlayer();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.return_Button = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer2)).BeginInit();
             this.SuspendLayout();
             // 
             // movieLabel1
@@ -82,7 +80,6 @@ namespace PokerApplication
             this.groupBox1.BackColor = System.Drawing.Color.White;
             this.groupBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.groupBox1.Controls.Add(this.return_Button);
-            this.groupBox1.Controls.Add(this.axWindowsMediaPlayer2);
             this.groupBox1.Controls.Add(this.movieLabel1);
             this.groupBox1.Controls.Add(this.sourceButton);
             this.groupBox1.Controls.Add(this.label1);
@@ -93,25 +90,6 @@ namespace PokerApplication
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Zasady Pokera";
-            // 
-            // axWindowsMediaPlayer2
-            // 
-            this.axWindowsMediaPlayer2.Enabled = true;
-            this.axWindowsMediaPlayer2.Location = new System.Drawing.Point(7, 120);
-            this.axWindowsMediaPlayer2.Name = "axWindowsMediaPlayer2";
-            this.axWindowsMediaPlayer2.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer2.OcxState")));
-            this.axWindowsMediaPlayer2.Size = new System.Drawing.Size(568, 383);
-            this.axWindowsMediaPlayer2.TabIndex = 6;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.BackColor = System.Drawing.Color.White;
-            this.groupBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.groupBox2.Location = new System.Drawing.Point(605, 23);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(647, 632);
-            this.groupBox2.TabIndex = 7;
-            this.groupBox2.TabStop = false;
             // 
             // return_Button
             // 
@@ -127,6 +105,16 @@ namespace PokerApplication
             this.return_Button.UseVisualStyleBackColor = false;
             this.return_Button.Click += new System.EventHandler(this.return_Button_Click);
             // 
+            // groupBox2
+            // 
+            this.groupBox2.BackColor = System.Drawing.Color.White;
+            this.groupBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.groupBox2.Location = new System.Drawing.Point(605, 23);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(647, 632);
+            this.groupBox2.TabIndex = 7;
+            this.groupBox2.TabStop = false;
+            // 
             // HelpForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -139,7 +127,6 @@ namespace PokerApplication
             this.Text = "Texas Hold\'em Pomoc";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -150,7 +137,6 @@ namespace PokerApplication
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button sourceButton;
         private System.Windows.Forms.GroupBox groupBox1;
-        private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button return_Button;
     }

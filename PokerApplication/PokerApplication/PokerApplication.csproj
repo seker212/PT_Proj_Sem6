@@ -56,6 +56,7 @@
     <Compile Include="Connection.Designer.cs">
       <DependentUpon>Connection.cs</DependentUpon>
     </Compile>
+    <Compile Include="Game.cs" />
     <Compile Include="HelpForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,6 +70,13 @@
       <DependentUpon>IntroForm.cs</DependentUpon>
     </Compile>
     <Compile Include="JsonData.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Table.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Table.Designer.cs">
+      <DependentUpon>Table.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserLobby.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,6 +105,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IntroForm.resx">
       <DependentUpon>IntroForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Table.resx">
+      <DependentUpon>Table.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserLobby.resx">
       <DependentUpon>UserLobby.cs</DependentUpon>
