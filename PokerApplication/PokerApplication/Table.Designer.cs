@@ -44,7 +44,7 @@ namespace PokerApplication
             this.player_card10 = new System.Windows.Forms.PictureBox();
             this.player_card9 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.pool = new System.Windows.Forms.Label();
+            this.poolLabel = new System.Windows.Forms.Label();
             this.player_1 = new System.Windows.Forms.Label();
             this.player_3 = new System.Windows.Forms.Label();
             this.player_4 = new System.Windows.Forms.Label();
@@ -223,16 +223,16 @@ namespace PokerApplication
             this.label1.TabIndex = 13;
             this.label1.Text = "Pula:";
             // 
-            // pool
+            // poolLabel
             // 
-            this.pool.AutoSize = true;
-            this.pool.BackColor = System.Drawing.Color.Transparent;
-            this.pool.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.pool.Location = new System.Drawing.Point(584, 237);
-            this.pool.Name = "pool";
-            this.pool.Size = new System.Drawing.Size(30, 35);
-            this.pool.TabIndex = 14;
-            this.pool.Text = "0";
+            this.poolLabel.AutoSize = true;
+            this.poolLabel.BackColor = System.Drawing.Color.Transparent;
+            this.poolLabel.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.poolLabel.Location = new System.Drawing.Point(584, 237);
+            this.poolLabel.Name = "poolLabel";
+            this.poolLabel.Size = new System.Drawing.Size(30, 35);
+            this.poolLabel.TabIndex = 14;
+            this.poolLabel.Text = "0";
             // 
             // player_1
             // 
@@ -465,7 +465,7 @@ namespace PokerApplication
             this.Controls.Add(this.player_4);
             this.Controls.Add(this.player_3);
             this.Controls.Add(this.player_1);
-            this.Controls.Add(this.pool);
+            this.Controls.Add(this.poolLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.player_card10);
             this.Controls.Add(this.player_card9);
@@ -520,7 +520,7 @@ namespace PokerApplication
         private System.Windows.Forms.PictureBox player_card10;
         private System.Windows.Forms.PictureBox player_card9;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label pool;
+        private System.Windows.Forms.Label poolLabel;
         private System.Windows.Forms.Label player_1;
         private System.Windows.Forms.Label player_3;
         private System.Windows.Forms.Label player_4;

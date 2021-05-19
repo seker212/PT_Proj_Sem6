@@ -18,8 +18,11 @@ namespace PokerApplication
         List<System.Windows.Forms.PictureBox> cards;
         List<System.Windows.Forms.Label> money;
         Client client;
-        public delegate void delUpdateUILabel(List<Player> players);
-        public delegate void delUpdateUIPoints(List<Player> players);
+        public delegate void delUpdateUILabel(List<Player> players,int i);
+        public delegate void delUpdateUIPoints(List<Player> players,int i);
+        public delegate void delUpdateUIPool(string pool);
+        public delegate void delUpdateUITurn(string turn);
+        public delegate void delUpdatePlayerCards();
         public Table()
         {
             InitializeComponent();
@@ -121,27 +124,48 @@ namespace PokerApplication
                 var MyTable = table.Split(':', ',');
                 client.game.Load(MyTable);
                 //UPDATE puli, posiadanej kasy, zaznaczenie aktywnego użytkownika
-                var Pool = client.game.Pool;
-                var Players = client.game.Players;
-                var Turn = client.game.Turn;
-                
+                var pool = client.game.Pool;
+                var players = client.game.Players;
+                var turn = client.game.Turn;
+                delUpdateUILabel delUpdateUILabel = new delUpdateUILabel(UpdateUILabel);
+                delUpdateUIPoints delUpdateUIPoints = new delUpdateUIPoints(UpdateUIPoints);
+                delUpdateUIPool delUpdateUIPool = new delUpdateUIPool(UpdateUIPool);
+                delUpdateUITurn delUpdateUITurn = new delUpdateUITurn(UpdateUITurn);
+                this.turnLabel.BeginInvoke(delUpdateUITurn, turn);
+                this.poolLabel.BeginInvoke(delUpdateUIPool, pool);
+
+                for (int i=0;i<players.Count;i++)
+                {
+                    this.labels[i].BeginInvoke(delUpdateUILabel,players, i);
+                }
+                for (int i = 0; i < players.Count; i++)
+                {
+                    this.money[i].BeginInvoke(delUpdateUIPoints,players, i);
+                }
+
+
+                //this.labels.BeginInvoke()
                 Thread.Sleep(1000);
             }            
 
         }
-        public void UpdateUILabel(List<Player> players)
+        public void UpdateUILabel(List<Player> players, int i)
         {
-            for(int i=0;i<players.Count;i++)
-            {
+            
                 labels[i].Text = players[i].name;
-            }
+           
         }
-        public void UpdateUIPoints(List<Player> players)
+        public void UpdateUIPoints(List<Player> players,int i)
         {
-            for (int i = 0; i < players.Count; i++)
-            {
                 money[i].Text = players[i].cash;
-            }
+        }
+        public void UpdateUIPool(string pool)
+        {
+            poolLabel.Text = pool;
+        }
+        public void UpdateUITurn(string turn)
+        {
+            turnLabel.Text = turn;
         }
 
     }
