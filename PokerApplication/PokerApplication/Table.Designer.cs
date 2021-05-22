@@ -245,6 +245,7 @@ namespace PokerApplication
             this.player_1.Size = new System.Drawing.Size(111, 35);
             this.player_1.TabIndex = 15;
             this.player_1.Text = "Gracz_1";
+            this.player_1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // player_3
             // 
@@ -257,6 +258,7 @@ namespace PokerApplication
             this.player_3.Size = new System.Drawing.Size(111, 35);
             this.player_3.TabIndex = 16;
             this.player_3.Text = "Gracz_3";
+            this.player_3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // player_4
             // 
@@ -269,6 +271,7 @@ namespace PokerApplication
             this.player_4.Size = new System.Drawing.Size(111, 35);
             this.player_4.TabIndex = 17;
             this.player_4.Text = "Gracz_4";
+            this.player_4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // player_6
             // 
@@ -281,6 +284,7 @@ namespace PokerApplication
             this.player_6.Size = new System.Drawing.Size(111, 35);
             this.player_6.TabIndex = 18;
             this.player_6.Text = "Gracz_6";
+            this.player_6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // player_card2
             // 
@@ -333,6 +337,7 @@ namespace PokerApplication
             this.player_2.Size = new System.Drawing.Size(111, 35);
             this.player_2.TabIndex = 23;
             this.player_2.Text = "Gracz_2";
+            this.player_2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // player_5
             // 
@@ -345,6 +350,7 @@ namespace PokerApplication
             this.player_5.Size = new System.Drawing.Size(111, 35);
             this.player_5.TabIndex = 24;
             this.player_5.Text = "Gracz_5";
+            this.player_5.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label2
             // 
@@ -379,6 +385,7 @@ namespace PokerApplication
             this.points_2.Size = new System.Drawing.Size(126, 35);
             this.points_2.TabIndex = 27;
             this.points_2.Text = "amount_1";
+            this.points_2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // points_1
             // 
@@ -391,6 +398,7 @@ namespace PokerApplication
             this.points_1.Size = new System.Drawing.Size(126, 35);
             this.points_1.TabIndex = 28;
             this.points_1.Text = "amount_1";
+            this.points_1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // points_3
             // 
@@ -403,6 +411,7 @@ namespace PokerApplication
             this.points_3.Size = new System.Drawing.Size(126, 35);
             this.points_3.TabIndex = 29;
             this.points_3.Text = "amount_1";
+            this.points_3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // points_6
             // 
@@ -415,6 +424,7 @@ namespace PokerApplication
             this.points_6.Size = new System.Drawing.Size(126, 35);
             this.points_6.TabIndex = 29;
             this.points_6.Text = "amount_1";
+            this.points_6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // points_4
             // 
@@ -422,11 +432,12 @@ namespace PokerApplication
             this.points_4.BackColor = System.Drawing.Color.Transparent;
             this.points_4.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.points_4.ForeColor = System.Drawing.Color.White;
-            this.points_4.Location = new System.Drawing.Point(753, 162);
+            this.points_4.Location = new System.Drawing.Point(742, 162);
             this.points_4.Name = "points_4";
             this.points_4.Size = new System.Drawing.Size(126, 35);
             this.points_4.TabIndex = 30;
             this.points_4.Text = "amount_1";
+            this.points_4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // points_5
             // 
@@ -439,6 +450,7 @@ namespace PokerApplication
             this.points_5.Size = new System.Drawing.Size(126, 35);
             this.points_5.TabIndex = 31;
             this.points_5.Text = "amount_1";
+            this.points_5.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // Table
             // 

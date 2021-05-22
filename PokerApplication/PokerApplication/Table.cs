@@ -17,6 +17,7 @@ namespace PokerApplication
         List<System.Windows.Forms.Label> labels;
         List<System.Windows.Forms.PictureBox> cards;
         List<System.Windows.Forms.Label> money;
+        List<System.Windows.Forms.PictureBox> sharedCards;
         Client client;
         public delegate void delUpdateUILabel(List<Player> players,int i);
         public delegate void delUpdateUIPoints(List<Player> players,int i);
@@ -83,6 +84,12 @@ namespace PokerApplication
             money.Add(points_5);
             money.Add(points_6);
 
+            sharedCards.Add(sharedCard1);
+            sharedCards.Add(sharedCard2);
+            sharedCards.Add(sharedCard3);
+            sharedCards.Add(sharedCard4);
+            sharedCards.Add(sharedCard5);
+
         }
         private void FormatList()
         {  
@@ -127,6 +134,12 @@ namespace PokerApplication
                 var pool = client.game.Pool;
                 var players = client.game.Players;
                 var turn = client.game.Turn;
+                while(players[0].name!=client.userName)
+                {
+                    var player = players[0];
+                    players.RemoveAt(0);
+                    players.Add(player);
+                }
                 delUpdateUILabel delUpdateUILabel = new delUpdateUILabel(UpdateUILabel);
                 delUpdateUIPoints delUpdateUIPoints = new delUpdateUIPoints(UpdateUIPoints);
                 delUpdateUIPool delUpdateUIPool = new delUpdateUIPool(UpdateUIPool);
