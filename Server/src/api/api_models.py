@@ -31,3 +31,10 @@ class ShowdownModel():
         self.pot = pot
         self.players_hands = players_hands
         self.winners = winners
+
+class AvailableActionsModel():
+    def __init__(self, Can_move: bool, check: bool, call: bool, bet_raise: bool) -> None:
+        self.Can_move = Can_move
+        self.check = check
+        self.call = call
+        self.bet_raise = bet_raise

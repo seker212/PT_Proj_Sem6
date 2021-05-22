@@ -1,4 +1,5 @@
 import enum
+from typing import Dict
 from src.poker.table import Table
 from src.poker.Player import Player, Status
 from src.poker.pot import Pot
@@ -15,6 +16,33 @@ class ActionEffect(enum.Enum):
     Wrong_player = 8
     Invalid_action = 9
 
+def AvailableActions(table: Table, player: Player) -> Dict:
+    result = {}
+    if player.status == Status.all_in or player.status == Status.fold:
+        result['Can_move'] = False
+        result['check'] = False
+        result['call'] = False
+        result['bet_raise'] = False
+        return result
+    else:
+        result['Can_move'] = True
+    to_call = _to_call(table, player)
+    if player in table.pots[len(table.pots)-1].members and player.table_money == table.pots[len(table.pots)-1].required:
+        result['check'] = True
+    else:
+        result['check'] = False
+
+    if table.turnPlayer.money <= to_call - table.turnPlayer.table_money:
+        result['call'] = False
+        result['bet_raise'] = False
+    else:
+        result['call'] = True
+        if table.turnPlayer.money-1 > to_call - table.turnPlayer.table_money:
+            result['bet_raise'] = True
+        else:
+            result['bet_raise'] = False
+
+    return result
 
 def bet_raise(table: Table, player: Player, money: int) -> ActionEffect: #TODO: More tests
     if table.turnPlayer is None or table.turnPlayer != player:

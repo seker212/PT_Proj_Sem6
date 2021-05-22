@@ -15,7 +15,7 @@ from src.helpers.User import User
 from src.poker.table import Table, GameStage
 from src.poker.table_players import TablePlayers
 from src.poker.Player import Player
-from src.poker.player_actions import bet_raise, all_in, call, check, fold, ActionEffect
+from src.poker.player_actions import bet_raise, all_in, call, check, fold, ActionEffect, AvailableActions
 from src.api.api_schemas import *
 from src.api.api_models import *
 
@@ -418,6 +418,27 @@ class AllIn(MethodResource, Resource):
         
 api.add_resource(AllIn, '/table/<tableID>/actions/allin')
 docs.register(AllIn)
+
+class CheckMoves(MethodResource, Resource):
+    @doc(tags=['Player Actions'])
+    @use_kwargs({'playerID': fields.String()}, location='querystring')
+    @marshal_with(AvailableActionsSchema, code='200', description='OK')
+    @marshal_with(None, code='403', description='playerID not found')
+    @marshal_with(None, code='404', description='tableID not found')
+    def get(self, tableID, playerID):
+            if tableID not in started_games:
+                return '', 404
+            table = started_games[tableID]
+            if playerID not in [p.user.id for p in table.players.List]:
+                return '', 403
+            player = None
+            for p in table.players.List:
+                if p.user.id == playerID:
+                    player = p
+                    break
+            
+            result = AvailableActions(table, player)
+            return result, 200
 
 if __name__ == '__main__':
     # context = ('myCA.pem', 'myKey.key')

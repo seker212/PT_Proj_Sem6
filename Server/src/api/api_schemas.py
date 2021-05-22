@@ -27,3 +27,9 @@ class ShowdownSchema(Schema):
     pot = fields.Integer(dump_only=True)
     players_hands = fields.Dict(fields.String(), fields.Nested(PlayerHandSchema), dump_only=True)
     winners = fields.List(fields.String(), dump_only=True)
+
+class AvailableActionsSchema(Schema):
+    Can_move = fields.Boolean()
+    check = fields.Boolean()
+    call = fields.Boolean()
+    bet_raise = fields.Boolean()
