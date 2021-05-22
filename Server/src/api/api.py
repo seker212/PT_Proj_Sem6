@@ -440,6 +440,9 @@ class CheckMoves(MethodResource, Resource):
             result = AvailableActions(table, player)
             return result, 200
 
+api.add_resource(CheckMoves, '/table/<tableID>/actions')
+docs.register(CheckMoves)
+
 if __name__ == '__main__':
     # context = ('myCA.pem', 'myKey.key')
     # app.run(port=29345, ssl_context=context)
