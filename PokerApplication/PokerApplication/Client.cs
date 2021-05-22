@@ -302,5 +302,13 @@ namespace PokerApplication
 
            
         }
-    }
+        public bool GetCards()
+        {
+            var message = "http://"+apiAddress+":"+apiPort+"/table/"+tableCode+"/playercards?playerID="+userCode;
+            var cards = makeRequest(message, 0)[0];
+            cards = Regex.Replace(cards, @"[^0-9a-zA-Z:,]+", "");
+            var MyCards = cards.Split(':', ',');
+            return true;
+        }
+    }   
 }
