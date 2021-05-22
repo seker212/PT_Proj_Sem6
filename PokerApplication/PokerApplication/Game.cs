@@ -32,16 +32,30 @@ namespace PokerApplication
         }
         public List<String> Cards
         {
-            get => Cards;
+            get => cards;
         }
         public void Load(string[] table)
         {
-            cards = new List<String>();
-            players = new List<Player>();
+            cards.Clear();
+            players.Clear();
+            turn = "";
+            pool = "";
             Player player = new Player();
             for (int i = 0; i < table.Length; i++)
             {
 
+                if (table[i].Contains("rank"))
+                {
+                    var rank = table[i + 1];
+                    var card = table[i + 3];
+                    card = card.Replace("hearts", "H");
+                    card = card.Replace("diamonds", "D");
+                    card = card.Replace("spades", "S");
+                    card = card.Replace("clubs", "C");
+                    card = rank + card;
+                    cards.Add(card);
+                    // Console.WriteLine("Kolej:" + table[i + 1]);
+                }
                 if (table[i].Contains("player_turn"))
                 {
                     turn = table[i + 1];

@@ -83,12 +83,7 @@ namespace PokerApplication
            data = data.Replace("\'", "");
            data = data.Replace(" ", "");
            var users = data.Split(',');
-           userLabel1.Text = "1:";
-           userLabel2.Text = "2:";
-           userLabel3.Text = "3:";
-           userLabel4.Text = "4:";
-           userLabel5.Text = "5:";
-           userLabel6.Text = "6:";
+           
             //MessageBox.Show(data);
            if (users.Length == 1)
            {

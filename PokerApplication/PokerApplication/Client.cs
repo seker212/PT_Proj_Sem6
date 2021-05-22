@@ -16,7 +16,7 @@ namespace PokerApplication
 {
     public class Client
     {
-       public string apiAddress, apiPort, userName,userCode,tableCode,path;
+       public string apiAddress, apiPort, userName,userCode,tableCode,path,card1,card2;
        public Game game;
        public List<string> users;
        public string endpoint { get; set; }
@@ -305,9 +305,21 @@ namespace PokerApplication
         public bool GetCards()
         {
             var message = "http://"+apiAddress+":"+apiPort+"/table/"+tableCode+"/playercards?playerID="+userCode;
-            var cards = makeRequest(message, 0)[0];
+            var cards =makeRequest(message, 0)[0];
+            Console.WriteLine(cards);
             cards = Regex.Replace(cards, @"[^0-9a-zA-Z:,]+", "");
-            var MyCards = cards.Split(':', ',');
+            Console.WriteLine(cards);
+            cards = cards.Replace("rank", "");
+            cards = cards.Replace("suit", "");
+            cards = cards.Replace(":", "");
+            cards = cards.Replace("spades", "S");
+            cards = cards.Replace("hearts", "H");
+            cards = cards.Replace("clubs", "C");
+            cards = cards.Replace("diamonds", "D");
+            var MyCards = cards.Split(',');
+            card1 = MyCards[0] + MyCards[1];
+            card2 = MyCards[2] + MyCards[3];
+
             return true;
         }
     }   

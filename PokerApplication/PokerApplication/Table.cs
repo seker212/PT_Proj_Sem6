@@ -21,6 +21,7 @@ namespace PokerApplication
         Client client;
         public delegate void delUpdateUILabel(List<Player> players,int i);
         public delegate void delUpdateUIPoints(List<Player> players,int i);
+        public delegate void delUpdateUISharedCards(List<string> cards, int i);
         public delegate void delUpdateUIPool(string pool);
         public delegate void delUpdateUITurn(string turn);
         public delegate void delUpdatePlayerCards();
@@ -35,24 +36,13 @@ namespace PokerApplication
             labels = new List<System.Windows.Forms.Label>();
             cards= new List<System.Windows.Forms.PictureBox>();
             money = new List<System.Windows.Forms.Label>();
-            /*
-            
-            Image img=player_card1.Image;
-            img.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            player_card1.Image = img;
-            img = player_card2.Image;
-            img.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            player_card2.Image = img;
-            img = player_card7.Image;
-            img.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            player_card7.Image = img;
-            img = player_card8.Image;
-            img.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            player_card8.Image = img;
-            */
+            sharedCards= new List<System.Windows.Forms.PictureBox>();
+            client.GetCards();
+        
             LoadObjects();
             FormatList();
             Task t = Task.Run(CheckGameStatus);
+            client.GetCards();
 
         }
         private void LoadObjects()
@@ -89,6 +79,20 @@ namespace PokerApplication
             sharedCards.Add(sharedCard3);
             sharedCards.Add(sharedCard4);
             sharedCards.Add(sharedCard5);
+            try
+            {
+                var directory = client.path + client.card1 + ".png";
+                userCard1.BackgroundImage = Image.FromFile(directory);
+                directory = client.path + client.card2 + ".png";
+                userCard2.BackgroundImage = Image.FromFile(directory);
+                
+                
+            }
+            catch(Exception e )
+            {
+                MessageBox.Show("Bład wczytywania kart");
+            }
+           
 
         }
         private void FormatList()
@@ -131,6 +135,7 @@ namespace PokerApplication
                 var MyTable = table.Split(':', ',');
                 client.game.Load(MyTable);
                 //UPDATE puli, posiadanej kasy, zaznaczenie aktywnego użytkownika
+                var cards = client.game.Cards;
                 var pool = client.game.Pool;
                 var players = client.game.Players;
                 var turn = client.game.Turn;
@@ -144,10 +149,11 @@ namespace PokerApplication
                 delUpdateUIPoints delUpdateUIPoints = new delUpdateUIPoints(UpdateUIPoints);
                 delUpdateUIPool delUpdateUIPool = new delUpdateUIPool(UpdateUIPool);
                 delUpdateUITurn delUpdateUITurn = new delUpdateUITurn(UpdateUITurn);
+                delUpdateUISharedCards delUpdateUISharedCards = new delUpdateUISharedCards(UpdateUISharedCards);
                 this.turnLabel.BeginInvoke(delUpdateUITurn, turn);
                 this.poolLabel.BeginInvoke(delUpdateUIPool, pool);
 
-                for (int i=0;i<players.Count;i++)
+                for (int i = 0;i<players.Count;i++)
                 {
                     this.labels[i].BeginInvoke(delUpdateUILabel,players, i);
                 }
@@ -155,6 +161,11 @@ namespace PokerApplication
                 {
                     this.money[i].BeginInvoke(delUpdateUIPoints,players, i);
                 }
+                for(int i=0;i<cards.Count;i++)
+                {
+                    this.sharedCards[i].BeginInvoke(delUpdateUISharedCards,cards, i);
+                }
+                
 
 
                 //this.labels.BeginInvoke()
@@ -180,6 +191,17 @@ namespace PokerApplication
         {
             turnLabel.Text = turn;
         }
-
+        public void UpdateUISharedCards(List<string> cards, int i)
+        {
+            try
+            {
+                var directory = client.path + cards[i] + ".png";
+                sharedCards[i].BackgroundImage = Image.FromFile(directory);
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("Bład wczytywania wspólnych kart");
+            }
+        }
     }
 }
