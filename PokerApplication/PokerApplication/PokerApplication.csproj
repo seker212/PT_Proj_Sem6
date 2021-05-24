@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="JsonData.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="Pool.cs" />
     <Compile Include="Table.cs">
       <SubType>Form</SubType>
     </Compile>

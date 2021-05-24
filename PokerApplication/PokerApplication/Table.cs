@@ -18,10 +18,14 @@ namespace PokerApplication
         List<System.Windows.Forms.PictureBox> cards;
         List<System.Windows.Forms.Label> money;
         List<System.Windows.Forms.PictureBox> sharedCards;
+        List<System.Windows.Forms.Label> pools;
+        List<System.Windows.Forms.Label> poolAmounts;
         Client client;
         public delegate void delUpdateUILabel(List<Player> players,int i);
         public delegate void delUpdateUIPoints(List<Player> players,int i);
         public delegate void delUpdateUISharedCards(List<string> cards, int i);
+        public delegate void delUpadateUIPools( int i,string text,int type);
+        public delegate void delUpdateUIPoolNames(int i,int type);
         public delegate void delUpdateUIPool(string pool);
         public delegate void delUpdateUITurn(string turn);
         public delegate void delUpdatePlayerCards();
@@ -37,6 +41,8 @@ namespace PokerApplication
             cards= new List<System.Windows.Forms.PictureBox>();
             money = new List<System.Windows.Forms.Label>();
             sharedCards= new List<System.Windows.Forms.PictureBox>();
+            pools = new List<System.Windows.Forms.Label>();
+            poolAmounts = new List<System.Windows.Forms.Label>();
             client.GetCards();
         
             LoadObjects();
@@ -79,6 +85,25 @@ namespace PokerApplication
             sharedCards.Add(sharedCard3);
             sharedCards.Add(sharedCard4);
             sharedCards.Add(sharedCard5);
+
+            pools.Add(pool1);
+            pools.Add(pool2);
+            pools.Add(pool3);
+            pools.Add(pool4);
+            pools.Add(pool5);
+
+            poolAmounts.Add(poolLabel1);
+            poolAmounts.Add(poolLabel2);
+            poolAmounts.Add(poolLabel3);
+            poolAmounts.Add(poolLabel4);
+            poolAmounts.Add(poolLabel5);
+            for (int i=1;i<5;i++)
+            {
+                pools[i].Visible = false;
+                poolAmounts[i].Visible = false;
+            }
+
+            
             try
             {
                 var directory = client.path + client.card1 + ".png";
@@ -131,14 +156,16 @@ namespace PokerApplication
                 var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode;
                 string table = client.makeRequest(message, 0)[0];
                 //table = table.Replace()
-                table = Regex.Replace(table, @"[^0-9a-zA-Z:_,]+", "");
+                table = Regex.Replace(table, @"[^0-9a-zA-Z:,_[+\]]", "");
+
                 var MyTable = table.Split(':', ',');
                 client.game.Load(MyTable);
                 //UPDATE puli, posiadanej kasy, zaznaczenie aktywnego użytkownika
                 var cards = client.game.Cards;
-                var pool = client.game.Pool;
+                //var pool = client.game.Pool;
                 var players = client.game.Players;
                 var turn = client.game.Turn;
+                var gamePools = client.game.Pools;
                 while(players[0].name!=client.userName)
                 {
                     var player = players[0];
@@ -150,9 +177,27 @@ namespace PokerApplication
                 delUpdateUIPool delUpdateUIPool = new delUpdateUIPool(UpdateUIPool);
                 delUpdateUITurn delUpdateUITurn = new delUpdateUITurn(UpdateUITurn);
                 delUpdateUISharedCards delUpdateUISharedCards = new delUpdateUISharedCards(UpdateUISharedCards);
+                delUpadateUIPools delUpadateUIPools = new delUpadateUIPools(UpdateUIPool);
+                delUpdateUIPoolNames delUpdateUIPoolNames = new delUpdateUIPoolNames(UpdateUIPoolNames);
                 this.turnLabel.BeginInvoke(delUpdateUITurn, turn);
-                this.poolLabel.BeginInvoke(delUpdateUIPool, pool);
+               // this.poolLabel1.BeginInvoke(delUpdateUIPool, pool);
+                for(int i=0;i<gamePools.Count;i++)
+                {
+                    this.pools[i].BeginInvoke(delUpdateUIPoolNames, i, 0);
+                    this.poolAmounts[i].BeginInvoke(delUpadateUIPools,i,gamePools[i].amount,0);
+                    if (gamePools[i].members.Contains(client.userName))
+                    {
+                        this.pools[i].BeginInvoke(delUpdateUIPoolNames, i, 1);
+                        this.poolAmounts[i].BeginInvoke(delUpadateUIPools, i, gamePools[i].amount, 1);
+                    }
+                    else
+                    {
+                        this.pools[i].BeginInvoke(delUpdateUIPoolNames, i, 3);
+                        this.poolAmounts[i].BeginInvoke(delUpadateUIPools, i, gamePools[i].amount, 3);
+                    }
 
+                   // this.poolAmounts[i].
+                }
                 for (int i = 0;i<players.Count;i++)
                 {
                     this.labels[i].BeginInvoke(delUpdateUILabel,players, i);
@@ -185,7 +230,7 @@ namespace PokerApplication
         }
         public void UpdateUIPool(string pool)
         {
-            poolLabel.Text = pool;
+            poolLabel1.Text = pool;
         }
         public void UpdateUITurn(string turn)
         {
@@ -201,6 +246,37 @@ namespace PokerApplication
             catch(Exception e)
             {
                 MessageBox.Show("Bład wczytywania wspólnych kart");
+            }
+        }
+        public void UpdateUIPoolNames(int i,int type)
+        {
+            if(type ==0)
+            {
+                pools[i].Visible = true;
+            }
+            else if (type == 1)
+            {
+                pools[i].ForeColor = Color.Red;
+            }
+            else
+            {
+                pools[i].ForeColor = DefaultForeColor;
+            }
+        }
+        public void UpdateUIPool( int i, string text,int type)
+        {
+            if (type == 0)
+            {
+                poolAmounts[i].Visible = true;
+                poolAmounts[i].Text = text;
+            }
+            else if(type ==1)
+            {
+                poolAmounts[i].ForeColor = Color.Red;
+            }
+            else
+            {
+                poolAmounts[i].ForeColor = DefaultForeColor;
             }
         }
     }

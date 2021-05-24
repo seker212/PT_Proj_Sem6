@@ -43,8 +43,8 @@ namespace PokerApplication
             this.player_card5 = new System.Windows.Forms.PictureBox();
             this.player_card10 = new System.Windows.Forms.PictureBox();
             this.player_card9 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.poolLabel = new System.Windows.Forms.Label();
+            this.pool1 = new System.Windows.Forms.Label();
+            this.poolLabel1 = new System.Windows.Forms.Label();
             this.player_1 = new System.Windows.Forms.Label();
             this.player_3 = new System.Windows.Forms.Label();
             this.player_4 = new System.Windows.Forms.Label();
@@ -63,6 +63,20 @@ namespace PokerApplication
             this.points_6 = new System.Windows.Forms.Label();
             this.points_4 = new System.Windows.Forms.Label();
             this.points_5 = new System.Windows.Forms.Label();
+            this.pool2 = new System.Windows.Forms.Label();
+            this.pool3 = new System.Windows.Forms.Label();
+            this.pool4 = new System.Windows.Forms.Label();
+            this.pool5 = new System.Windows.Forms.Label();
+            this.poolLabel2 = new System.Windows.Forms.Label();
+            this.poolLabel3 = new System.Windows.Forms.Label();
+            this.poolLabel4 = new System.Windows.Forms.Label();
+            this.poolLabel5 = new System.Windows.Forms.Label();
+            this.callButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.userCard1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userCard2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sharedCard1)).BeginInit();
@@ -80,6 +94,7 @@ namespace PokerApplication
             ((System.ComponentModel.ISupportInitialize)(this.player_card1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.player_card8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.player_card7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // userCard1
@@ -212,27 +227,27 @@ namespace PokerApplication
             this.player_card9.TabIndex = 11;
             this.player_card9.TabStop = false;
             // 
-            // label1
+            // pool1
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(508, 237);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 35);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Pula:";
+            this.pool1.AutoSize = true;
+            this.pool1.BackColor = System.Drawing.Color.Transparent;
+            this.pool1.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.pool1.Location = new System.Drawing.Point(803, 221);
+            this.pool1.Name = "pool1";
+            this.pool1.Size = new System.Drawing.Size(95, 35);
+            this.pool1.TabIndex = 13;
+            this.pool1.Text = "Pula 1:";
             // 
-            // poolLabel
+            // poolLabel1
             // 
-            this.poolLabel.AutoSize = true;
-            this.poolLabel.BackColor = System.Drawing.Color.Transparent;
-            this.poolLabel.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.poolLabel.Location = new System.Drawing.Point(584, 237);
-            this.poolLabel.Name = "poolLabel";
-            this.poolLabel.Size = new System.Drawing.Size(30, 35);
-            this.poolLabel.TabIndex = 14;
-            this.poolLabel.Text = "0";
+            this.poolLabel1.AutoSize = true;
+            this.poolLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.poolLabel1.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.poolLabel1.Location = new System.Drawing.Point(895, 221);
+            this.poolLabel1.Name = "poolLabel1";
+            this.poolLabel1.Size = new System.Drawing.Size(30, 35);
+            this.poolLabel1.TabIndex = 14;
+            this.poolLabel1.Text = "0";
             // 
             // player_1
             // 
@@ -357,7 +372,7 @@ namespace PokerApplication
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label2.Location = new System.Drawing.Point(508, 391);
+            this.label2.Location = new System.Drawing.Point(543, 244);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(83, 35);
             this.label2.TabIndex = 25;
@@ -368,7 +383,7 @@ namespace PokerApplication
             this.turnLabel.AutoSize = true;
             this.turnLabel.BackColor = System.Drawing.Color.Transparent;
             this.turnLabel.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.turnLabel.Location = new System.Drawing.Point(584, 391);
+            this.turnLabel.Location = new System.Drawing.Point(619, 244);
             this.turnLabel.Name = "turnLabel";
             this.turnLabel.Size = new System.Drawing.Size(74, 35);
             this.turnLabel.TabIndex = 26;
@@ -452,6 +467,152 @@ namespace PokerApplication
             this.points_5.Text = "amount_1";
             this.points_5.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // pool2
+            // 
+            this.pool2.AutoSize = true;
+            this.pool2.BackColor = System.Drawing.Color.Transparent;
+            this.pool2.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.pool2.Location = new System.Drawing.Point(803, 256);
+            this.pool2.Name = "pool2";
+            this.pool2.Size = new System.Drawing.Size(95, 35);
+            this.pool2.TabIndex = 32;
+            this.pool2.Text = "Pula 2:";
+            // 
+            // pool3
+            // 
+            this.pool3.AutoSize = true;
+            this.pool3.BackColor = System.Drawing.Color.Transparent;
+            this.pool3.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.pool3.Location = new System.Drawing.Point(803, 291);
+            this.pool3.Name = "pool3";
+            this.pool3.Size = new System.Drawing.Size(95, 35);
+            this.pool3.TabIndex = 33;
+            this.pool3.Text = "Pula 3:";
+            // 
+            // pool4
+            // 
+            this.pool4.AutoSize = true;
+            this.pool4.BackColor = System.Drawing.Color.Transparent;
+            this.pool4.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.pool4.Location = new System.Drawing.Point(803, 326);
+            this.pool4.Name = "pool4";
+            this.pool4.Size = new System.Drawing.Size(95, 35);
+            this.pool4.TabIndex = 34;
+            this.pool4.Text = "Pula 4:";
+            // 
+            // pool5
+            // 
+            this.pool5.AutoSize = true;
+            this.pool5.BackColor = System.Drawing.Color.Transparent;
+            this.pool5.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.pool5.Location = new System.Drawing.Point(803, 361);
+            this.pool5.Name = "pool5";
+            this.pool5.Size = new System.Drawing.Size(95, 35);
+            this.pool5.TabIndex = 35;
+            this.pool5.Text = "Pula 5:";
+            // 
+            // poolLabel2
+            // 
+            this.poolLabel2.AutoSize = true;
+            this.poolLabel2.BackColor = System.Drawing.Color.Transparent;
+            this.poolLabel2.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.poolLabel2.Location = new System.Drawing.Point(895, 256);
+            this.poolLabel2.Name = "poolLabel2";
+            this.poolLabel2.Size = new System.Drawing.Size(30, 35);
+            this.poolLabel2.TabIndex = 36;
+            this.poolLabel2.Text = "0";
+            // 
+            // poolLabel3
+            // 
+            this.poolLabel3.AutoSize = true;
+            this.poolLabel3.BackColor = System.Drawing.Color.Transparent;
+            this.poolLabel3.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.poolLabel3.Location = new System.Drawing.Point(895, 291);
+            this.poolLabel3.Name = "poolLabel3";
+            this.poolLabel3.Size = new System.Drawing.Size(30, 35);
+            this.poolLabel3.TabIndex = 37;
+            this.poolLabel3.Text = "0";
+            // 
+            // poolLabel4
+            // 
+            this.poolLabel4.AutoSize = true;
+            this.poolLabel4.BackColor = System.Drawing.Color.Transparent;
+            this.poolLabel4.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.poolLabel4.Location = new System.Drawing.Point(895, 326);
+            this.poolLabel4.Name = "poolLabel4";
+            this.poolLabel4.Size = new System.Drawing.Size(30, 35);
+            this.poolLabel4.TabIndex = 38;
+            this.poolLabel4.Text = "0";
+            // 
+            // poolLabel5
+            // 
+            this.poolLabel5.AutoSize = true;
+            this.poolLabel5.BackColor = System.Drawing.Color.Transparent;
+            this.poolLabel5.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.poolLabel5.Location = new System.Drawing.Point(895, 361);
+            this.poolLabel5.Name = "poolLabel5";
+            this.poolLabel5.Size = new System.Drawing.Size(30, 35);
+            this.poolLabel5.TabIndex = 39;
+            this.poolLabel5.Text = "0";
+            // 
+            // callButton
+            // 
+            this.callButton.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.callButton.Location = new System.Drawing.Point(352, 429);
+            this.callButton.Name = "callButton";
+            this.callButton.Size = new System.Drawing.Size(108, 34);
+            this.callButton.TabIndex = 40;
+            this.callButton.Text = "Sprawdź";
+            this.callButton.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button1.Location = new System.Drawing.Point(466, 429);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(86, 34);
+            this.button1.TabIndex = 41;
+            this.button1.Text = "Czekaj";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button2.Location = new System.Drawing.Point(684, 429);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 34);
+            this.button2.TabIndex = 42;
+            this.button2.Text = "Pas";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button3.Location = new System.Drawing.Point(558, 429);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(120, 34);
+            this.button3.TabIndex = 43;
+            this.button3.Text = "Postaw";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button4.Location = new System.Drawing.Point(765, 431);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(120, 34);
+            this.button4.TabIndex = 44;
+            this.button4.Text = "Va banque";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.numericUpDown1.Location = new System.Drawing.Point(558, 469);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(120, 34);
+            this.numericUpDown1.TabIndex = 45;
+            // 
             // Table
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -459,6 +620,20 @@ namespace PokerApplication
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.callButton);
+            this.Controls.Add(this.poolLabel5);
+            this.Controls.Add(this.poolLabel4);
+            this.Controls.Add(this.poolLabel3);
+            this.Controls.Add(this.poolLabel2);
+            this.Controls.Add(this.pool5);
+            this.Controls.Add(this.pool4);
+            this.Controls.Add(this.pool3);
+            this.Controls.Add(this.pool2);
             this.Controls.Add(this.points_5);
             this.Controls.Add(this.points_4);
             this.Controls.Add(this.points_6);
@@ -477,8 +652,8 @@ namespace PokerApplication
             this.Controls.Add(this.player_4);
             this.Controls.Add(this.player_3);
             this.Controls.Add(this.player_1);
-            this.Controls.Add(this.poolLabel);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.poolLabel1);
+            this.Controls.Add(this.pool1);
             this.Controls.Add(this.player_card10);
             this.Controls.Add(this.player_card9);
             this.Controls.Add(this.player_card6);
@@ -511,6 +686,7 @@ namespace PokerApplication
             ((System.ComponentModel.ISupportInitialize)(this.player_card1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.player_card8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.player_card7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -531,8 +707,8 @@ namespace PokerApplication
         private System.Windows.Forms.PictureBox player_card5;
         private System.Windows.Forms.PictureBox player_card10;
         private System.Windows.Forms.PictureBox player_card9;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label poolLabel;
+        private System.Windows.Forms.Label pool1;
+        private System.Windows.Forms.Label poolLabel1;
         private System.Windows.Forms.Label player_1;
         private System.Windows.Forms.Label player_3;
         private System.Windows.Forms.Label player_4;
@@ -551,5 +727,19 @@ namespace PokerApplication
         private System.Windows.Forms.Label points_6;
         private System.Windows.Forms.Label points_4;
         private System.Windows.Forms.Label points_5;
+        private System.Windows.Forms.Label pool2;
+        private System.Windows.Forms.Label pool3;
+        private System.Windows.Forms.Label pool4;
+        private System.Windows.Forms.Label pool5;
+        private System.Windows.Forms.Label poolLabel2;
+        private System.Windows.Forms.Label poolLabel3;
+        private System.Windows.Forms.Label poolLabel4;
+        private System.Windows.Forms.Label poolLabel5;
+        private System.Windows.Forms.Button callButton;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }
