@@ -162,5 +162,10 @@ namespace PokerApplication
             
 
         }
+
+        private void Lobby_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -60,6 +60,7 @@ namespace PokerApplication
             client.GetCards();
 
         }
+        #region Initialization
         private void LoadObjects()
         {
             labels.Clear();
@@ -178,6 +179,7 @@ namespace PokerApplication
                 cards[(i * 2) + 1].Visible = false;
             }
         }
+        #endregion
         private void CheckGameStatus()
         {
             while(true)
@@ -256,6 +258,8 @@ namespace PokerApplication
         }
         public void Showdown()
         {
+            delUpdateUITurn delUpdateUITurn = new delUpdateUITurn(UpdateUITurn);
+            this.turnLabel.BeginInvoke(delUpdateUITurn, "Koniec Rundy");
             var  message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/showdown";
             var response = client.makeRequest(message, 0)[0];
             List<ShowdownSchema> showdown = new List<ShowdownSchema>();
@@ -289,8 +293,8 @@ namespace PokerApplication
                             {
                                 delUpdateUIPoints2 delUpdateUIPoints = new delUpdateUIPoints2(UpdateUIPoints2);
 
-
-                                this.money[k].BeginInvoke(delUpdateUIPoints,new object[] { item.Value.hand_type, k});
+                                string type = GetHand(item.Value.hand_type);
+                                this.money[k].BeginInvoke(delUpdateUIPoints,new object[] {type , k});
                                 var rank = item.Value.hand[0].rank;
                                 var suit = item.Value.hand[0].suit;
                                 suit = suit.Replace("hearts", "H");
@@ -322,6 +326,63 @@ namespace PokerApplication
             }
             
         }
+        public string GetHand(string rawHand)
+        {
+            if(rawHand== "royal_flash")
+            {
+                return "Poker Królewski";
+            }
+            if (rawHand == "straight_flash")
+            {
+                return "Poker";
+            }
+            if (rawHand == "four_of_a_kind")
+            {
+                return "Kareta";
+            }
+            if (rawHand == "full_house")
+            {
+                return "Full";
+            }
+            if (rawHand == "flush")
+            {
+                return "Kolor";
+            }
+            if (rawHand == "straight")
+            {
+                return "Strit";
+            }
+            if (rawHand == "three_of_a_kind")
+            {
+                return "Trójka";
+            }
+            if (rawHand == "two_pair")
+            {
+                return "Dwie Pary";
+            }
+            if (rawHand == "pair")
+            {
+                return "Para";
+            }
+            if (rawHand == "high_hand")
+            {
+                return "Wysoka Karta";
+            }
+
+
+            //royal_flash = 1
+            //straight_flash = 2
+            //four_of_a_kind = 3
+            //full_house = 4
+            //flush = 5
+            //straight = 6
+            //three_of_a_kind = 7
+            //two_pair = 8
+            //pair = 9
+            //high_hand = 10
+            return "";
+        }
+        #region UI handling
         public void UpdateUILabel(List<Player> players, int i)
         {
             
@@ -391,6 +452,8 @@ namespace PokerApplication
         {
             cards[i].BackgroundImage = Image.FromFile(directory);
         }
+        #endregion
+        #region Button Handling
         private void CheckButtons(object sender, EventArgs e)
         {
           
@@ -499,7 +562,6 @@ namespace PokerApplication
 
             }
         }
-
         private void callButton_Click(object sender, EventArgs e)
         {
             //var message = 
@@ -507,27 +569,23 @@ namespace PokerApplication
             var message = "http://"+client.apiAddress+":"+client.apiPort+"/table/"+client.tableCode+"/actions/call?playerID="+client.userCode;
             client.makeRequest(message, 0);
         }
-
         private void checkButton_Click(object sender, EventArgs e)
         {
             var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/actions/check?playerID=" + client.userCode;
             client.makeRequest(message, 0);
         }
-
         private void betButton_Click(object sender, EventArgs e)
         {
             //http://127.0.0.1:29345/table/HsbtJO8RtdWbV9p2/actions/bet?playerID=SqTwlUuJhgE0Fl6h&ammount=23
             var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/actions/bet?playerID=" + client.userCode+ "&ammount="+cashUpDown.Value.ToString();
             client.makeRequest(message, 0);
         }
-
         private void foldButton_Click(object sender, EventArgs e)
         {
             //http://127.0.0.1:29345/table/HsbtJO8RtdWbV9p2/actions/fold?playerID=ufCHsPZyP71GvBT7
             var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/actions/fold?playerID=" + client.userCode;
             client.makeRequest(message, 0);
         }
-
         private void allinButton_Click(object sender, EventArgs e)
         {
             //http://127.0.0.1:29345/table/HsbtJO8RtdWbV9p2/actions/allin?playerID=1mrkelFBCVJbaY3G
@@ -535,4 +593,5 @@ namespace PokerApplication
             client.makeRequest(message, 0);
         }
     }
+    #endregion
 }

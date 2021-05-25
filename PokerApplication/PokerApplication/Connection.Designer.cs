@@ -29,6 +29,7 @@ namespace PokerApplication
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Connection));
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -37,7 +38,7 @@ namespace PokerApplication
             // 
             // button1
             // 
-            this.button1.Font = new System.Drawing.Font("Comic Sans MS", 20.25F, System.Drawing.FontStyle.Bold);
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button1.Location = new System.Drawing.Point(247, 158);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(158, 43);
@@ -48,25 +49,28 @@ namespace PokerApplication
             // 
             // textBox1
             // 
+            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(101)))), ((int)(((byte)(77)))));
             this.textBox1.Font = new System.Drawing.Font("Comic Sans MS", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.textBox1.Location = new System.Drawing.Point(12, 86);
+            this.textBox1.Location = new System.Drawing.Point(34, 86);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(393, 52);
+            this.textBox1.Size = new System.Drawing.Size(349, 52);
             this.textBox1.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Comic Sans MS", 20.25F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(52, 45);
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label1.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label1.Location = new System.Drawing.Point(70, 37);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(311, 38);
+            this.label1.Size = new System.Drawing.Size(292, 37);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Podaj otrzymany klucz";
+            this.label1.Text = "Podaj otrzymany kod";
             // 
             // returnButton
             // 
-            this.returnButton.Font = new System.Drawing.Font("Comic Sans MS", 20.25F, System.Drawing.FontStyle.Bold);
+            this.returnButton.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.returnButton.Location = new System.Drawing.Point(12, 158);
             this.returnButton.Name = "returnButton";
             this.returnButton.Size = new System.Drawing.Size(158, 43);
@@ -79,6 +83,8 @@ namespace PokerApplication
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(417, 213);
             this.Controls.Add(this.returnButton);
             this.Controls.Add(this.label1);
