@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CardSchema.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Connection.cs">
       <SubType>Form</SubType>
@@ -71,7 +72,9 @@
     </Compile>
     <Compile Include="JsonData.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="PlayerHandSchema.cs" />
     <Compile Include="Pool.cs" />
+    <Compile Include="ShowdownSchema.cs" />
     <Compile Include="Table.cs">
       <SubType>Form</SubType>
     </Compile>

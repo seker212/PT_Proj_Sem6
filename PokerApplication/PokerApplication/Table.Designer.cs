@@ -72,11 +72,11 @@ namespace PokerApplication
             this.poolLabel4 = new System.Windows.Forms.Label();
             this.poolLabel5 = new System.Windows.Forms.Label();
             this.callButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.checkButton = new System.Windows.Forms.Button();
+            this.foldButton = new System.Windows.Forms.Button();
+            this.betButton = new System.Windows.Forms.Button();
+            this.allinButton = new System.Windows.Forms.Button();
+            this.cashUpDown = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.userCard1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userCard2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sharedCard1)).BeginInit();
@@ -94,7 +94,7 @@ namespace PokerApplication
             ((System.ComponentModel.ISupportInitialize)(this.player_card1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.player_card8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.player_card7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cashUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // userCard1
@@ -388,6 +388,7 @@ namespace PokerApplication
             this.turnLabel.Size = new System.Drawing.Size(74, 35);
             this.turnLabel.TabIndex = 26;
             this.turnLabel.Text = "None";
+            this.turnLabel.TextChanged += new System.EventHandler(this.CheckButtons);
             // 
             // points_2
             // 
@@ -564,54 +565,75 @@ namespace PokerApplication
             this.callButton.TabIndex = 40;
             this.callButton.Text = "Sprawdź";
             this.callButton.UseVisualStyleBackColor = true;
+            this.callButton.Visible = false;
+            this.callButton.Click += new System.EventHandler(this.callButton_Click);
             // 
-            // button1
+            // checkButton
             // 
-            this.button1.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button1.Location = new System.Drawing.Point(466, 429);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(86, 34);
-            this.button1.TabIndex = 41;
-            this.button1.Text = "Czekaj";
-            this.button1.UseVisualStyleBackColor = true;
+            this.checkButton.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.checkButton.Location = new System.Drawing.Point(466, 429);
+            this.checkButton.Name = "checkButton";
+            this.checkButton.Size = new System.Drawing.Size(86, 34);
+            this.checkButton.TabIndex = 41;
+            this.checkButton.Text = "Czekaj";
+            this.checkButton.UseVisualStyleBackColor = true;
+            this.checkButton.Visible = false;
+            this.checkButton.Click += new System.EventHandler(this.checkButton_Click);
             // 
-            // button2
+            // foldButton
             // 
-            this.button2.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button2.Location = new System.Drawing.Point(684, 429);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 34);
-            this.button2.TabIndex = 42;
-            this.button2.Text = "Pas";
-            this.button2.UseVisualStyleBackColor = true;
+            this.foldButton.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.foldButton.Location = new System.Drawing.Point(684, 429);
+            this.foldButton.Name = "foldButton";
+            this.foldButton.Size = new System.Drawing.Size(75, 34);
+            this.foldButton.TabIndex = 42;
+            this.foldButton.Text = "Pas";
+            this.foldButton.UseVisualStyleBackColor = true;
+            this.foldButton.Visible = false;
+            this.foldButton.Click += new System.EventHandler(this.foldButton_Click);
             // 
-            // button3
+            // betButton
             // 
-            this.button3.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button3.Location = new System.Drawing.Point(558, 429);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(120, 34);
-            this.button3.TabIndex = 43;
-            this.button3.Text = "Postaw";
-            this.button3.UseVisualStyleBackColor = true;
+            this.betButton.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.betButton.Location = new System.Drawing.Point(558, 429);
+            this.betButton.Name = "betButton";
+            this.betButton.Size = new System.Drawing.Size(120, 34);
+            this.betButton.TabIndex = 43;
+            this.betButton.Text = "Postaw";
+            this.betButton.UseVisualStyleBackColor = true;
+            this.betButton.Visible = false;
+            this.betButton.Click += new System.EventHandler(this.betButton_Click);
             // 
-            // button4
+            // allinButton
             // 
-            this.button4.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button4.Location = new System.Drawing.Point(765, 431);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(120, 34);
-            this.button4.TabIndex = 44;
-            this.button4.Text = "Va banque";
-            this.button4.UseVisualStyleBackColor = true;
+            this.allinButton.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.allinButton.Location = new System.Drawing.Point(765, 429);
+            this.allinButton.Name = "allinButton";
+            this.allinButton.Size = new System.Drawing.Size(120, 34);
+            this.allinButton.TabIndex = 44;
+            this.allinButton.Text = "Va banque";
+            this.allinButton.UseVisualStyleBackColor = true;
+            this.allinButton.Visible = false;
+            this.allinButton.Click += new System.EventHandler(this.allinButton_Click);
             // 
-            // numericUpDown1
+            // cashUpDown
             // 
-            this.numericUpDown1.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.numericUpDown1.Location = new System.Drawing.Point(558, 469);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 34);
-            this.numericUpDown1.TabIndex = 45;
+            this.cashUpDown.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.cashUpDown.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.cashUpDown.Location = new System.Drawing.Point(558, 469);
+            this.cashUpDown.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.cashUpDown.Name = "cashUpDown";
+            this.cashUpDown.Size = new System.Drawing.Size(120, 34);
+            this.cashUpDown.TabIndex = 45;
+            this.cashUpDown.Visible = false;
             // 
             // Table
             // 
@@ -620,11 +642,11 @@ namespace PokerApplication
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1264, 681);
-            this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.cashUpDown);
+            this.Controls.Add(this.allinButton);
+            this.Controls.Add(this.betButton);
+            this.Controls.Add(this.foldButton);
+            this.Controls.Add(this.checkButton);
             this.Controls.Add(this.callButton);
             this.Controls.Add(this.poolLabel5);
             this.Controls.Add(this.poolLabel4);
@@ -686,7 +708,7 @@ namespace PokerApplication
             ((System.ComponentModel.ISupportInitialize)(this.player_card1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.player_card8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.player_card7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cashUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -736,10 +758,10 @@ namespace PokerApplication
         private System.Windows.Forms.Label poolLabel4;
         private System.Windows.Forms.Label poolLabel5;
         private System.Windows.Forms.Button callButton;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Button checkButton;
+        private System.Windows.Forms.Button foldButton;
+        private System.Windows.Forms.Button betButton;
+        private System.Windows.Forms.Button allinButton;
+        private System.Windows.Forms.NumericUpDown cashUpDown;
     }
 }

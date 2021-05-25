@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Security.Cryptography;
+
 
 namespace PokerApplication
 {
@@ -21,14 +25,19 @@ namespace PokerApplication
         List<System.Windows.Forms.Label> pools;
         List<System.Windows.Forms.Label> poolAmounts;
         Client client;
+        bool showdown=false;
         public delegate void delUpdateUILabel(List<Player> players,int i);
         public delegate void delUpdateUIPoints(List<Player> players,int i);
+        public delegate void delUpdateUIPoints2(string text, int i);
         public delegate void delUpdateUISharedCards(List<string> cards, int i);
+
         public delegate void delUpadateUIPools( int i,string text,int type);
         public delegate void delUpdateUIPoolNames(int i,int type);
         public delegate void delUpdateUIPool(string pool);
         public delegate void delUpdateUITurn(string turn);
         public delegate void delUpdatePlayerCards();
+        public delegate void delUpdateCards(int i,string directory);
+
         public Table()
         {
             InitializeComponent();
@@ -53,6 +62,7 @@ namespace PokerApplication
         }
         private void LoadObjects()
         {
+            labels.Clear();
             labels.Add(player_1);
             labels.Add(player_2);
             labels.Add(player_3);
@@ -60,6 +70,7 @@ namespace PokerApplication
             labels.Add(player_5);
             labels.Add(player_6);
 
+            cards.Clear();
             cards.Add(userCard1);
             cards.Add(userCard2);
             cards.Add(player_card1);
@@ -73,6 +84,7 @@ namespace PokerApplication
             cards.Add(player_card9);
             cards.Add(player_card10);
 
+            money.Clear();
             money.Add(points_1);
             money.Add(points_2);
             money.Add(points_3);
@@ -80,18 +92,35 @@ namespace PokerApplication
             money.Add(points_5);
             money.Add(points_6);
 
+            sharedCards.Clear();
             sharedCards.Add(sharedCard1);
             sharedCards.Add(sharedCard2);
             sharedCards.Add(sharedCard3);
             sharedCards.Add(sharedCard4);
             sharedCards.Add(sharedCard5);
+            try
+            {
+                var directory = client.path +  "crimson_back.png";
+                for(int i=0; i<sharedCards.Count;i++)
+                {
+                    sharedCards[i].BackgroundImage= Image.FromFile(directory);
+                }
+                userCard1.BackgroundImage = Image.FromFile(directory);
+                userCard2.BackgroundImage = Image.FromFile(directory);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Bład wczytywania kart");
+            }
 
+            pools.Clear();
             pools.Add(pool1);
             pools.Add(pool2);
             pools.Add(pool3);
             pools.Add(pool4);
             pools.Add(pool5);
 
+            poolAmounts.Clear();
             poolAmounts.Add(poolLabel1);
             poolAmounts.Add(poolLabel2);
             poolAmounts.Add(poolLabel3);
@@ -111,12 +140,12 @@ namespace PokerApplication
                 directory = client.path + client.card2 + ".png";
                 userCard2.BackgroundImage = Image.FromFile(directory);
                 
-                
             }
             catch(Exception e )
             {
                 MessageBox.Show("Bład wczytywania kart");
             }
+
            
 
         }
@@ -172,51 +201,126 @@ namespace PokerApplication
                     players.RemoveAt(0);
                     players.Add(player);
                 }
-                delUpdateUILabel delUpdateUILabel = new delUpdateUILabel(UpdateUILabel);
-                delUpdateUIPoints delUpdateUIPoints = new delUpdateUIPoints(UpdateUIPoints);
-                delUpdateUIPool delUpdateUIPool = new delUpdateUIPool(UpdateUIPool);
-                delUpdateUITurn delUpdateUITurn = new delUpdateUITurn(UpdateUITurn);
-                delUpdateUISharedCards delUpdateUISharedCards = new delUpdateUISharedCards(UpdateUISharedCards);
-                delUpadateUIPools delUpadateUIPools = new delUpadateUIPools(UpdateUIPool);
-                delUpdateUIPoolNames delUpdateUIPoolNames = new delUpdateUIPoolNames(UpdateUIPoolNames);
-                this.turnLabel.BeginInvoke(delUpdateUITurn, turn);
-               // this.poolLabel1.BeginInvoke(delUpdateUIPool, pool);
-                for(int i=0;i<gamePools.Count;i++)
-                {
-                    this.pools[i].BeginInvoke(delUpdateUIPoolNames, i, 0);
-                    this.poolAmounts[i].BeginInvoke(delUpadateUIPools,i,gamePools[i].amount,0);
-                    if (gamePools[i].members.Contains(client.userName))
+                if(!showdown)
+                { 
+                    delUpdateUILabel delUpdateUILabel = new delUpdateUILabel(UpdateUILabel); 
+                    delUpdateUIPoints delUpdateUIPoints = new delUpdateUIPoints(UpdateUIPoints);
+                    delUpdateUIPool delUpdateUIPool = new delUpdateUIPool(UpdateUIPool);
+                    delUpdateUITurn delUpdateUITurn = new delUpdateUITurn(UpdateUITurn);
+                    delUpdateUISharedCards delUpdateUISharedCards = new delUpdateUISharedCards(UpdateUISharedCards);
+                    delUpadateUIPools delUpadateUIPools = new delUpadateUIPools(UpdateUIPool);
+                    delUpdateUIPoolNames delUpdateUIPoolNames = new delUpdateUIPoolNames(UpdateUIPoolNames);
+                    this.turnLabel.BeginInvoke(delUpdateUITurn, turn);
+                   // this.poolLabel1.BeginInvoke(delUpdateUIPool, pool);
+                    for(int i=0;i<gamePools.Count;i++)
                     {
-                        this.pools[i].BeginInvoke(delUpdateUIPoolNames, i, 1);
-                        this.poolAmounts[i].BeginInvoke(delUpadateUIPools, i, gamePools[i].amount, 1);
-                    }
-                    else
-                    {
-                        this.pools[i].BeginInvoke(delUpdateUIPoolNames, i, 3);
-                        this.poolAmounts[i].BeginInvoke(delUpadateUIPools, i, gamePools[i].amount, 3);
-                    }
+                        this.pools[i].BeginInvoke(delUpdateUIPoolNames, i, 0);
+                        this.poolAmounts[i].BeginInvoke(delUpadateUIPools,i,gamePools[i].amount,0);
+                        if (gamePools[i].members.Contains(client.userName))
+                        {
+                            this.pools[i].BeginInvoke(delUpdateUIPoolNames, i, 1);
+                            this.poolAmounts[i].BeginInvoke(delUpadateUIPools, i, gamePools[i].amount, 1);
+                        }
+                        else
+                        {
+                            this.pools[i].BeginInvoke(delUpdateUIPoolNames, i, 3);
+                            this.poolAmounts[i].BeginInvoke(delUpadateUIPools, i, gamePools[i].amount, 3);
+                        }
 
-                   // this.poolAmounts[i].
+                       // this.poolAmounts[i].
+                    }
+                    for (int i = 0;i<players.Count;i++)
+                    {
+                        this.labels[i].BeginInvoke(delUpdateUILabel,players, i);
+                    }
+                    for (int i = 0; i < players.Count; i++)
+                    {
+                        this.money[i].BeginInvoke(delUpdateUIPoints,players, i);
+                    }
+                    for(int i=0;i<cards.Count;i++)
+                    {
+                        this.sharedCards[i].BeginInvoke(delUpdateUISharedCards,cards, i);
+                    }
+                    if(cards.Count>=5&&showdown==false)
+                    {
+                        showdown = true;
+                        Showdown();
+                    }
                 }
-                for (int i = 0;i<players.Count;i++)
-                {
-                    this.labels[i].BeginInvoke(delUpdateUILabel,players, i);
-                }
-                for (int i = 0; i < players.Count; i++)
-                {
-                    this.money[i].BeginInvoke(delUpdateUIPoints,players, i);
-                }
-                for(int i=0;i<cards.Count;i++)
-                {
-                    this.sharedCards[i].BeginInvoke(delUpdateUISharedCards,cards, i);
-                }
-                
 
 
                 //this.labels.BeginInvoke()
                 Thread.Sleep(1000);
             }            
 
+        }
+        public void Showdown()
+        {
+            var  message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/showdown";
+            var response = client.makeRequest(message, 0)[0];
+            List<ShowdownSchema> showdown = new List<ShowdownSchema>();
+            showdown = JsonConvert.DeserializeObject<List<ShowdownSchema>>(response);
+            for(int i =0; i<showdown.Count;i++)
+            {
+                var schema = showdown[i];
+                int pot = schema.pot+1;
+                var prefix = "";
+                if (schema.winners.Count > 1)
+                {
+                    prefix = "Wygrali:";
+                }
+                else
+                {
+                     prefix = "Wygrał: ";
+                }
+                var winners = string.Join(", ", schema.winners);
+                winners = prefix + winners;
+                delUpadateUIPools delUpadateUIPools = new delUpadateUIPools(UpdateUIPool);
+                poolAmounts[schema.pot].BeginInvoke(delUpadateUIPools, new object[] { i,winners,0  });
+                for(int j=0;j<schema.players_hands.Count;j++)//RĘCE GRACZY
+                {
+                    var cards = schema.players_hands;
+                    foreach (var item in cards)//GRACZE
+                    {
+                        int k = 0;
+                        for(k=0;k<labels.Count;k++)//SZUKANIE GRACZA
+                        {
+                            if(labels[k].Text==item.Key)//PRZYPISYWANIE WARTOŚCI RĘKI DO TEKSTU
+                            {
+                                delUpdateUIPoints2 delUpdateUIPoints = new delUpdateUIPoints2(UpdateUIPoints2);
+
+
+                                this.money[k].BeginInvoke(delUpdateUIPoints,new object[] { item.Value.hand_type, k});
+                                var rank = item.Value.hand[0].rank;
+                                var suit = item.Value.hand[0].suit;
+                                suit = suit.Replace("hearts", "H");
+                                suit = suit.Replace("diamonds", "D");
+                                suit = suit.Replace("spades", "S");
+                                suit = suit.Replace("clubs", "C");
+                                var card = rank + suit;
+                                var directory = client.path + card + ".png";
+                                delUpdateCards delUpdateCards = new delUpdateCards(UpdateCards);
+                                this.cards[k * 2].BeginInvoke(delUpdateCards, new object[] { k * 2, directory });
+                                rank = item.Value.hand[1].rank;
+                                suit = item.Value.hand[1].suit;
+                                suit = suit.Replace("hearts", "H");
+                                suit = suit.Replace("diamonds", "D");
+                                suit = suit.Replace("spades", "S");
+                                suit = suit.Replace("clubs", "C");
+                                card = rank + suit;
+                                directory = client.path + card + ".png";
+                                this.cards[k * 2+1].BeginInvoke(delUpdateCards, new object[] { k * 2 + 1, directory });
+
+                                break;
+                            }
+                        }
+                    }
+
+                   // cards[j].
+                }
+                //schema.players_hands
+            }
+            
         }
         public void UpdateUILabel(List<Player> players, int i)
         {
@@ -227,6 +331,10 @@ namespace PokerApplication
         public void UpdateUIPoints(List<Player> players,int i)
         {
                 money[i].Text = players[i].cash;
+        }
+        public void UpdateUIPoints2(string text, int i)
+        {
+            money[i].Text = text;
         }
         public void UpdateUIPool(string pool)
         {
@@ -278,6 +386,153 @@ namespace PokerApplication
             {
                 poolAmounts[i].ForeColor = DefaultForeColor;
             }
+        }
+        public void UpdateCards(int i, string directory)
+        {
+            cards[i].BackgroundImage = Image.FromFile(directory);
+        }
+        private void CheckButtons(object sender, EventArgs e)
+        {
+          
+            if (turnLabel.Text==client.userName)
+            {
+                var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/actions?playerID=" + client.userCode;
+                var cards = client.makeRequest(message, 0)[0];
+                cards = cards.Replace("{", "");
+                cards = cards.Replace("}", "");
+                var myCards = cards.Split(',');
+
+                var bet_raise = false;
+                var call = false;
+                var check=false;
+                for (int i = 0; i < myCards.Length; i++)
+                {
+                    Console.WriteLine(myCards[i]);
+                    var line = myCards[i].Split(':');
+                    if (line[0].Contains("bet_raise"))
+                    {
+                        if (line[1].Contains("true"))
+                        {
+                            bet_raise = true;
+                        }
+                        else
+                        {
+                            bet_raise = false;
+                        }
+                    }
+                    else if (line[0].Contains("call"))
+                    {
+                        if (line[1].Contains("true"))
+                        {
+                            call = true;
+                        }
+                        else
+                        {
+                            call = false;
+                        }
+                    }
+                    if (line[0].Contains("check"))
+                    {
+                        if (line[1].Contains("true"))
+                        {
+                            check = true;
+                        }
+                        else
+                        {
+                            check = false;
+                        }
+                    }
+
+                }
+
+                checkButton.Visible = true;
+                betButton.Visible = true;
+                allinButton.Visible = true;
+                foldButton.Visible = true;
+                callButton.Visible = true;
+                cashUpDown.Visible = true;
+
+                foldButton.Enabled = true;
+                allinButton.Enabled = true;
+                if(!bet_raise)
+                {
+                    betButton.Enabled = false;
+                    cashUpDown.Enabled = false;
+                }
+                else
+                {
+                    betButton.Enabled = true;
+                    cashUpDown.Enabled = true;
+                }
+                if(!call)
+                {
+                    callButton.Enabled = false;
+                }
+                else
+                {
+                    callButton.Enabled = true;
+                }
+                if (!check)
+                {
+                    checkButton.Enabled = false;
+                }
+                else
+                {
+                    checkButton.Enabled = true;
+                }
+            }
+            else
+            {
+                checkButton.Visible = false;
+                betButton.Visible = false;
+                allinButton.Visible = false;
+                foldButton.Visible = false;
+                callButton.Visible = false;
+                cashUpDown.Visible = false;
+
+                checkButton.Enabled = false;
+                betButton.Enabled = false;
+                allinButton.Enabled = false;
+                foldButton.Enabled = false;
+                callButton.Enabled = false;
+                cashUpDown.Enabled = false;
+
+            }
+        }
+
+        private void callButton_Click(object sender, EventArgs e)
+        {
+            //var message = 
+            //http://127.0.0.1:29345/table/HsbtJO8RtdWbV9p2/actions/call?playerID=Pq8qG7nuSKl1Efoq
+            var message = "http://"+client.apiAddress+":"+client.apiPort+"/table/"+client.tableCode+"/actions/call?playerID="+client.userCode;
+            client.makeRequest(message, 0);
+        }
+
+        private void checkButton_Click(object sender, EventArgs e)
+        {
+            var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/actions/check?playerID=" + client.userCode;
+            client.makeRequest(message, 0);
+        }
+
+        private void betButton_Click(object sender, EventArgs e)
+        {
+            //http://127.0.0.1:29345/table/HsbtJO8RtdWbV9p2/actions/bet?playerID=SqTwlUuJhgE0Fl6h&ammount=23
+            var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/actions/bet?playerID=" + client.userCode+ "&ammount="+cashUpDown.Value.ToString();
+            client.makeRequest(message, 0);
+        }
+
+        private void foldButton_Click(object sender, EventArgs e)
+        {
+            //http://127.0.0.1:29345/table/HsbtJO8RtdWbV9p2/actions/fold?playerID=ufCHsPZyP71GvBT7
+            var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/actions/fold?playerID=" + client.userCode;
+            client.makeRequest(message, 0);
+        }
+
+        private void allinButton_Click(object sender, EventArgs e)
+        {
+            //http://127.0.0.1:29345/table/HsbtJO8RtdWbV9p2/actions/allin?playerID=1mrkelFBCVJbaY3G
+            var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/actions/allin?playerID=" + client.userCode;
+            client.makeRequest(message, 0);
         }
     }
 }
