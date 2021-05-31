@@ -197,59 +197,62 @@ namespace PokerApplication
                 var players = client.game.Players;
                 var turn = client.game.Turn;
                 var gamePools = client.game.Pools;
-                while(players[0].name!=client.userName)
+                if(players!=null&&players.Count>0)
                 {
-                    var player = players[0];
-                    players.RemoveAt(0);
-                    players.Add(player);
-                }
-                if(!showdown)
-                { 
-                    delUpdateUILabel delUpdateUILabel = new delUpdateUILabel(UpdateUILabel); 
-                    delUpdateUIPoints delUpdateUIPoints = new delUpdateUIPoints(UpdateUIPoints);
-                    delUpdateUIPool delUpdateUIPool = new delUpdateUIPool(UpdateUIPool);
-                    delUpdateUITurn delUpdateUITurn = new delUpdateUITurn(UpdateUITurn);
-                    delUpdateUISharedCards delUpdateUISharedCards = new delUpdateUISharedCards(UpdateUISharedCards);
-                    delUpadateUIPools delUpadateUIPools = new delUpadateUIPools(UpdateUIPool);
-                    delUpdateUIPoolNames delUpdateUIPoolNames = new delUpdateUIPoolNames(UpdateUIPoolNames);
-                    this.turnLabel.BeginInvoke(delUpdateUITurn, turn);
-                   // this.poolLabel1.BeginInvoke(delUpdateUIPool, pool);
-                    for(int i=0;i<gamePools.Count;i++)
+                    while(players[0].name!=client.userName)
                     {
-                        this.pools[i].BeginInvoke(delUpdateUIPoolNames, i, 0);
-                        this.poolAmounts[i].BeginInvoke(delUpadateUIPools,i,gamePools[i].amount,0);
-                        if (gamePools[i].members.Contains(client.userName))
+                        var player = players[0];
+                        players.RemoveAt(0);
+                        players.Add(player);
+                    }
+                    if(!showdown)
+                    { 
+                        delUpdateUILabel delUpdateUILabel = new delUpdateUILabel(UpdateUILabel); 
+                        delUpdateUIPoints delUpdateUIPoints = new delUpdateUIPoints(UpdateUIPoints);
+                        delUpdateUIPool delUpdateUIPool = new delUpdateUIPool(UpdateUIPool);
+                        delUpdateUITurn delUpdateUITurn = new delUpdateUITurn(UpdateUITurn);
+                        delUpdateUISharedCards delUpdateUISharedCards = new delUpdateUISharedCards(UpdateUISharedCards);
+                        delUpadateUIPools delUpadateUIPools = new delUpadateUIPools(UpdateUIPool);
+                        delUpdateUIPoolNames delUpdateUIPoolNames = new delUpdateUIPoolNames(UpdateUIPoolNames);
+                        this.turnLabel.BeginInvoke(delUpdateUITurn, turn);
+                       // this.poolLabel1.BeginInvoke(delUpdateUIPool, pool);
+                        for(int i=0;i<gamePools.Count;i++)
                         {
-                            this.pools[i].BeginInvoke(delUpdateUIPoolNames, i, 1);
-                            this.poolAmounts[i].BeginInvoke(delUpadateUIPools, i, gamePools[i].amount, 1);
-                        }
-                        else
-                        {
-                            this.pools[i].BeginInvoke(delUpdateUIPoolNames, i, 3);
-                            this.poolAmounts[i].BeginInvoke(delUpadateUIPools, i, gamePools[i].amount, 3);
-                        }
+                            this.pools[i].BeginInvoke(delUpdateUIPoolNames, i, 0);
+                            this.poolAmounts[i].BeginInvoke(delUpadateUIPools,i,gamePools[i].amount,0);
+                            if (gamePools[i].members.Contains(client.userName))
+                            {
+                                this.pools[i].BeginInvoke(delUpdateUIPoolNames, i, 1);
+                                this.poolAmounts[i].BeginInvoke(delUpadateUIPools, i, gamePools[i].amount, 1);
+                            }
+                            else
+                            {
+                                this.pools[i].BeginInvoke(delUpdateUIPoolNames, i, 3);
+                                this.poolAmounts[i].BeginInvoke(delUpadateUIPools, i, gamePools[i].amount, 3);
+                            }
 
-                       // this.poolAmounts[i].
+                           // this.poolAmounts[i].
+                        }
+                        for (int i = 0;i<players.Count;i++)
+                        {
+                            this.labels[i].BeginInvoke(delUpdateUILabel,players, i);
+                        }
+                        for (int i = 0; i < players.Count; i++)
+                        {
+                            this.money[i].BeginInvoke(delUpdateUIPoints,players, i);
+                        }
+                        for(int i=0;i<cards.Count;i++)
+                        {
+                            this.sharedCards[i].BeginInvoke(delUpdateUISharedCards,cards, i);
+                        }
+                   
                     }
-                    for (int i = 0;i<players.Count;i++)
-                    {
-                        this.labels[i].BeginInvoke(delUpdateUILabel,players, i);
-                    }
-                    for (int i = 0; i < players.Count; i++)
-                    {
-                        this.money[i].BeginInvoke(delUpdateUIPoints,players, i);
-                    }
-                    for(int i=0;i<cards.Count;i++)
-                    {
-                        this.sharedCards[i].BeginInvoke(delUpdateUISharedCards,cards, i);
-                    }
-                    if(cards.Count>=5&&showdown==false)
+                    if (cards.Count >= 5 && showdown == false)
                     {
                         showdown = true;
                         Showdown();
                     }
                 }
-
 
                 //this.labels.BeginInvoke()
                 Thread.Sleep(1000);
@@ -259,71 +262,80 @@ namespace PokerApplication
         public void Showdown()
         {
             delUpdateUITurn delUpdateUITurn = new delUpdateUITurn(UpdateUITurn);
-            this.turnLabel.BeginInvoke(delUpdateUITurn, "Koniec Rundy");
+            
             var  message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/showdown";
             var response = client.makeRequest(message, 0)[0];
-            List<ShowdownSchema> showdown = new List<ShowdownSchema>();
-            showdown = JsonConvert.DeserializeObject<List<ShowdownSchema>>(response);
-            for(int i =0; i<showdown.Count;i++)
+            List<ShowdownSchema> showdownresp = new List<ShowdownSchema>();
+            showdownresp = JsonConvert.DeserializeObject<List<ShowdownSchema>>(response);
+            if(showdownresp!=null)
             {
-                var schema = showdown[i];
-                int pot = schema.pot+1;
-                var prefix = "";
-                if (schema.winners.Count > 1)
+                for (int i = 0; i < showdownresp.Count; i++)
                 {
-                    prefix = "Wygrali:";
-                }
-                else
-                {
-                     prefix = "Wygrał: ";
-                }
-                var winners = string.Join(", ", schema.winners);
-                winners = prefix + winners;
-                delUpadateUIPools delUpadateUIPools = new delUpadateUIPools(UpdateUIPool);
-                poolAmounts[schema.pot].BeginInvoke(delUpadateUIPools, new object[] { i,winners,0  });
-                for(int j=0;j<schema.players_hands.Count;j++)//RĘCE GRACZY
-                {
-                    var cards = schema.players_hands;
-                    foreach (var item in cards)//GRACZE
+                    this.turnLabel.BeginInvoke(delUpdateUITurn, "Koniec Rundy");
+                    var schema = showdownresp[i];
+                    int pot = schema.pot + 1;
+                    var prefix = "";
+                    //if (schema.winners.Count > 1)
+                    //{
+                    //    prefix = "Wygrali:";
+                    //}
+                    //else
+                    //{
+                    //     prefix = "Wygrał: ";
+                    //}
+                    var winners = string.Join(", ", schema.winners);
+                    winners = prefix + winners;
+                    delUpadateUIPools delUpadateUIPools = new delUpadateUIPools(UpdateUIPool);
+                    poolAmounts[schema.pot].BeginInvoke(delUpadateUIPools, new object[] { i, winners, 0 });
+                    for (int j = 0; j < schema.players_hands.Count; j++)//RĘCE GRACZY
                     {
-                        int k = 0;
-                        for(k=0;k<labels.Count;k++)//SZUKANIE GRACZA
+                        var cards = schema.players_hands;
+                        foreach (var item in cards)//GRACZE
                         {
-                            if(labels[k].Text==item.Key)//PRZYPISYWANIE WARTOŚCI RĘKI DO TEKSTU
+                            int k = 0;
+                            for (k = 0; k < labels.Count; k++)//SZUKANIE GRACZA
                             {
-                                delUpdateUIPoints2 delUpdateUIPoints = new delUpdateUIPoints2(UpdateUIPoints2);
+                                if (labels[k].Text == item.Key)//PRZYPISYWANIE WARTOŚCI RĘKI DO TEKSTU
+                                {
+                                    delUpdateUIPoints2 delUpdateUIPoints = new delUpdateUIPoints2(UpdateUIPoints2);
 
-                                string type = GetHand(item.Value.hand_type);
-                                this.money[k].BeginInvoke(delUpdateUIPoints,new object[] {type , k});
-                                var rank = item.Value.hand[0].rank;
-                                var suit = item.Value.hand[0].suit;
-                                suit = suit.Replace("hearts", "H");
-                                suit = suit.Replace("diamonds", "D");
-                                suit = suit.Replace("spades", "S");
-                                suit = suit.Replace("clubs", "C");
-                                var card = rank + suit;
-                                var directory = client.path + card + ".png";
-                                delUpdateCards delUpdateCards = new delUpdateCards(UpdateCards);
-                                this.cards[k * 2].BeginInvoke(delUpdateCards, new object[] { k * 2, directory });
-                                rank = item.Value.hand[1].rank;
-                                suit = item.Value.hand[1].suit;
-                                suit = suit.Replace("hearts", "H");
-                                suit = suit.Replace("diamonds", "D");
-                                suit = suit.Replace("spades", "S");
-                                suit = suit.Replace("clubs", "C");
-                                card = rank + suit;
-                                directory = client.path + card + ".png";
-                                this.cards[k * 2+1].BeginInvoke(delUpdateCards, new object[] { k * 2 + 1, directory });
+                                    string type = GetHand(item.Value.hand_type);
+                                    this.money[k].BeginInvoke(delUpdateUIPoints, new object[] { type, k });
+                                    var rank = item.Value.hand[0].rank;
+                                    var suit = item.Value.hand[0].suit;
+                                    suit = suit.Replace("hearts", "H");
+                                    suit = suit.Replace("diamonds", "D");
+                                    suit = suit.Replace("spades", "S");
+                                    suit = suit.Replace("clubs", "C");
+                                    var card = rank + suit;
+                                    var directory = client.path + card + ".png";
+                                    delUpdateCards delUpdateCards = new delUpdateCards(UpdateCards);
+                                    this.cards[k * 2].BeginInvoke(delUpdateCards, new object[] { k * 2, directory });
+                                    rank = item.Value.hand[1].rank;
+                                    suit = item.Value.hand[1].suit;
+                                    suit = suit.Replace("hearts", "H");
+                                    suit = suit.Replace("diamonds", "D");
+                                    suit = suit.Replace("spades", "S");
+                                    suit = suit.Replace("clubs", "C");
+                                    card = rank + suit;
+                                    directory = client.path + card + ".png";
+                                    this.cards[k * 2 + 1].BeginInvoke(delUpdateCards, new object[] { k * 2 + 1, directory });
 
-                                break;
+                                    break;
+                                }
                             }
                         }
-                    }
 
-                   // cards[j].
+                        // cards[j].
+                    }
+                    //schema.players_hands
                 }
-                //schema.players_hands
             }
+            else
+            {
+                showdown = false;
+            }
+           
             
         }
         public string GetHand(string rawHand)
@@ -470,7 +482,7 @@ namespace PokerApplication
                 var check=false;
                 for (int i = 0; i < myCards.Length; i++)
                 {
-                    Console.WriteLine(myCards[i]);
+                    //Console.WriteLine(myCards[i]);
                     var line = myCards[i].Split(':');
                     if (line[0].Contains("bet_raise"))
                     {

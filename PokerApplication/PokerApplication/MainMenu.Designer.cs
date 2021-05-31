@@ -53,7 +53,7 @@ namespace PokerApplication
             // 
             this.mainLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(101)))), ((int)(((byte)(77)))));
             this.mainLabel.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Bold);
-            this.mainLabel.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.mainLabel.ForeColor = System.Drawing.Color.Gainsboro;
             this.mainLabel.Location = new System.Drawing.Point(486, 32);
             this.mainLabel.Name = "mainLabel";
             this.mainLabel.Size = new System.Drawing.Size(297, 27);
@@ -63,7 +63,7 @@ namespace PokerApplication
             // 
             // startButton
             // 
-            this.startButton.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.startButton.BackColor = System.Drawing.Color.Gainsboro;
             this.startButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.startButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.startButton.Font = new System.Drawing.Font("Comic Sans MS", 14.75F, System.Drawing.FontStyle.Bold);
@@ -78,7 +78,7 @@ namespace PokerApplication
             // 
             // joinButton
             // 
-            this.joinButton.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.joinButton.BackColor = System.Drawing.Color.Gainsboro;
             this.joinButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.joinButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.joinButton.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold);
@@ -93,7 +93,7 @@ namespace PokerApplication
             // 
             // helpButton
             // 
-            this.helpButton.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.helpButton.BackColor = System.Drawing.Color.Gainsboro;
             this.helpButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.helpButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.helpButton.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold);
@@ -108,7 +108,7 @@ namespace PokerApplication
             // 
             // settingsButton
             // 
-            this.settingsButton.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.settingsButton.BackColor = System.Drawing.Color.Gainsboro;
             this.settingsButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.settingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.settingsButton.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold);
@@ -119,10 +119,11 @@ namespace PokerApplication
             this.settingsButton.TabIndex = 5;
             this.settingsButton.Text = "Ustawienia";
             this.settingsButton.UseVisualStyleBackColor = false;
+            this.settingsButton.Visible = false;
             // 
             // exitButton
             // 
-            this.exitButton.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.exitButton.BackColor = System.Drawing.Color.Gainsboro;
             this.exitButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.exitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.exitButton.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold);

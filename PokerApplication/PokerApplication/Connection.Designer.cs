@@ -39,9 +39,9 @@ namespace PokerApplication
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button1.Location = new System.Drawing.Point(247, 158);
+            this.button1.Location = new System.Drawing.Point(214, 158);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(158, 43);
+            this.button1.Size = new System.Drawing.Size(168, 43);
             this.button1.TabIndex = 0;
             this.button1.Text = "Połącz";
             this.button1.UseVisualStyleBackColor = true;
@@ -49,11 +49,12 @@ namespace PokerApplication
             // 
             // textBox1
             // 
-            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(101)))), ((int)(((byte)(77)))));
+            this.textBox1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.textBox1.Font = new System.Drawing.Font("Comic Sans MS", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.textBox1.Location = new System.Drawing.Point(34, 86);
+            this.textBox1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.textBox1.Location = new System.Drawing.Point(36, 86);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(349, 52);
+            this.textBox1.Size = new System.Drawing.Size(344, 52);
             this.textBox1.TabIndex = 1;
             // 
             // label1
@@ -71,9 +72,9 @@ namespace PokerApplication
             // returnButton
             // 
             this.returnButton.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.returnButton.Location = new System.Drawing.Point(12, 158);
+            this.returnButton.Location = new System.Drawing.Point(34, 158);
             this.returnButton.Name = "returnButton";
-            this.returnButton.Size = new System.Drawing.Size(158, 43);
+            this.returnButton.Size = new System.Drawing.Size(168, 43);
             this.returnButton.TabIndex = 3;
             this.returnButton.Text = "Powrót";
             this.returnButton.UseVisualStyleBackColor = true;

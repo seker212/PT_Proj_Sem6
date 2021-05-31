@@ -104,11 +104,11 @@ namespace PokerApplication
             // 
             this.userLabel1.AutoSize = true;
             this.userLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.userLabel1.Font = new System.Drawing.Font("Segoe UI Semilight", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.userLabel1.Font = new System.Drawing.Font("Segoe UI Semilight", 20F);
             this.userLabel1.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.userLabel1.Location = new System.Drawing.Point(75, 180);
             this.userLabel1.Name = "userLabel1";
-            this.userLabel1.Size = new System.Drawing.Size(29, 32);
+            this.userLabel1.Size = new System.Drawing.Size(33, 37);
             this.userLabel1.TabIndex = 6;
             this.userLabel1.Text = "1:";
             // 
@@ -116,11 +116,11 @@ namespace PokerApplication
             // 
             this.userLabel2.AutoSize = true;
             this.userLabel2.BackColor = System.Drawing.Color.Transparent;
-            this.userLabel2.Font = new System.Drawing.Font("Segoe UI Semilight", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.userLabel2.Font = new System.Drawing.Font("Segoe UI Semilight", 20F);
             this.userLabel2.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.userLabel2.Location = new System.Drawing.Point(75, 220);
             this.userLabel2.Name = "userLabel2";
-            this.userLabel2.Size = new System.Drawing.Size(33, 32);
+            this.userLabel2.Size = new System.Drawing.Size(37, 37);
             this.userLabel2.TabIndex = 7;
             this.userLabel2.Text = "2:";
             // 
@@ -128,11 +128,11 @@ namespace PokerApplication
             // 
             this.userLabel3.AutoSize = true;
             this.userLabel3.BackColor = System.Drawing.Color.Transparent;
-            this.userLabel3.Font = new System.Drawing.Font("Segoe UI Semilight", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.userLabel3.Font = new System.Drawing.Font("Segoe UI Semilight", 20F);
             this.userLabel3.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.userLabel3.Location = new System.Drawing.Point(75, 260);
             this.userLabel3.Name = "userLabel3";
-            this.userLabel3.Size = new System.Drawing.Size(33, 32);
+            this.userLabel3.Size = new System.Drawing.Size(37, 37);
             this.userLabel3.TabIndex = 8;
             this.userLabel3.Text = "3:";
             // 
@@ -140,11 +140,11 @@ namespace PokerApplication
             // 
             this.userLabel6.AutoSize = true;
             this.userLabel6.BackColor = System.Drawing.Color.Transparent;
-            this.userLabel6.Font = new System.Drawing.Font("Segoe UI Semilight", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.userLabel6.Font = new System.Drawing.Font("Segoe UI Semilight", 20F);
             this.userLabel6.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.userLabel6.Location = new System.Drawing.Point(470, 260);
+            this.userLabel6.Location = new System.Drawing.Point(429, 260);
             this.userLabel6.Name = "userLabel6";
-            this.userLabel6.Size = new System.Drawing.Size(33, 32);
+            this.userLabel6.Size = new System.Drawing.Size(37, 37);
             this.userLabel6.TabIndex = 11;
             this.userLabel6.Text = "6:";
             // 
@@ -152,11 +152,11 @@ namespace PokerApplication
             // 
             this.userLabel5.AutoSize = true;
             this.userLabel5.BackColor = System.Drawing.Color.Transparent;
-            this.userLabel5.Font = new System.Drawing.Font("Segoe UI Semilight", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.userLabel5.Font = new System.Drawing.Font("Segoe UI Semilight", 20F);
             this.userLabel5.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.userLabel5.Location = new System.Drawing.Point(470, 220);
+            this.userLabel5.Location = new System.Drawing.Point(429, 220);
             this.userLabel5.Name = "userLabel5";
-            this.userLabel5.Size = new System.Drawing.Size(33, 32);
+            this.userLabel5.Size = new System.Drawing.Size(37, 37);
             this.userLabel5.TabIndex = 10;
             this.userLabel5.Text = "5:";
             // 
@@ -164,11 +164,11 @@ namespace PokerApplication
             // 
             this.userLabel4.AutoSize = true;
             this.userLabel4.BackColor = System.Drawing.Color.Transparent;
-            this.userLabel4.Font = new System.Drawing.Font("Segoe UI Semilight", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.userLabel4.Font = new System.Drawing.Font("Segoe UI Semilight", 20F);
             this.userLabel4.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.userLabel4.Location = new System.Drawing.Point(470, 180);
+            this.userLabel4.Location = new System.Drawing.Point(429, 180);
             this.userLabel4.Name = "userLabel4";
-            this.userLabel4.Size = new System.Drawing.Size(33, 32);
+            this.userLabel4.Size = new System.Drawing.Size(38, 37);
             this.userLabel4.TabIndex = 9;
             this.userLabel4.Text = "4:";
             // 
