@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PokerApplication
+namespace PokerApplicationClassLib
 {
     public class Player
     {

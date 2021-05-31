@@ -49,15 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CardSchema.cs" />
-    <Compile Include="Client.cs" />
     <Compile Include="Connection.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Connection.Designer.cs">
       <DependentUpon>Connection.cs</DependentUpon>
     </Compile>
-    <Compile Include="Game.cs" />
     <Compile Include="HelpForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,11 +67,7 @@
     <Compile Include="IntroForm.Designer.cs">
       <DependentUpon>IntroForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="JsonData.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="PlayerHandSchema.cs" />
-    <Compile Include="Pool.cs" />
-    <Compile Include="ShowdownSchema.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Table.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,7 +92,6 @@
     <Compile Include="MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Connection.resx">
       <DependentUpon>Connection.cs</DependentUpon>
@@ -130,6 +122,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -163,6 +156,12 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PokerApplicationClassLib\PokerApplicationClassLib.csproj">
+      <Project>{1640ec03-0cdc-4d4d-aa66-3a0e64b1e25f}</Project>
+      <Name>PokerApplicationClassLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

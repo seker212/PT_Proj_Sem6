@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Security.Cryptography;
-
+using PokerApplicationClassLib;
 
 namespace PokerApplication
 {

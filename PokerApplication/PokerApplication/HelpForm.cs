@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PokerApplicationClassLib;
 
 namespace PokerApplication
 {
     public partial class HelpForm : Form
     {
+        
         Client client;
         public HelpForm()
         {
