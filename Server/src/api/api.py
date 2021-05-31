@@ -52,7 +52,10 @@ class GetTableInfo(MethodResource, Resource):
         table_cards = [CardModel(card.suit.name, card.rank) for card in table.getCurrentCards()]
         table_pots = [PotModel(pot.ammount, [m.user.name for m in pot.members]) for pot in table.pots]
         table_players = [PlayerModel(p.user.name, p.money) for p in table.players.List]
-        table_model = TableModel(table_pots, table_players, table.turnPlayer.user.name, table_cards)
+        turn_player = table.turnPlayer
+        if turn_player is not None:
+            turn_player = turn_player.user.name
+        table_model = TableModel(table_pots, table_players, turn_player, table_cards)
         table_schema = TableSchema()
         return table_schema.dump(table_model), 200
 
