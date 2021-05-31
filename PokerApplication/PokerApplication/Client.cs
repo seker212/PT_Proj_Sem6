@@ -32,7 +32,8 @@ namespace PokerApplication
         {
             GET,
             POST,
-            DELETE
+            DELETE,
+            PUT
         }
         /// <summary>
         /// Checks if server is responding
@@ -174,6 +175,10 @@ namespace PokerApplication
             if(type==2)
             {
                 httpMethod = httpVerbs.DELETE;
+            }
+            if(type==3)
+            {
+                httpMethod = httpVerbs.PUT;
             }
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(message);
 

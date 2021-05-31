@@ -77,6 +77,7 @@ namespace PokerApplication
             this.betButton = new System.Windows.Forms.Button();
             this.allinButton = new System.Windows.Forms.Button();
             this.cashUpDown = new System.Windows.Forms.NumericUpDown();
+            this.nextRound = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.userCard1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userCard2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sharedCard1)).BeginInit();
@@ -635,6 +636,18 @@ namespace PokerApplication
             this.cashUpDown.TabIndex = 45;
             this.cashUpDown.Visible = false;
             // 
+            // nextRound
+            // 
+            this.nextRound.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold);
+            this.nextRound.Location = new System.Drawing.Point(1074, 635);
+            this.nextRound.Name = "nextRound";
+            this.nextRound.Size = new System.Drawing.Size(178, 34);
+            this.nextRound.TabIndex = 46;
+            this.nextRound.Text = "Następna runda";
+            this.nextRound.UseVisualStyleBackColor = true;
+            this.nextRound.Visible = false;
+            this.nextRound.Click += new System.EventHandler(this.nextRound_Click);
+            // 
             // Table
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -642,6 +655,7 @@ namespace PokerApplication
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.nextRound);
             this.Controls.Add(this.cashUpDown);
             this.Controls.Add(this.allinButton);
             this.Controls.Add(this.betButton);
@@ -763,5 +777,6 @@ namespace PokerApplication
         private System.Windows.Forms.Button betButton;
         private System.Windows.Forms.Button allinButton;
         private System.Windows.Forms.NumericUpDown cashUpDown;
+        private System.Windows.Forms.Button nextRound;
     }
 }
