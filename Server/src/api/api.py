@@ -259,13 +259,16 @@ class Showdown(MethodResource, Resource):
         showdown_models = []
         pot_index = 0
         for pot in table.pots:
-            players_hands_model_dict = {}
-            players_hands = table.getHands(pot)
-            for player in players_hands.keys():
-                players_hands_model_dict[player.user.name] = PlayerHandModel(players_hands[player].HandType.name, [CardModel(c.suit.name, c.rank) for c in player.hand])
-            winners = table.getWinners(players_hands)
-            showdown_models.append(ShowdownModel(players_hands_model_dict.copy(), [w.user.name for w in winners], pot_index))
-            pot_index += 1
+            if len(pot.members) > 1:
+                players_hands_model_dict = {}
+                players_hands = table.getHands(pot)
+                for player in players_hands.keys():
+                    players_hands_model_dict[player.user.name] = PlayerHandModel(players_hands[player].HandType.name, [CardModel(c.suit.name, c.rank) for c in player.hand])
+                winners = table.getWinners(players_hands)
+                showdown_models.append(ShowdownModel(players_hands_model_dict.copy(), [w.user.name for w in winners], pot_index))
+                pot_index += 1
+            else:
+                showdown_models.append(ShowdownModel(None, [pot.members[0].user.name], pot_index))
         showdown_schemas = [ShowdownSchema().dump(model) for model in showdown_models]
         return showdown_schemas, 200
 
