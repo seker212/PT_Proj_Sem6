@@ -205,6 +205,7 @@ namespace PokerApplication
             this.Controls.Add(this.button1);
             this.Name = "UserLobby";
             this.Text = "Lobby";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Lobby_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -79,7 +79,7 @@ namespace PokerApplication
             }
             else
             {
-
+                Application.Exit();
             }
         }
 
@@ -116,8 +116,8 @@ namespace PokerApplication
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            var code =client.createGame();
-            if(client.joinGame(code))
+            var code =client.CreateGame();
+            if(client.JoinGame(code))
             {
                 Lobby lobby = new Lobby(client, code);
                 lobby.Show();

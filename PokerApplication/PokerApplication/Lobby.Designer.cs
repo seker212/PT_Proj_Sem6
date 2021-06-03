@@ -109,7 +109,6 @@ namespace PokerApplication
             this.label2.Size = new System.Drawing.Size(91, 35);
             this.label2.TabIndex = 4;
             this.label2.Text = "Lobby";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // refresh_button
             // 
@@ -303,7 +302,7 @@ namespace PokerApplication
             this.Controls.Add(this.button1);
             this.Name = "Lobby";
             this.Text = "Lobby";
-            this.Load += new System.EventHandler(this.Lobby_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Lobby_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.bet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.smalBlind)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

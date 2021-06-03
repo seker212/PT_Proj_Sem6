@@ -15,6 +15,7 @@ namespace PokerApplication
     {
         string gamecode;
         Client client;
+        bool controlledClose = false;
         public UserLobby()
         {
             InitializeComponent();
@@ -47,13 +48,13 @@ namespace PokerApplication
         private void refresh()
         {
             var message = "http://" + client.apiAddress + ":" + client.apiPort + "/newtable/players/" + gamecode;
-            var data = client.makeRequest(message, 0)[0];
+            var data = client.MakeRequest(message, 0)[0];
             splitToLabels(data);
         }
         private void button1_Click(object sender, EventArgs e)
         {
             const string message =
-               "Czy na pewno chcesz anulować rozgrywkę?";
+               "Czy na pewno chcesz opuścić rozgrywkę?";
             const string caption = "Wyjście";
             var result = MessageBox.Show(message, caption,
                                          MessageBoxButtons.YesNo,
@@ -69,9 +70,12 @@ namespace PokerApplication
             {
                 MainMenu mainMenu = new MainMenu(client);
                 var request = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/disconnect?playerID=" + client.userCode;
-                client.makeRequest(request, 2);
+                controlledClose = true;
+                client.MakeRequest(request, 2);
                 mainMenu.Show();
                 this.Close();
+                
+                
                 //USUWANIE STOŁU 
             }
             
@@ -151,6 +155,31 @@ namespace PokerApplication
                 this.Hide();
             }
 
+        }
+        private void Lobby_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(!controlledClose)
+            {
+                const string message =
+                                "Czy na pewno chcesz opuścić program?";
+                const string caption = "Wyście";
+                var result = MessageBox.Show(message, caption,
+                                             MessageBoxButtons.YesNo,
+                                             MessageBoxIcon.Question);
+
+                // If the no button was pressed ...
+                if (result == DialogResult.No)
+                {
+                    // cancel the closure of the form.
+                    e.Cancel = true;
+                }
+                else
+                {
+                    var request = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/disconnect?playerID=" + client.userCode;
+                    client.MakeRequest(request, 2);
+                }
+            }
+            
         }
     }
 }

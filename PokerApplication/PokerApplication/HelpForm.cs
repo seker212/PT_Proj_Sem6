@@ -39,5 +39,7 @@ namespace PokerApplication
             mainMenu.Show();
             this.Close();
         }
+
+       
     }
 }

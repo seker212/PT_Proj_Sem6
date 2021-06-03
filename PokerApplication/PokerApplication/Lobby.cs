@@ -15,6 +15,7 @@ namespace PokerApplication
     {
         string gamecode;
         Client client;
+        bool controlledClose = false;
         public Lobby()
         {
             InitializeComponent();
@@ -31,7 +32,7 @@ namespace PokerApplication
         private void refresh_Click(object sender, EventArgs e)
         {
             refresh();
-            if (label2.Text.Length > 2)
+            if (userLabel2.Text.Length > 2 )
             {
                 start_Button.Enabled = true;
             }
@@ -43,7 +44,7 @@ namespace PokerApplication
         private void refresh()
         {
             var message = "http://" + client.apiAddress + ":" + client.apiPort + "/newtable/players/" + gamecode;
-            var data = client.makeRequest(message, 0)[0];
+            var data = client.MakeRequest(message, 0)[0];
             splitToLabels(data);
         }
 
@@ -66,7 +67,8 @@ namespace PokerApplication
             {
                 MainMenu mainMenu = new MainMenu(client);
                 var request = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/disconnect?playerID=" + client.userCode;
-                client.makeRequest(request, 2);
+                client.MakeRequest(request, 2);
+                controlledClose = true;
                 //http://127.0.0.1:29345/table/T2IGi5DgI1yvx3DL/disconnect?playerID=ScgfM4DitNP3op5I
                 mainMenu.Show();
                 this.Close();
@@ -153,7 +155,7 @@ namespace PokerApplication
             
             //http://127.0.0.1:29345/newtable/start/mjjzZEMSOtbIJ1bf?startingMoney=1000&smallBlind=20
             var message = "http://"+client.apiAddress+":"+client.apiPort+"/newtable/start/"+client.tableCode+"?startingMoney="+bet.Value.ToString()+"&smallBlind="+smalBlind.Value.ToString();
-            client.makeRequest(message,0);
+            client.MakeRequest(message,0);
             if(client.Started())
             {
                 Table table = new Table(client);
@@ -163,15 +165,30 @@ namespace PokerApplication
             
 
         }
-
-        private void Lobby_Load(object sender, EventArgs e)
+        private void Lobby_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (!controlledClose)
+            {
+                const string message =
+                                "Czy na pewno chcesz opuścić program?";
+                const string caption = "Wyście";
+                var result = MessageBox.Show(message, caption,
+                                             MessageBoxButtons.YesNo,
+                                             MessageBoxIcon.Question);
 
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
+                // If the no button was pressed ...
+                if (result == DialogResult.No)
+                {
+                    // cancel the closure of the form.
+                    e.Cancel = true;
+                }
+                else
+                {
+                    var request = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/disconnect?playerID=" + client.userCode;
+                    client.MakeRequest(request, 2);
+                }
+            }
+           
         }
     }
 }

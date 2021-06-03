@@ -200,7 +200,7 @@ namespace PokerApplication
             while(true)
             {
                 var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode;
-                string table = client.makeRequest(message, 0)[0];
+                string table = client.MakeRequest(message, 0)[0];
                 //table = table.Replace()
                 table = Regex.Replace(table, @"[^0-9a-zA-Z:,_[+\]]", "");
 
@@ -210,6 +210,20 @@ namespace PokerApplication
                 var cards = client.game.Cards;
                 //var pool = client.game.Pool;
                 var players = client.game.Players;
+                if(players.Count()<2)
+                {
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        // close the form on the forms thread
+                        MainMenu mainMenu = new MainMenu(client);
+                        MessageBox.Show("Wszyscy gracze wyszli. Nastąpi przekierowanie do głównego menu");
+                        mainMenu.Show();
+                        this.Close();
+                    });
+                }
+                
+
+                //jeśli playerów jest 1 to wtedy zamknij 
                 var turn = client.game.Turn;
                 var gamePools = client.game.Pools;
                 if(players!=null&&players.Count>0)
@@ -248,13 +262,13 @@ namespace PokerApplication
 
                             // this.poolAmounts[i].
                         }
-                        for (int i = 0; i < players.Count; i++)
+                        for (int i = 0; i < 6; i++)
                         {
                             this.labels[i].BeginInvoke(delUpdateUILabel, players, i);
                         }
-                        for (int i = 0; i < players.Count; i++)
+                        for (int i = 0; i < 6; i++)
                         {
-                            this.money[i].BeginInvoke(delUpdateUIPoints, players, i);
+                            this.money[i].BeginInvoke(delUpdateUIPoints, players, i); 
                         }
                         for (int i = 0; i < cards.Count; i++)
                         {
@@ -274,7 +288,7 @@ namespace PokerApplication
             delUpdateUITurn delUpdateUITurn = new delUpdateUITurn(UpdateUITurn);
             
             var  message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/showdown";
-            var response = client.makeRequest(message, 0)[0];
+            var response = client.MakeRequest(message, 0)[0];
             List<ShowdownSchema> showdownresp = new List<ShowdownSchema>();
             showdownresp = JsonConvert.DeserializeObject<List<ShowdownSchema>>(response);
             if(showdownresp!=null)
@@ -419,13 +433,30 @@ namespace PokerApplication
         #region UI handling
         public void UpdateUILabel(List<Player> players, int i)
         {
-            
-                labels[i].Text = players[i].name;
+                if (i < 0)
+                    return;
+                if(i>=players.Count())
+                {
+                    labels[i].Text = "";
+                }
+                else
+                {
+                     labels[i].Text = players[i].name;
+                }
+                
            
         }
         public void UpdateUIPoints(List<Player> players,int i)
         {
+            if (i >= players.Count())
+            {
+                money[i].Text = "";
+            }
+            else
+            {
                 money[i].Text = players[i].cash;
+            }
+            
         }
         public void UpdateUIPoints2(string text, int i)
         {
@@ -494,7 +525,7 @@ namespace PokerApplication
             if (turnLabel.Text==client.userName)
             {
                 var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/actions?playerID=" + client.userCode;
-                var cards = client.makeRequest(message, 0)[0];
+                var cards = client.MakeRequest(message, 0)[0];
                 cards = cards.Replace("{", "");
                 cards = cards.Replace("}", "");
                 var myCards = cards.Split(',');
@@ -607,41 +638,41 @@ namespace PokerApplication
             //var message = 
             //http://127.0.0.1:29345/table/HsbtJO8RtdWbV9p2/actions/call?playerID=Pq8qG7nuSKl1Efoq
             var message = "http://"+client.apiAddress+":"+client.apiPort+"/table/"+client.tableCode+"/actions/call?playerID="+client.userCode;
-            client.makeRequest(message, 0);
+            client.MakeRequest(message, 0);
         }
         private void checkButton_Click(object sender, EventArgs e)
         {
             var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/actions/check?playerID=" + client.userCode;
-            client.makeRequest(message, 0);
+            client.MakeRequest(message, 0);
         }
         private void betButton_Click(object sender, EventArgs e)
         {
             //http://127.0.0.1:29345/table/HsbtJO8RtdWbV9p2/actions/bet?playerID=SqTwlUuJhgE0Fl6h&ammount=23
             var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/actions/bet?playerID=" + client.userCode+ "&ammount="+cashUpDown.Value.ToString();
-            client.makeRequest(message, 0);
+            client.MakeRequest(message, 0);
         }
         private void foldButton_Click(object sender, EventArgs e)
         {
             //http://127.0.0.1:29345/table/HsbtJO8RtdWbV9p2/actions/fold?playerID=ufCHsPZyP71GvBT7
             var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/actions/fold?playerID=" + client.userCode;
-            client.makeRequest(message, 0);
+            client.MakeRequest(message, 0);
         }
         private void allinButton_Click(object sender, EventArgs e)
         {
             //http://127.0.0.1:29345/table/HsbtJO8RtdWbV9p2/actions/allin?playerID=1mrkelFBCVJbaY3G
             var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/actions/allin?playerID=" + client.userCode;
-            client.makeRequest(message, 0);
+            client.MakeRequest(message, 0);
         }
 
         private void nextRound_Click(object sender, EventArgs e)
         {
             nextRound.Visible = false;
             var request = "http://"+client.apiAddress+":"+client.apiPort+"/table/"+client.tableCode+"/nextround?playerID="+client.userCode;
-            client.makeRequest(request, 3);
+            client.MakeRequest(request, 3);
             while(true)
             {
                 var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode;
-                string table = client.makeRequest(message, 0)[0];
+                string table = client.MakeRequest(message, 0)[0];
                 //table = table.Replace()
                 table = Regex.Replace(table, @"[^0-9a-zA-Z:,_[+\]]", "");
 
@@ -664,6 +695,28 @@ namespace PokerApplication
             LoadObjects();
 
         }
+        private void Table_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            const string message =
+                "Czy na pewno chcesz opuścić rozgrywkę?\nUwaga, jeżeli opuścisz rozgrywkę już do niej nie wrócisz!";
+            const string caption = "Wyście";
+            var result = MessageBox.Show(message, caption,
+                                         MessageBoxButtons.YesNo,
+                                         MessageBoxIcon.Question);
+
+            // If the no button was pressed ...
+            if (result == DialogResult.No)
+            {
+                // cancel the closure of the form.
+                e.Cancel = true;
+            }
+            else
+            {
+                var request = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/disconnect?playerID=" + client.userCode;
+                client.MakeRequest(request, 2);
+            }
+        }
     }
+
     #endregion
 }

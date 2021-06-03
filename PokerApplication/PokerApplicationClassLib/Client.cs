@@ -45,7 +45,7 @@ namespace PokerApplicationClassLib
         {
             //CHANGE REQUEST FOR PING
             var api_Request = "http://" + ipAddress + ":" + port + "/doc/swagger/";
-            string[] received = makeRequest(api_Request,0);
+            string[] received = MakeRequest(api_Request,0);
             if (!String.IsNullOrEmpty(received[0]) )
             {
                 this.apiAddress = ipAddress;
@@ -62,19 +62,19 @@ namespace PokerApplicationClassLib
         /// Creates a new poker table, return unique table code.
         /// </summary>
         /// <returns></returns>
-        public string createGame()
+        public string CreateGame()
         {      
             var api_Request = "http://" + apiAddress + ":" + apiPort + "/newtable";
-            string[] received = makeRequest(api_Request,1);
+            string[] received = MakeRequest(api_Request,1);
             Regex reg = new Regex("[*'\",_&#^@]");
             received[0] = reg.Replace(received[0], string.Empty);
             return received[0];
         }
-        public bool joinGame(string joinCode)
+        public bool JoinGame(string joinCode)
         {
 
             var message = "http://" + apiAddress + ":" + apiPort + "/newtable/join/" + joinCode + "?playerName=" + userName;
-            userCode = makeRequest(message,1)[0];
+            userCode = MakeRequest(message,1)[0];
             Regex reg = new Regex("[*'\",_&#^@]");
             userCode = reg.Replace(userCode, string.Empty);
             if(userCode==""||userCode==null)
@@ -120,47 +120,13 @@ namespace PokerApplicationClassLib
             
 
         }
-        public string Login(string login, string passwd)
-        {
-            string api_Request = "http://127.0.0.1:29345/doc/swagger/";
-            string[] received = makeRequest(api_Request,0);
-            return "hello";
-
-        }
-        public string[] GetData(string login, string passwd)
-        {
-            string api_Request = "";
-            if (Regex.IsMatch(login, @"^[a-zA-Z0-9]+$"))
-            {
-                // Logowanie użytkownika po peselu
-                if (Regex.IsMatch(login, @"^[0-9]+$"))
-                {
-                    if (login.Length == 11)
-                    {
-                        api_Request = "http://127.0.0.1:5000/api/results?pesel=" + login;
-                    }
-                    
-                }
-                else // Logowanie administratora po loginie
-                {
-                    api_Request = "http://127.0.0.1:5000/api/results?username=" + login;
-                }
-
-            }
-            string[] received = new string[10];
-            received = makeRequest(api_Request,0);
-            Console.WriteLine(received);
-            //TEST
-            return received;
-
-
-        }
+       
         /// <summary>
         /// Makes API request
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public string[] makeRequest(string message,int type)
+        public string[] MakeRequest(string message,int type)
         {
             string msgResponse = string.Empty;
             if(type==0)
@@ -295,7 +261,7 @@ namespace PokerApplicationClassLib
         {
             var request = "http://"+apiAddress+":"+apiPort+"/table/" +tableCode;
             
-            if (makeRequest(request, 0)[0] != "NO")
+            if (MakeRequest(request, 0)[0] != "NO")
             {
                 return true;
             }
@@ -309,7 +275,7 @@ namespace PokerApplicationClassLib
         public bool GetCards()
         {
             var message = "http://"+apiAddress+":"+apiPort+"/table/"+tableCode+"/playercards?playerID="+userCode;
-            var cards =makeRequest(message, 0)[0];
+            var cards =MakeRequest(message, 0)[0];
             Console.WriteLine(cards);
             cards = Regex.Replace(cards, @"[^0-9a-zA-Z:,]+", "");
             Console.WriteLine(cards);

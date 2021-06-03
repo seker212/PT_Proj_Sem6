@@ -705,6 +705,7 @@ namespace PokerApplication
             this.Controls.Add(this.userCard1);
             this.Name = "Table";
             this.Text = "Table";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Table_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.userCard1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.userCard2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sharedCard1)).EndInit();
