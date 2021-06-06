@@ -182,14 +182,19 @@ class DisconnectPlayer(MethodResource, Resource):
                     return '', 403
                 else:
                     disconnect_player = None
-                    for p in table.players.List:
-                        if p.user.id == playerID:
-                            disconnect_player = p
-                            break
-                    for pot in table.pots:
-                        if disconnect_player in pot.members:
-                            pot.members.remove(disconnect_player)
-                    table.players.List.remove(disconnect_player)
+                    if len(table.players.List) > 1:
+                        for p in table.players.List:
+                            if p.user.id == playerID:
+                                disconnect_player = p
+                                break
+                        while table.turnPlayer is not None and table.turnPlayer == disconnect_player:
+                            table.nextTurnPlayer()
+                        for pot in table.pots:
+                            if disconnect_player in pot.members:
+                                pot.members.remove(disconnect_player)
+                        table.players.List.remove(disconnect_player)
+                    else:
+                        del started_games[tableID]
                 if tableID in next_rounds_check:
                     del next_rounds_check[tableID][playerID]
                     if all(next_rounds_check[tableID].values()):
