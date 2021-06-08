@@ -2,6 +2,8 @@ from sys import path
 if '' not in path:
     path.append('')
 
+import threading, time
+
 from flask import Flask
 from flask_restful import Resource, Api
 from apispec import APISpec
@@ -18,6 +20,7 @@ from src.poker.Player import Player
 from src.poker.player_actions import bet_raise, all_in, call, check, fold, ActionEffect, AvailableActions
 from src.api.api_schemas import *
 from src.api.api_models import *
+
 
 app = Flask(__name__)  # Flask app instance initiated
 api = Api(app)  # Flask restful wraps Flask app around it.
@@ -38,17 +41,51 @@ docs = FlaskApiSpec(app)
 not_started_games = {}
 started_games = {}
 next_rounds_check = {}
+timeout_dict = {}
 
+def timeout():
+    while True:
+        time.sleep(15)
+        for tableId in timeout_dict:
+            to_remove = []
+            for playerId in timeout_dict[tableId]:
+                if timeout_dict[tableId][playerId] == False:
+                    to_remove.append(playerId)
+                    table = started_games[tableId]
+                    disconnect_player = None
+                    if len(table.players.List) > 1:
+                        for p in table.players.List:
+                            if p.user.id == playerId:
+                                disconnect_player = p
+                                break
+                        while table.turnPlayer is not None and table.turnPlayer == disconnect_player:
+                            table.nextTurnPlayer()
+                        for pot in table.pots:
+                            if disconnect_player in pot.members:
+                                pot.members.remove(disconnect_player)
+                        table.players.List.remove(disconnect_player)
+                else:
+                    timeout_dict[tableId][playerId] = False
+
+            for playerId in to_remove:
+                del timeout_dict[tableId][playerId]
 
 class GetTableInfo(MethodResource, Resource):
     @doc(tags=['Get Info'])
+    @use_kwargs({'playerID': fields.String()}, location='querystring')
     @marshal_with(TableSchema, code='200', description='Returns public table info')
     @marshal_with(None, code='404', description='tableID not found')
-    def get(self, tableID):
+    def get(self, tableID, playerID = None):
         if tableID not in started_games:
             return '', 404
-        
+
         table = started_games[tableID]
+        if playerID is not None:
+            table_players_ids = [p.user.id for p in table.players.List]
+            if playerID not in table_players_ids:
+                return '', 403
+            timeout_dict[tableID][playerID] = True
+
         table_cards = [CardModel(card.suit.name, card.rank) for card in table.getCurrentCards()]
         table_pots = [PotModel(pot.ammount, [m.user.name for m in pot.members]) for pot in table.pots]
         table_players = [PlayerModel(p.user.name, p.money) for p in table.players.List]
@@ -158,6 +195,9 @@ class StartTable(MethodResource, Resource):
         
         players = [Player(user, startingMoney) for user in table]
         started_games[tableID] = Table(TablePlayers(players), smallBlind)
+        timeout_dict[tableID] = {}
+        for player in players:
+            timeout_dict[tableID][player.user.id] = True
         
         del not_started_games[tableID]
         return '', 200
@@ -199,6 +239,7 @@ class DisconnectPlayer(MethodResource, Resource):
                     del next_rounds_check[tableID][playerID]
                     if all(next_rounds_check[tableID].values()):
                         table.initRound()
+                del timeout_dict[tableID][playerID]
         else:
             table = not_started_games[tableID]
             if playerID not in [p.id for p in table]:
@@ -455,6 +496,8 @@ api.add_resource(CheckMoves, '/table/<tableID>/actions')
 docs.register(CheckMoves)
 
 if __name__ == '__main__':
+    threading.Thread(target=timeout, daemon=True).start()
+
     # context = ('myCA.pem', 'myKey.key')
     # app.run(port=29345, ssl_context=context)
     app.run(port=29345)
