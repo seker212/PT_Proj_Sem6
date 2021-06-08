@@ -26,6 +26,7 @@ namespace PokerApplication
         List<System.Windows.Forms.Label> poolAmounts;
         Client client;
         bool showdown=false;
+        bool end = false;
         public delegate void delUpdateUILabel(List<Player> players,int i);
         public delegate void delUpdateUIPoints(List<Player> players,int i);
         public delegate void delUpdateUIPoints2(string text, int i);
@@ -210,9 +211,11 @@ namespace PokerApplication
                 var cards = client.game.Cards;
                 //var pool = client.game.Pool;
                 var players = client.game.Players;
-                if(players.Count()<2)
+
+                if(players.Count()<2&&!end)
                 {   
-                        MessageBox.Show("Wszyscy gracze wyszli. Opuść rozgrywkę.");
+                    MessageBox.Show("Wszyscy gracze wyszli. Opuść rozgrywkę.");
+                    end = true;
                 }
                 
 
@@ -516,7 +519,13 @@ namespace PokerApplication
         {
           
             if (turnLabel.Text==client.userName)
-            {
+            {   
+                if(end)
+                {
+                    MainMenu mainMenu = new MainMenu(client);
+                    mainMenu.Show();
+                    this.Close();
+                }
                 var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/actions?playerID=" + client.userCode;
                 var cards = client.MakeRequest(message, 0)[0];
                 cards = cards.Replace("{", "");
