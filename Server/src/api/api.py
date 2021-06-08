@@ -498,6 +498,6 @@ docs.register(CheckMoves)
 if __name__ == '__main__':
     threading.Thread(target=timeout, daemon=True).start()
 
-    # context = ('myCA.pem', 'myKey.key')
-    # app.run(port=29345, ssl_context=context)
-    app.run(port=29345)
+    context = ('myCA.pem', 'myKey.key')
+    app.run(port=29345, ssl_context=context)
+    #app.run(port=29345)

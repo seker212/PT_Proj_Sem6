@@ -199,7 +199,7 @@ namespace PokerApplication
         {
             while(true)
             {
-                var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode;
+                var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode+"?playerID="+client.userCode;
                 string table = client.MakeRequest(message, 0)[0];
                 //table = table.Replace()
                 table = Regex.Replace(table, @"[^0-9a-zA-Z:,_[+\]]", "");
