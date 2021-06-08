@@ -211,15 +211,8 @@ namespace PokerApplication
                 //var pool = client.game.Pool;
                 var players = client.game.Players;
                 if(players.Count()<2)
-                {
-                    this.Invoke((MethodInvoker)delegate
-                    {
-                        // close the form on the forms thread
-                        MainMenu mainMenu = new MainMenu(client);
-                        MessageBox.Show("Wszyscy gracze wyszli. Nastąpi przekierowanie do głównego menu");
-                        mainMenu.Show();
-                        this.Close();
-                    });
+                {   
+                        MessageBox.Show("Wszyscy gracze wyszli. Opuść rozgrywkę.");
                 }
                 
 

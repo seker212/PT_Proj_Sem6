@@ -129,7 +129,8 @@ namespace PokerApplicationClassLib
         public string[] MakeRequest(string message,int type)
         {
             string msgResponse = string.Empty;
-            if(type==0)
+            message = message.Replace("http", "https");
+            if (type==0)
             {
                 httpMethod = httpVerbs.GET;
             }
@@ -148,7 +149,7 @@ namespace PokerApplicationClassLib
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(message);
 
             request.Method = httpMethod.ToString();
-
+            request.ServerCertificateValidationCallback += (a, b, c, d) => true;
             try {
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
@@ -206,7 +207,7 @@ namespace PokerApplicationClassLib
             }
                 catch(System.Net.WebException)
                 {
-                   if( message=="http://" + apiAddress + ":" + apiPort + "/table/" + tableCode)
+                   if( message=="https://" + apiAddress + ":" + apiPort + "/table/" + tableCode)
                    {
                         String[] resp = new String[1];
                         resp[0] = "NO";

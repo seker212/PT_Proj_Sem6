@@ -15,6 +15,7 @@ namespace PokerApplication
     public partial class MainMenu : Form
     {
         Client client;
+        bool LegalClose = false;
         private MainMenu()
         {
             InitializeComponent();
@@ -59,33 +60,42 @@ namespace PokerApplication
             }
             else
             {
+                LegalClose = true;
                 Application.Exit();
             }
         }
         private void MainMenu_FormClosing(object sender, FormClosingEventArgs e)
         {
-            const string message =
-                "Czy na pewno chcesz opuścić program?";
-            const string caption = "Wyście";
-            var result = MessageBox.Show(message, caption,
-                                         MessageBoxButtons.YesNo,
-                                         MessageBoxIcon.Question);
+            if(!LegalClose)
+            {
+                const string message =
+               "Czy na pewno chcesz opuścić program?";
+                const string caption = "Wyście";
+                var result = MessageBox.Show(message, caption,
+                                             MessageBoxButtons.YesNo,
+                                             MessageBoxIcon.Question);
 
-            // If the no button was pressed ...
-            if (result == DialogResult.No)
-            {
-                // cancel the closure of the form.
-                e.Cancel = true;
+                // If the no button was pressed ...
+                if (result == DialogResult.No)
+                {
+                    // cancel the closure of the form.
+                    e.Cancel = true;
+                }
+                else
+                {
+                    Application.Exit();
+                }
             }
-            else
-            {
-                Application.Exit();
-            }
+           
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            CloseCancel(e);
+            if(!LegalClose)
+            {
+                CloseCancel(e);
+            }
+            
         }
         public static void CloseCancel(FormClosingEventArgs e)
         {
