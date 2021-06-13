@@ -35,6 +35,7 @@ namespace PokerApplication
             Client client = new Client();
             client.path = Application.StartupPath;
             client.path = client.path.Replace("bin\\Debug", "cards\\");
+            client.path = client.path.Replace("bin\\Release", "cards\\");
             if (client.CheckData(addressBox.Text, portBox.Text, userName.Text))
             {
                 if (client.Initialize(addressBox.Text, portBox.Text, userName.Text))

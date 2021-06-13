@@ -38,6 +38,7 @@ namespace PokerApplication
         public delegate void delUpdateUITurn(string turn);
         public delegate void delUpdatePlayerCards();
         public delegate void delUpdateCards(int i,string directory);
+        public delegate void delReturnButton();
 
         public Table()
         {
@@ -216,6 +217,13 @@ namespace PokerApplication
                 {   
                     MessageBox.Show("Wszyscy gracze wyszli. Opuść rozgrywkę.");
                     end = true;
+                    delReturnButton delReturnButton = new delReturnButton(updateReturnButton);
+                    this.mainMenu.BeginInvoke(delReturnButton);
+                    break;
+                }
+                else if(end)
+                {
+                    break;
                 }
                 
 
@@ -513,6 +521,10 @@ namespace PokerApplication
         {
             cards[i].BackgroundImage = Image.FromFile(directory);
         }
+        private void updateReturnButton()
+        {
+            mainMenu.Visible = true;
+        }
         #endregion
         #region Button Handling
         private void CheckButtons(object sender, EventArgs e)
@@ -665,7 +677,7 @@ namespace PokerApplication
             var message = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/actions/allin?playerID=" + client.userCode;
             client.MakeRequest(message, 0);
         }
-
+        
         private void nextRound_Click(object sender, EventArgs e)
         {
             nextRound.Visible = false;
@@ -698,25 +710,46 @@ namespace PokerApplication
 
         }
         private void Table_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            const string message =
-                "Czy na pewno chcesz opuścić rozgrywkę?\nUwaga, jeżeli opuścisz rozgrywkę już do niej nie wrócisz!";
-            const string caption = "Wyście";
-            var result = MessageBox.Show(message, caption,
-                                         MessageBoxButtons.YesNo,
-                                         MessageBoxIcon.Question);
-
-            // If the no button was pressed ...
-            if (result == DialogResult.No)
+        {   
+            if(!end)
             {
-                // cancel the closure of the form.
-                e.Cancel = true;
+                const string message =
+                "Czy na pewno chcesz opuścić rozgrywkę?\nUwaga, jeżeli opuścisz rozgrywkę już do niej nie wrócisz!";
+                const string caption = "Wyście";
+                var result = MessageBox.Show(message, caption,
+                                             MessageBoxButtons.YesNo,
+                                             MessageBoxIcon.Question);
+
+                // If the no button was pressed ...
+                if (result == DialogResult.No)
+                {
+                    // cancel the closure of the form.
+                    e.Cancel = true;
+                }
+                else
+                {
+
+                    var request = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/disconnect?playerID=" + client.userCode;
+                    client.MakeRequest(request, 2);
+                    end = true;
+                    //Application.Exit();
+                }
             }
             else
             {
                 var request = "http://" + client.apiAddress + ":" + client.apiPort + "/table/" + client.tableCode + "/disconnect?playerID=" + client.userCode;
                 client.MakeRequest(request, 2);
             }
+
+            
+        }
+
+        private void mainMenu_Click(object sender, EventArgs e)
+        {
+            MainMenu mMenu = new MainMenu(client);
+            mMenu.Show();
+            end = true;
+            this.Close();
         }
     }
 

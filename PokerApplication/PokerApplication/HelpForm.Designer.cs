@@ -55,7 +55,7 @@ namespace PokerApplication
             this.groupBox1.Size = new System.Drawing.Size(596, 632);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Zasady Pokera";
+            this.groupBox1.Text = "Zasady pokera";
             // 
             // label2
             // 

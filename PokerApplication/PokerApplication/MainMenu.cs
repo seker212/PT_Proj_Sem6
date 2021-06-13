@@ -89,7 +89,7 @@ namespace PokerApplication
            
         }
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
+        /*protected override void OnFormClosing(FormClosingEventArgs e)
         {
             if(!LegalClose)
             {
@@ -99,6 +99,7 @@ namespace PokerApplication
         }
         public static void CloseCancel(FormClosingEventArgs e)
         {
+           
             const string message = "Czy na pewno chcesz opuścić program?";
             const string caption = "Wyście";
             var result = MessageBox.Show(message, caption,
@@ -106,7 +107,7 @@ namespace PokerApplication
                               MessageBoxIcon.Question);
 
             e.Cancel = (result == DialogResult.No);
-        }
+        }*/
 
         private void helpButton_Click(object sender, EventArgs e)
         {
