@@ -1,0 +1,4 @@
+STARTING_MONEY: int = 500
+SMALL_BLIND: int = 4
+BLIND_INC: int = 2
+BLIND_INC_STEP: int = 5
